@@ -17,6 +17,11 @@ public class FileReader {
         }
     }
 
+    public void WriteFile(String data)throws Exception{
+        PrintWriter printWriter = new PrintWriter(schedule);
+        printWriter.print(data);
+    }
+
 
 
 }
