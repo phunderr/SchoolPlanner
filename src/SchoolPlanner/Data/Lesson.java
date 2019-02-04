@@ -4,6 +4,7 @@ public class Lesson {
     private String subject;
     private Teacher teacher;
     private LessonPeriod lessonPeriod;
+    private Class aClass;
 
     public Lesson(String subject, Teacher teacher, LessonPeriod lessonPeriod) {
         this.subject = subject;
