@@ -3,11 +3,11 @@ import java.io.*;
 import java.util.Scanner;
 
 public class FileReader {
-    private File path;
+//    private File path;
 
 
-    public FileReader(String path){
-        this.path = new File(path);
+    public FileReader(){
+//        this.path = new File(path);
     }
 
     /**
@@ -28,7 +28,7 @@ public class FileReader {
      * @throws Exception omdat we object io gebruiken
      */
 
-    public void WriteObject(Object obj)throws Exception{
+    public void WriteObject(Object obj, String path)throws Exception{
         FileOutputStream fos = new FileOutputStream(path);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
 
