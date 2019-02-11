@@ -14,14 +14,14 @@ import javafx.stage.Stage;
 /**
  * @Author Stijn van Berkel & Jelmer Surewaard
  * Creates a pop-up panel with 4 comboboxes containing:
- * teachers, classrooms, courses, timestamps.
+ * teachers, classrooms, subjects, timestamps.
  */
 
 public class PopUp extends Application {
 
     private ComboBox teacherComboBox;
     private ComboBox classroomComboBox;
-    private ComboBox courseComboBox;
+    private ComboBox subjectComboBox;
     private ComboBox timestampComboBox;
 
     @Override
@@ -37,16 +37,15 @@ public class PopUp extends Application {
         teacherLabel.setMinWidth(100);
         Label classroomLabel = new Label("Classroom:");
         classroomLabel.setMinWidth(100);
-        Label courseLabel = new Label("Course:");
+        Label courseLabel = new Label("Subject:");
         courseLabel.setMinWidth(100);
         Label timestampLabel = new Label("Timestamp:");
         timestampLabel.setMinWidth(100);
-        git
         HBox hBoxComboBox = new HBox();
 
         this.teacherComboBox = new ComboBox();
         this.classroomComboBox = new ComboBox();
-        this.courseComboBox = new ComboBox();
+        this.subjectComboBox = new ComboBox();
         this.timestampComboBox = new ComboBox();
 
         HBox teacher = new HBox();
@@ -55,14 +54,14 @@ public class PopUp extends Application {
         HBox classroom = new HBox();
         classroom.getChildren().addAll(classroomLabel, classroomComboBox);
 
-        HBox course = new HBox();
-        course.getChildren().addAll(courseLabel, courseComboBox);
+        HBox subject = new HBox();
+        subject.getChildren().addAll(courseLabel, subjectComboBox);
 
         HBox timestamp = new HBox();
         timestamp.getChildren().addAll(timestampLabel, timestampComboBox);
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(teacher, classroom, course, timestamp);
+        vBox.getChildren().addAll(teacher, classroom, subject, timestamp);
         vBox.getChildren().addAll(hBoxLabel, hBoxComboBox);
 
         BorderPane borderPane = new BorderPane();
