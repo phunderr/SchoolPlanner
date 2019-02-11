@@ -20,7 +20,7 @@ private BorderPane mainPane;
 private ResizableCanvas canvas;
 private double screenHeight;
 private double screenWidth;
-private ArrayList<Rectangle2D.Double> clickableRectangeList;
+private static ArrayList<Rectangle2D.Double> clickableRectangeList;
 
     public static void main(String[] args) {
         launch(GUI.class);
@@ -33,6 +33,7 @@ private ArrayList<Rectangle2D.Double> clickableRectangeList;
         mainPane.setCenter(canvas);
         draw(new FXGraphics2D(canvas.getGraphicsContext2D()));
         setup();
+        canvas.setOnMousePressed(RectangleLogics::rectangleClicked);
         primaryStage.setScene(new Scene(mainPane));
         primaryStage.setTitle("GUI");
         primaryStage.show();
@@ -51,6 +52,7 @@ private ArrayList<Rectangle2D.Double> clickableRectangeList;
 
     //draws main grid with rectangles which are saved in attribute "clickableRectangeList"
     public void drawGrid(FXGraphics2D graphics) {
+        clickableRectangeList = new ArrayList<>();
 
         int currentX;
         int currentY=0;
@@ -61,9 +63,13 @@ private ArrayList<Rectangle2D.Double> clickableRectangeList;
                 graphics.setColor(Color.black);
                 Rectangle2D.Double rectangle = new Rectangle2D.Double(currentX, currentY, 200, 50);
                 graphics.draw(rectangle);
-                this.clickableRectangeList.add(rectangle);
+                clickableRectangeList.add(rectangle);
             }
         }
+    }
+
+    public static ArrayList<Rectangle2D.Double> getClickableRectangleList(){
+        return clickableRectangeList;
     }
     }
 
