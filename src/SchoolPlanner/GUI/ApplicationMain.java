@@ -2,49 +2,52 @@ package SchoolPlanner.GUI;
 
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.Observable;
+import SchoolPlanner.GUI.TestData.Group;
+
 
 public class ApplicationMain extends javafx.application.Application {
 
-    private BorderPane mainPane;
-    private GridPane mainGrid;
+   private Canvas mainCanvas;
+   private ObservableList<SchoolPlanner.GUI.TestData.Group> groupList;
+
 
 
     public static void main(String[] args) {
         launch(ApplicationMain.class);
-
     }
     public void start(Stage stage){
         initialize(stage);
-        gridEditor();
+        drawGrid();
+
     }
 
     public void initialize(Stage stage){
-        this.mainPane = new BorderPane();
-        this.mainGrid = new GridPane();
-        mainPane.setBottom(mainGrid);
-        Scene testScene = new Scene(mainPane);
-        stage.setScene(testScene);
+        this.mainCanvas = new Canvas();
+        stage.setScene(new Scene(new javafx.scene.Group(mainCanvas)));
+        stage.setTitle("Rooster");
+        mainCanvas.setHeight(1080);
+        mainCanvas.setWidth(1920);
         stage.show();
     }
 
-    public void gridEditor(){
-        mainGrid.setVgap(30);
-        mainGrid.setHgap(30);
-        mainGrid.setGridLinesVisible(true);
-        mainGrid.setPadding(new Insets(500,500,500,500));
-        mainGrid.setMinWidth(400);
-        mainGrid.setMinHeight(400);
-        for (int y = 0; y < 4 ; y++) {
-            for (int i = 0; i < 4; i++) {
-                mainGrid.add(new Label("skrrr" + i), i, y);
-            }
+    public void drawGrid(){
+        for (int i = 0; i < 3; i++) {
+            groupList.add(new SchoolPlanner.GUI.TestData.Group("class"+i));
+        }
+        for (Group g:groupList) {
+            System.out.println(g.getName());
         }
     }
-}
+
+    }
