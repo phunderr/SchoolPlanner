@@ -1,6 +1,8 @@
 package SchoolPlanner.Data;
 
-public class Classroom {
+import java.io.Serializable;
+
+public class Classroom implements Serializable {
     private String classID;
 
     public Classroom(String classID) {
