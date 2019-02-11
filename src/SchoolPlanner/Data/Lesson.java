@@ -35,4 +35,12 @@ public class Lesson {
     public void setLessonPeriod(LessonPeriod lessonPeriod) {
         this.lessonPeriod = lessonPeriod;
     }
+
+    public Class getaClass () {
+        return aClass;
+    }
+
+    public void setaClass (Class aClass) {
+        this.aClass = aClass;
+    }
 }
