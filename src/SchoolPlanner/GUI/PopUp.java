@@ -1,6 +1,7 @@
 package SchoolPlanner.GUI;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -10,19 +11,25 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * @Author Stijn van Berkel & Jelmer Surewaard
+ * Creates a pop-up panel with 4 comboboxes containing:
+ * teachers, classrooms, courses, timestamps.
+ */
 
 public class PopUp extends Application {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+    private ComboBox teacherComboBox;
+    private ComboBox classroomComboBox;
+    private ComboBox courseComboBox;
+    private ComboBox timestampComboBox;
 
     @Override
     public void start(Stage stage) {
 
         stage.setTitle("Add Lesson");
-        stage.setMinWidth(400);
-        stage.setMinHeight(200);
+        stage.setMinWidth(350);
+        stage.setMinHeight(350);
 
         HBox hBoxLabel = new HBox();
 
@@ -34,14 +41,13 @@ public class PopUp extends Application {
         courseLabel.setMinWidth(100);
         Label timestampLabel = new Label("Timestamp:");
         timestampLabel.setMinWidth(100);
-
-
+        git
         HBox hBoxComboBox = new HBox();
 
-        ComboBox teacherComboBox = new ComboBox();
-        ComboBox classroomComboBox = new ComboBox();
-        ComboBox courseComboBox = new ComboBox();
-        ComboBox timestampComboBox = new ComboBox();
+        this.teacherComboBox = new ComboBox();
+        this.classroomComboBox = new ComboBox();
+        this.courseComboBox = new ComboBox();
+        this.timestampComboBox = new ComboBox();
 
         HBox teacher = new HBox();
         teacher.getChildren().addAll(teacherLabel, teacherComboBox);
@@ -57,14 +63,11 @@ public class PopUp extends Application {
 
         VBox vBox = new VBox();
         vBox.getChildren().addAll(teacher, classroom, course, timestamp);
-
         vBox.getChildren().addAll(hBoxLabel, hBoxComboBox);
 
         BorderPane borderPane = new BorderPane();
-
         borderPane.setCenter(vBox);
-
-        
+        borderPane.setPadding(new Insets(75,75,75,75));
 
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
