@@ -3,23 +3,36 @@ import java.io.*;
 import java.util.Scanner;
 
 public class FileReader {
-    private File schedule;
+    private File path;
+
 
     public FileReader(String path){
-        this.schedule = new File(path);
+        this.path = new File(path);
     }
 
-    public void ReadFile() throws Exception{
-        Scanner reader = new Scanner(schedule);
-        reader.useDelimiter("#");
-        while(reader.hasNextLine()){
-            System.out.println(reader.nextLine());
-        }
+    /**
+     * ReadObject leest een object af van de object stream.
+     * @throws Exception omdat we objectio gebruiken
+     */
+
+    public Object ReadObject(String path) throws Exception{
+        FileInputStream fis = new FileInputStream(path);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+
+        return ois.readObject();
     }
 
-    public void WriteFile(String data)throws Exception{
-        PrintWriter printWriter = new PrintWriter(schedule);
-        printWriter.print(data);
+    /**
+     * WriteObject schrijft een object naar de stream
+     * @param obj is het object dat naar de stream wordt gestuurd
+     * @throws Exception omdat we object io gebruiken
+     */
+
+    public void WriteObject(Object obj)throws Exception{
+        FileOutputStream fos = new FileOutputStream(path);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+        oos.writeObject(obj);
     }
 
 
