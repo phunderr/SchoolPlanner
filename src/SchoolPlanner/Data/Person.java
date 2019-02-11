@@ -1,6 +1,16 @@
 package SchoolPlanner.Data;
 
-public class Person {
+public abstract class Person {
 
     private String name;
+
+
+    Person (String name) {
+        this.name = name;
+    }
+
+    public String getName () {
+        return name;
+    }
+
 }
