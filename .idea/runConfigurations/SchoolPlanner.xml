@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="SchoolPlanner" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="SchoolPlanner.GUI.ApplicationMain" />
+    <option name="MAIN_CLASS_NAME" value="SchoolPlanner.GUI.GUI" />
     <module name="SchoolPlanner" />
     <method v="2">
       <option name="Make" enabled="true" />
