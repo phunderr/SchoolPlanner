@@ -1,7 +1,7 @@
-package SchoolPlanner.GUI;
+package SchoolPlanner.GUI.Logics;
 
 
-import javafx.event.EventHandler;
+import SchoolPlanner.GUI.Scenes.MainScene;
 import javafx.scene.input.MouseEvent;
 
 import java.awt.geom.Point2D;
@@ -11,9 +11,9 @@ public class RectangleLogics {
 
     public static void rectangleClicked(MouseEvent event){
         Point2D clickedLocation = new Point2D.Double(event.getX(),event.getY());
-        for (Rectangle2D.Double rectangle:GUI.getClickableRectangleList()) {
+        for (Rectangle2D.Double rectangle: MainScene.getClickableRectangleList()) {
             if(rectangle.contains(clickedLocation)){
-                System.out.println(GUI.getClickableRectangleList().indexOf(rectangle));
+                System.out.println(MainScene.getClickableRectangleList().indexOf(rectangle));
             }
         }
     }
