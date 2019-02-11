@@ -11,8 +11,8 @@ public class FileReader {
     }
 
     /**
-     * ReadObject leest een object af van de object stream.
-     * @throws Exception omdat we objectio gebruiken
+     * ReadObject reads an object from the object stream.
+     * @throws Exception because we  use objectio
      */
 
     public Object ReadObject(String path) throws Exception{
@@ -23,9 +23,9 @@ public class FileReader {
     }
 
     /**
-     * WriteObject schrijft een object naar de stream
-     * @param obj is het object dat naar de stream wordt gestuurd
-     * @throws Exception omdat we object io gebruiken
+     * WriteObject writes an object to the stream
+     * @param obj is the object that is send to the stream
+     * @throws Exception because we use objectio
      */
 
     public void WriteObject(Object obj, String path)throws Exception{
