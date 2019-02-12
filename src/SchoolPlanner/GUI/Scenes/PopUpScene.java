@@ -1,4 +1,4 @@
-package SchoolPlanner.GUI;
+package SchoolPlanner.GUI.Scenes;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -17,7 +17,7 @@ import javafx.stage.Stage;
  * teachers, classrooms, subjects, timestamps.
  */
 
-public class PopUp extends Application {
+public class PopUpScene extends Application {
 
     private ComboBox teacherComboBox;
     private ComboBox classroomComboBox;
