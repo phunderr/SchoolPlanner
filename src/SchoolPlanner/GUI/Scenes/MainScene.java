@@ -3,10 +3,14 @@ package SchoolPlanner.GUI.Scenes;
 
 import SchoolPlanner.GUI.Logics.RectangleLogics;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
@@ -23,6 +27,7 @@ private double screenHeight;
 private double screenWidth;
 private static ArrayList<Rectangle2D.Double> clickableRectangeList;
 private TabPane mainTabPane;
+private VBox timeVBox;
 
     public static void main(String[] args) {
         launch(MainScene.class);
@@ -38,7 +43,7 @@ private TabPane mainTabPane;
         //primaryStage.setFullScreen(true);
         canvas.setOnMousePressed(RectangleLogics::rectangleClicked);
         primaryStage.setScene(new Scene(mainPane));
-        primaryStage.setTitle("MainScene");
+        primaryStage.setTitle("Rooster Application");
         primaryStage.show();
     }
 
@@ -52,19 +57,30 @@ private TabPane mainTabPane;
         this.screenWidth = canvas.getWidth();
         this.screenHeight = canvas.getHeight();
 
-
+        //main tab pane setup
         this.mainTabPane = new TabPane();
+        mainTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         Tab roosterTab = new Tab("Rooster");
         Tab roosterInputTab = new Tab("Rooster Input");
         Tab simulationTab = new Tab("Simulation");
-
         mainTabPane.getTabs().addAll(roosterTab,roosterInputTab,simulationTab);
         this.mainPane.setTop(mainTabPane);
 
+
+        //left vbox setup
+        this.timeVBox = new VBox();
+        timeVBox.setAlignment(Pos.CENTER_LEFT);
+        timeVBox.setSpacing(this.canvas.getHeight()/6);
+        for (int i = 0; i < 8 ; i++) {
+            Label label = new Label((i+8)+":00");
+            label.setFont(new Font("Serif",20));
+            this.timeVBox.getChildren().add(label);
+        }
+        this.mainPane.setLeft(timeVBox);
     }
 
 
-    //draws main grid with rectangles which are saved in attribute "clickableRectangeList"
+    //draws main grid with rectangles which are saved in attribute "clickableRectangleList"
     public void drawGrid(FXGraphics2D graphics) {
         clickableRectangeList = new ArrayList<>();
 
