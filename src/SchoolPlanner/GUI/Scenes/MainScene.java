@@ -42,7 +42,7 @@ private VBox timeVBox;
         setup();
         //primaryStage.setFullScreen(true);
         canvas.setOnMousePressed(RectangleLogics::rectangleClicked);
-        primaryStage.setScene(new Scene(mainPane));
+        primaryStage.setScene(new Scene(mainTabPane));
         primaryStage.setTitle("Rooster Application");
         primaryStage.show();
     }
@@ -64,7 +64,8 @@ private VBox timeVBox;
         Tab roosterInputTab = new Tab("Rooster Input");
         Tab simulationTab = new Tab("Simulation");
         mainTabPane.getTabs().addAll(roosterTab,roosterInputTab,simulationTab);
-        this.mainPane.setTop(mainTabPane);
+        roosterTab.setContent(mainPane);
+        //this.mainPane.setTop(mainTabPane);
 
 
         //left vbox setup

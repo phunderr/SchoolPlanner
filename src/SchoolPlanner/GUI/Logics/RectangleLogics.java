@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import static javafx.application.Application.launch;
+
 public class RectangleLogics {
 
     public static void rectangleClicked(MouseEvent event){
@@ -17,7 +19,9 @@ public class RectangleLogics {
         for (Rectangle2D.Double rectangle: MainScene.getClickableRectangleList()) {
             if(rectangle.contains(clickedLocation)){
                 System.out.println(MainScene.getClickableRectangleList().indexOf(rectangle));
+                
             }
         }
+
     }
 }
