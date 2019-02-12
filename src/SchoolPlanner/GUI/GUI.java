@@ -1,6 +1,7 @@
 package SchoolPlanner.GUI;
 
 
+import SchoolPlanner.GUI.Logics.RectangleLogics;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCombination;

@@ -3,6 +3,7 @@ package SchoolPlanner.GUI.Scenes;
 
 import SchoolPlanner.GUI.Logics.RectangleLogics;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -70,8 +71,10 @@ private VBox timeVBox;
         //left vbox setup
         this.timeVBox = new VBox();
         timeVBox.setAlignment(Pos.CENTER_LEFT);
-        timeVBox.setSpacing(this.canvas.getHeight()/6);
-        for (int i = 0; i < 8 ; i++) {
+        timeVBox.setSpacing(this.canvas.getHeight()/5.3);
+        timeVBox.setPadding(new Insets(80,0,80,0));
+
+        for (int i = 0; i < 9 ; i++) {
             Label label = new Label((i+8)+":00");
             label.setFont(new Font("Serif",20));
             this.timeVBox.getChildren().add(label);
