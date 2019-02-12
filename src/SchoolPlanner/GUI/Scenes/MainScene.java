@@ -1,6 +1,7 @@
 package SchoolPlanner.GUI.Scenes;
 
 
+import SchoolPlanner.Data.Class;
 import SchoolPlanner.GUI.Logics.RectangleLogics;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -9,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -34,19 +36,28 @@ private VBox timeVBox;
     }
 
     public void start(Stage primaryStage) throws Exception {
+        ArrayList<Class> classes = new ArrayList<>();
+
+        for ( int i = 0; i<= 5; i++){
+            classes.add(new Class("class " + (i +1)));
+        }
+
+
+
         primaryStage.setMaximized(true);
         this.mainPane = new BorderPane();
-        this.canvas = new ResizableCanvas(g -> draw(g), mainPane);
+        this.canvas = new ResizableCanvas(this::draw, mainPane);
         mainPane.setCenter(canvas);
         draw(new FXGraphics2D(canvas.getGraphicsContext2D()));
+        mainPane.setTop(placeClasses(classes));
         setup();
         //primaryStage.setFullScreen(true);
         canvas.setOnMousePressed(RectangleLogics::rectangleClicked);
         primaryStage.setScene(new Scene(mainTabPane));
         primaryStage.setTitle("Rooster Application");
         primaryStage.show();
+        primaryStage.setResizable(false);
     }
-
 
     public void draw(FXGraphics2D graphics) {
         drawGrid(graphics);
@@ -102,7 +113,23 @@ private VBox timeVBox;
     public static ArrayList<Rectangle2D.Double> getClickableRectangleList(){
         return clickableRectangeList;
     }
+
+    public HBox placeClasses(ArrayList<Class> classes){
+        HBox hbox = new HBox();
+        hbox.setSpacing(canvas.getWidth() / 7);
+        Label label = new Label(" ");
+        label.setPrefWidth(160);
+        hbox.getChildren().add(label);
+        for ( Class aClass : classes ) {
+            Label l  =new Label(aClass.getClassID());
+            l.setFont(new Font(35));
+            hbox.getChildren().add(l);
+        }
+
+        return hbox;
     }
+
+}
 
 
 
