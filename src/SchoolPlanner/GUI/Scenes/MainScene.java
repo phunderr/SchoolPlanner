@@ -80,7 +80,7 @@ private VBox timeVBox;
     }
 
 
-    //draws main grid with rectangles which are saved in attribute "clickableRectangeList"
+    //draws main grid with rectangles which are saved in attribute "clickableRectangleList"
     public void drawGrid(FXGraphics2D graphics) {
         clickableRectangeList = new ArrayList<>();
 
