@@ -1,5 +1,6 @@
 package SchoolPlanner.GUI.Scenes;
 
+import SchoolPlanner.Data.FileReader;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -11,22 +12,26 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
 /**
- * @Author Stijn van Berkel & Jelmer Surewaard
+ * @Author Stijn van Berkel & Jelmer Surewaard & Pascal Holthuijsen
  * Creates a pop-up panel with 4 comboboxes containing:
  * teachers, classrooms, subjects, timestamps.
  */
 
-public class PopUpScene extends Application {
+public class PopUpScene {
 
     private ComboBox teacherComboBox;
     private ComboBox classroomComboBox;
     private ComboBox subjectComboBox;
     private ComboBox timestampComboBox;
+    private FileReader fileReader;
 
-    @Override
-    public void start(Stage stage) {
-
+    public void generatePopUp (Stage stage) {
+        this.fileReader = new FileReader();
         stage.setTitle("Add Lesson");
         stage.setMinWidth(350);
         stage.setMinHeight(350);
@@ -71,5 +76,37 @@ public class PopUpScene extends Application {
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void fillComboboxes(){
+        try {
+            File classfile = fileReader.readTextFile("src/TextFile/Classes.txt");
+            File teacherFile = fileReader.readTextFile("src/TextFile/Classes.txt");
+            File subjectFile = fileReader.readTextFile("src/TextFile/Classes.txt");
+
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+//        classroomComboBox;
+//        subjectComboBox;
+//        teacherComboBox;
+//        timestampComboBox;
+    }
+
+    public String readFiles(File file)throws IOException{
+        Scanner scanner = new Scanner(file);
+        StringBuilder stringBuilder = new StringBuilder();
+
+        while(scanner.hasNextLine()){
+            stringBuilder.append(scanner.nextLine());
+        }
+        return stringBuilder.toString();
     }
 }

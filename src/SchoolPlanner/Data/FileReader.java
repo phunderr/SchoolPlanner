@@ -35,6 +35,25 @@ public class FileReader {
         oos.writeObject(obj);
     }
 
+    /**
+     *
+     * @param pathName
+     * @return
+     * @throws IOException
+     * if a file isnt found
+     */
+    public File readTextFile(String pathName)throws IOException{
+        File file = new File(pathName);
+
+
+
+        return file;
+    }
+
+    /**
+     *
+     */
+    public void writeTextFIle(){}
 
 
 }

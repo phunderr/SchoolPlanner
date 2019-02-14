@@ -16,8 +16,9 @@ import javafx.stage.Stage;
  * creates the scene for "Rooster Input" tab in the main application.
  */
 
-public class RoosterInputScene {
-    public void start(Stage primaryStage) throws Exception {
+public class RosterInputScene {
+
+    public Scene rosterInputScene(){
         BorderPane borderPane = new BorderPane();
         VBox vBox1 = new VBox();
         VBox vBox2 = new VBox();
@@ -44,8 +45,8 @@ public class RoosterInputScene {
         borderPane.setRight(vBox2);
         borderPane.setCenter(vBox1);
 
-        Scene scene = new Scene(borderPane);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        return new Scene(borderPane);
+
+
     }
 }

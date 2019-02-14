@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -35,7 +36,7 @@ private VBox timeVBox;
         launch(MainScene.class);
     }
 
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage){
         ArrayList<Class> classes = new ArrayList<>();
 
         for ( int i = 0; i<= 5; i++){
@@ -52,11 +53,13 @@ private VBox timeVBox;
         mainPane.setTop(placeClasses(classes));
         setup();
         //primaryStage.setFullScreen(true);
-        canvas.setOnMousePressed(RectangleLogics::rectangleClicked);
+        canvas.setOnMousePressed(this::onMousePressed);
         primaryStage.setScene(new Scene(mainTabPane));
         primaryStage.setTitle("Rooster Application");
         primaryStage.show();
         primaryStage.setResizable(false);
+
+        new PopUpScene().generatePopUp(new Stage());
     }
 
     public void draw(FXGraphics2D graphics) {
@@ -72,11 +75,15 @@ private VBox timeVBox;
         this.mainTabPane = new TabPane();
         mainTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         Tab roosterTab = new Tab("Rooster");
-        Tab roosterInputTab = new Tab("Rooster Input");
+        Tab rosterInputTab = new Tab("Rooster Input");
         Tab simulationTab = new Tab("Simulation");
-        mainTabPane.getTabs().addAll(roosterTab,roosterInputTab,simulationTab);
+        mainTabPane.getTabs().addAll(roosterTab,rosterInputTab,simulationTab);
         roosterTab.setContent(mainPane);
+
         //this.mainPane.setTop(mainTabPane);
+
+        //RosterInputTab
+        rosterInputTab.setContent(new RosterInputScene().rosterInputScene().getRoot());
 
 
         //left vbox setup
@@ -128,6 +135,16 @@ private VBox timeVBox;
 
         return hbox;
     }
+
+    //event handelers
+
+    public void onMousePressed(MouseEvent e){
+        RectangleLogics.rectangleClicked(e);
+
+
+    }
+
+
 
 }
 
