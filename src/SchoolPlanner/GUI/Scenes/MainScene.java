@@ -2,12 +2,12 @@ package SchoolPlanner.GUI.Scenes;
 
 
 import SchoolPlanner.GUI.Logics.RectangleLogics;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
@@ -43,6 +43,10 @@ public class MainScene extends Application {
         primaryStage.show();
     }
 
+    /**
+     * draw draws the GUI components on the canvas
+     * @param graphics
+     */
     public void draw(FXGraphics2D graphics) {
         this.screenWidth = canvas.getWidth();
         this.screenHeight = canvas.getHeight();
@@ -56,6 +60,9 @@ public class MainScene extends Application {
         drawTimeGrid(graphics);
     }
 
+    /**
+     * setup() initializes JavaFX components of the GUI
+     */
     public void setup() {
         //main tab pane setup
         this.mainTabPane = new TabPane();
@@ -67,7 +74,10 @@ public class MainScene extends Application {
         this.mainPane.setTop(mainTabPane);
     }
 
-    //draws horizontal lines with time in the left column
+    /**
+     * drawTimeGrid() draws horizontal lines with time in the left column
+     * @param graphics
+     */
     public void drawTimeGrid(FXGraphics2D graphics) {
         int distanceBetweenLines = (2 * (int) screenHeight / 12) - (int) screenHeight / 12;
         int fontScale = distanceBetweenLines / 2;
@@ -80,7 +90,11 @@ public class MainScene extends Application {
         graphics.drawLine(0, (11 * (int) screenHeight / 12), (int) screenWidth, (11 * (int) screenHeight / 12));
     }
 
-    //draws main grid with rectangles which are saved in attribute "clickableRectangleList"
+    /**
+     * drawGrid() draws main grid with rectangles which are saved in attribute "clickableRectangleList"
+     * @param graphics
+     * @param amountOfClasses the amount of classes corresponds to the amount of columns
+     */
     public void drawGrid(FXGraphics2D graphics, int amountOfClasses) {
         clickableRectangeList = new ArrayList<>();
         int currentX;
