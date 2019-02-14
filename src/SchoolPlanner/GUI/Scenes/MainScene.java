@@ -77,11 +77,14 @@ public class MainScene extends Application {
         //main tab pane setup
         this.mainTabPane = new TabPane();
         mainTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-        Tab roosterTab = new Tab("Rooster");
+        Tab rosterTab = new Tab("Rooster");
         Tab rosterInputTab = new Tab("Rooster Input");
         Tab simulationTab = new Tab("Simulation");
-        mainTabPane.getTabs().addAll(roosterTab, rosterInputTab, simulationTab);
-        this.mainPane.setTop(mainTabPane);
+        mainTabPane.getTabs().addAll(rosterTab, rosterInputTab, simulationTab);
+        rosterTab.setContent(mainPane);
+        rosterInputTab.setContent(new RosterInputScene().rosterInputScene());
+
+
     }
 
     /**
@@ -125,7 +128,7 @@ public class MainScene extends Application {
     public static ArrayList<Rectangle2D.Double> getClickableRectangleList() {
         return clickableRectangeList;
     }
-    
+
 
     //event handelers
 
