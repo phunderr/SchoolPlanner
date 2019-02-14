@@ -40,7 +40,7 @@ public class FileReader {
      * @param pathName
      * @return
      * @throws IOException
-     * if a file isnt found
+     * if a file isnt found throws a exception
      */
     public File readTextFile(String pathName)throws IOException{
         File file = new File(pathName);

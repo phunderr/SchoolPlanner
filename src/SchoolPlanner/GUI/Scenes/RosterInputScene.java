@@ -2,8 +2,7 @@ package SchoolPlanner.GUI.Scenes;
 
 import SchoolPlanner.Data.FileReader;
 import SchoolPlanner.Data.Lesson;
-import SchoolPlanner.Data.Teacher;
-import javafx.geometry.Insets;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
