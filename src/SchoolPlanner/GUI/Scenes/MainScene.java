@@ -70,9 +70,9 @@ private VBox timeVBox;
 
         //left vbox setup
         this.timeVBox = new VBox();
-        timeVBox.setAlignment(Pos.CENTER_LEFT);
-        timeVBox.setSpacing(this.canvas.getHeight()/5.3);
-        timeVBox.setPadding(new Insets(80,0,80,0));
+        timeVBox.setAlignment(Pos.TOP_LEFT);
+        timeVBox.setSpacing(this.canvas.getHeight()/9);
+        timeVBox.setPadding(new Insets(110,0,0,15));
 
         for (int i = 0; i < 9 ; i++) {
             Label label = new Label((i+8)+":00");
@@ -90,11 +90,11 @@ private VBox timeVBox;
         int currentX;
         int currentY=0;
         for (int j = 1; j < 9 ; j++) {
-        currentY = (int)(j*(this.canvas.getHeight()/10));
+        currentY = (int)(j*(this.canvas.getHeight()/12));
             for (int i = 1; i < 7; i++) {
                 currentX = (int) (i * (this.canvas.getWidth() / 10));
                 graphics.setColor(Color.black);
-                Rectangle2D.Double rectangle = new Rectangle2D.Double(currentX, currentY, this.canvas.getWidth() / 10, this.canvas.getHeight()/10);
+                Rectangle2D.Double rectangle = new Rectangle2D.Double(currentX, currentY, this.canvas.getWidth() / 10, this.canvas.getHeight()/12);
                 graphics.draw(rectangle);
                 clickableRectangeList.add(rectangle);
             }
