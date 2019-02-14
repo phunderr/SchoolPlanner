@@ -32,9 +32,6 @@ private static ArrayList<Rectangle2D.Double> clickableRectangeList;
 private TabPane mainTabPane;
 private VBox timeVBox;
 
-    public static void main(String[] args) {
-        launch(MainScene.class);
-    }
 
     public void start(Stage primaryStage){
         ArrayList<String> classes = new ArrayList<>();
@@ -59,7 +56,7 @@ private VBox timeVBox;
         primaryStage.show();
         primaryStage.setResizable(false);
 
-        new PopUpScene().generatePopUp(new Stage());
+        //new PopUpScene().generatePopUp(new Stage());
     }
 
     public void draw(FXGraphics2D graphics) {

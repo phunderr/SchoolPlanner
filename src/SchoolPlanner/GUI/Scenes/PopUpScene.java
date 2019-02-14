@@ -108,12 +108,6 @@ public class PopUpScene {
         }
 
 
-
-
-//        classroomComboBox;
-//        subjectComboBox;
-//        teacherComboBox;
-//        timestampComboBox;
     }
 
 
