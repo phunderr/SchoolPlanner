@@ -2,11 +2,11 @@ package SchoolPlanner.Data;
 
 public class Lesson {
     private String subject;
-    private Teacher teacher;
+    private String teacher;
     private LessonPeriod lessonPeriod;
     private Class aClass;
 
-    public Lesson(String subject, Teacher teacher, LessonPeriod lessonPeriod) {
+    public Lesson(String subject, String teacher, LessonPeriod lessonPeriod) {
         this.subject = subject;
         this.teacher = teacher;
         this.lessonPeriod = lessonPeriod;
@@ -20,11 +20,11 @@ public class Lesson {
         this.subject = subject;
     }
 
-    public Teacher getTeacher() {
+    public String getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
+    public void setTeacher(String teacher) {
         this.teacher = teacher;
     }
 

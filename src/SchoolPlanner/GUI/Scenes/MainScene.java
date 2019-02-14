@@ -1,8 +1,8 @@
 package SchoolPlanner.GUI.Scenes;
 
 
-import SchoolPlanner.Data.Class;
 import SchoolPlanner.GUI.Logics.RectangleLogics;
+
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -37,10 +37,10 @@ private VBox timeVBox;
     }
 
     public void start(Stage primaryStage){
-        ArrayList<Class> classes = new ArrayList<>();
+        ArrayList<String> classes = new ArrayList<>();
 
         for ( int i = 0; i<= 5; i++){
-            classes.add(new Class("class " + (i +1)));
+            classes.add("class " + (i +1));
         }
 
 
@@ -121,14 +121,14 @@ private VBox timeVBox;
         return clickableRectangeList;
     }
 
-    public HBox placeClasses(ArrayList<Class> classes){
+    public HBox placeClasses(ArrayList<String> classes){
         HBox hbox = new HBox();
         hbox.setSpacing(canvas.getWidth() / 7);
         Label label = new Label(" ");
         label.setPrefWidth(160);
         hbox.getChildren().add(label);
-        for ( Class aClass : classes ) {
-            Label l  =new Label(aClass.getClassID());
+        for ( String aClass : classes ) {
+            Label l  =new Label(aClass);
             l.setFont(new Font(35));
             hbox.getChildren().add(l);
         }
