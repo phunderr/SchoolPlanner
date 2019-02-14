@@ -3,49 +3,68 @@ package SchoolPlanner.GUI.Scenes;
 import SchoolPlanner.Data.FileReader;
 import SchoolPlanner.Data.Lesson;
 import SchoolPlanner.Data.Teacher;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
- * @Author Luke Taylor
- * creates the scene for "Rooster Input" tab in the main application.
+ * @Author Luke Taylor & Jelmer Surewaard
+ * creates the scene for "Roster Input" tab in the main application.
  */
 
 public class RosterInputScene {
 
-    public Scene rosterInputScene(){
+    /**
+     * @return the RosterInput borderpane.
+     */
+
+    public BorderPane rosterInputScene(){
         BorderPane borderPane = new BorderPane();
         VBox vBox1 = new VBox();
         VBox vBox2 = new VBox();
+        Button button = new Button("Send");
+
+
+
+        button.setFont(new Font(105));
 
         Label teacher = new Label("Teacher: ");
-        Label lesson = new Label("Lesson: ");
+        Label lesson = new Label("Subject: ");
         Label classroom = new Label("Classroom: ");
         TextField teachertxt = new TextField();
         TextField lessontxt = new TextField();
         TextField classroomtxt = new TextField();
 
-        teacher.setFont(new Font(17));
-        lesson.setFont(new Font(17));
-        classroom.setFont(new Font(17));
-
-        vBox1.getChildren().add(teacher);
-        vBox1.getChildren().add(lesson);
-        vBox1.getChildren().add(classroom);
-        vBox2.getChildren().add(teachertxt);
-        vBox2.getChildren().add(lessontxt);
-        vBox2.getChildren().add(classroomtxt);
+//        button.setOnAction(event -> {
+//            if(!teachertxt.getText().contains("")){
+//
+//            }
+//        });
 
 
-        borderPane.setRight(vBox2);
-        borderPane.setCenter(vBox1);
+        teacher.setFont(new Font(50));
+        lesson.setFont(new Font(50));
+        classroom.setFont(new Font(50));
 
-        return new Scene(borderPane);
+        teachertxt.setFont(new Font(35));
+        lessontxt.setFont(new Font(35));
+        classroomtxt.setFont(new Font(35));
+
+        vBox1.getChildren().addAll(teacher, lesson, classroom);
+        vBox2.getChildren().addAll(teachertxt, lessontxt, classroomtxt);
+
+        borderPane.setLeft(vBox1);
+        borderPane.setCenter(vBox2);
+        borderPane.setRight(button);
+
+        return borderPane;
 
 
     }

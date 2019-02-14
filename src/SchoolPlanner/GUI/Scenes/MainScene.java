@@ -83,7 +83,7 @@ private VBox timeVBox;
         //this.mainPane.setTop(mainTabPane);
 
         //RosterInputTab
-        rosterInputTab.setContent(new RosterInputScene().rosterInputScene().getRoot());
+        rosterInputTab.setContent(new RosterInputScene().rosterInputScene());
 
 
         //left vbox setup
