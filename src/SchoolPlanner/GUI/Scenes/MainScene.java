@@ -41,7 +41,7 @@ public class MainScene extends Application {
         this.canvas = new ResizableCanvas(this::draw, mainPane);
         mainPane.setCenter(canvas);
         draw(new FXGraphics2D(canvas.getGraphicsContext2D()));
-        mainPane.setTop(placeClasses(classes));
+        //mainPane.setTop(placeClasses(classes));
         setup();
         //primaryStage.setFullScreen(true);
         canvas.setOnMousePressed(this::onMousePressed);
@@ -80,7 +80,7 @@ public class MainScene extends Application {
         Tab roosterTab = new Tab("Rooster");
         Tab rosterInputTab = new Tab("Rooster Input");
         Tab simulationTab = new Tab("Simulation");
-        mainTabPane.getTabs().addAll(roosterTab, roosterInputTab, simulationTab);
+        mainTabPane.getTabs().addAll(roosterTab, rosterInputTab, simulationTab);
         this.mainPane.setTop(mainTabPane);
     }
 
@@ -125,7 +125,7 @@ public class MainScene extends Application {
     public static ArrayList<Rectangle2D.Double> getClickableRectangleList() {
         return clickableRectangeList;
     }
-    }
+    
 
     //event handelers
 
