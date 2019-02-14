@@ -17,18 +17,20 @@ import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 
 import java.awt.*;
+import java.awt.Font.*;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public class MainScene extends Application {
 
-private BorderPane mainPane;
-private ResizableCanvas canvas;
-private double screenHeight;
-private double screenWidth;
-private static ArrayList<Rectangle2D.Double> clickableRectangeList;
-private TabPane mainTabPane;
-private VBox timeVBox;
+    private BorderPane mainPane;
+    private ResizableCanvas canvas;
+    private double screenHeight;
+    private double screenWidth;
+    private static ArrayList<Rectangle2D.Double> clickableRectangeList;
+    private TabPane mainTabPane;
+    private VBox timeVBox;
 
     public static void main(String[] args) {
         launch(MainScene.class);
@@ -50,61 +52,63 @@ private VBox timeVBox;
 
 
     public void draw(FXGraphics2D graphics) {
-        drawGrid(graphics);
+        this.screenWidth = canvas.getWidth();
+        this.screenHeight = canvas.getHeight();
+        graphics.setTransform(new AffineTransform());
+        graphics.setBackground(Color.white);
+        graphics.clearRect(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
+        drawGrid(graphics, 2);
+        drawTimeGrid(graphics);
 
     }
 
-    public void setup(){
-        this.screenWidth = canvas.getWidth();
-        this.screenHeight = canvas.getHeight();
-
+    public void setup() {
         //main tab pane setup
         this.mainTabPane = new TabPane();
         mainTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         Tab roosterTab = new Tab("Rooster");
         Tab roosterInputTab = new Tab("Rooster Input");
         Tab simulationTab = new Tab("Simulation");
-        mainTabPane.getTabs().addAll(roosterTab,roosterInputTab,simulationTab);
+        mainTabPane.getTabs().addAll(roosterTab, roosterInputTab, simulationTab);
         this.mainPane.setTop(mainTabPane);
-
-
-        //left vbox setup
-        this.timeVBox = new VBox();
-        timeVBox.setAlignment(Pos.TOP_LEFT);
-        timeVBox.setSpacing(this.canvas.getHeight()/9);
-        timeVBox.setPadding(new Insets(110,0,0,15));
-
-        for (int i = 0; i < 9 ; i++) {
-            Label label = new Label((i+8)+":00");
-            label.setFont(new Font("Serif",20));
-            this.timeVBox.getChildren().add(label);
-        }
-        this.mainPane.setLeft(timeVBox);
     }
 
 
-    //draws main grid with rectangles which are saved in attribute "clickableRectangleList"
-    public void drawGrid(FXGraphics2D graphics) {
-        clickableRectangeList = new ArrayList<>();
+    //draws horizontal lines with time in the left column
+    public void drawTimeGrid(FXGraphics2D graphics) {
+        int distanceBetweenLines = (2 * (int) screenHeight / 12) - (int) screenHeight / 12;
+        int fontScale = distanceBetweenLines / 2;
+        java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.PLAIN, fontScale);
+        for (int i = 1; i < 11; i++) {
+            graphics.drawLine(0, (i * (int) screenHeight / 12), (int) screenWidth, (i * (int) screenHeight / 12));
+            Shape shape = font.createGlyphVector(graphics.getFontRenderContext(), (i + 7) + ":00").getOutline();
+            graphics.fill(AffineTransform.getTranslateInstance(10, distanceBetweenLines / 1.5 + (i * screenHeight / 12)).createTransformedShape(shape));
+        }
+        graphics.drawLine(0, (11 * (int) screenHeight / 12), (int) screenWidth, (11 * (int) screenHeight / 12));
+    }
 
+    //draws main grid with rectangles which are saved in attribute "clickableRectangleList"
+    public void drawGrid(FXGraphics2D graphics, int amount) {
+        clickableRectangeList = new ArrayList<>();
         int currentX;
-        int currentY=0;
-        for (int j = 1; j < 9 ; j++) {
-        currentY = (int)(j*(this.canvas.getHeight()/12));
-            for (int i = 1; i < 7; i++) {
-                currentX = (int) (i * (this.canvas.getWidth() / 10));
+        int currentY = 0;
+        for (int j = 1; j < 11; j++) {
+            currentY = (int) (j * (screenHeight / 12));
+            for (int i = 1; i < amount + 1; i++) {
+                currentX = (int) (i * (screenWidth / (amount + 1)));
                 graphics.setColor(Color.black);
-                Rectangle2D.Double rectangle = new Rectangle2D.Double(currentX, currentY, this.canvas.getWidth() / 10, this.canvas.getHeight()/12);
+                graphics.drawLine(currentX,0,currentX,currentY);
+                Rectangle2D.Double rectangle = new Rectangle2D.Double(currentX, currentY, screenWidth / (amount + 1), screenHeight / 12);
                 graphics.draw(rectangle);
                 clickableRectangeList.add(rectangle);
             }
         }
     }
 
-    public static ArrayList<Rectangle2D.Double> getClickableRectangleList(){
+    public static ArrayList<Rectangle2D.Double> getClickableRectangleList() {
         return clickableRectangeList;
     }
-    }
+}
 
 
 
