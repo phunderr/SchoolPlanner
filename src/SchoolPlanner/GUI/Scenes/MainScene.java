@@ -1,6 +1,8 @@
 package SchoolPlanner.GUI.Scenes;
 
 
+import SchoolPlanner.GUI.Logics.LessonButton;
+import SchoolPlanner.GUI.Logics.DrawableShape;
 import SchoolPlanner.GUI.Logics.RectangleLogics;
 
 import javafx.application.Application;
@@ -14,6 +16,8 @@ import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Arc2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -25,24 +29,19 @@ public class MainScene extends Application {
     private double screenWidth;
     private static ArrayList<Rectangle2D.Double> clickableRectangeList;
     private TabPane mainTabPane;
+    private ArrayList<DrawableShape> drawableShapes;
 
 
     public void start(Stage primaryStage){
-        ArrayList<String> classes = new ArrayList<>();
-
-        for ( int i = 0; i<= 5; i++){
-            classes.add("class " + (i +1));
-        }
-
+        setup();
 
 
         primaryStage.setMaximized(true);
-        this.mainPane = new BorderPane();
         this.canvas = new ResizableCanvas(this::draw, mainPane);
         mainPane.setCenter(canvas);
         draw(new FXGraphics2D(canvas.getGraphicsContext2D()));
         //mainPane.setTop(placeClasses(classes));
-        setup();
+
         //primaryStage.setFullScreen(true);
         canvas.setOnMousePressed(this::onMousePressed);
         primaryStage.setScene(new Scene(mainTabPane));
@@ -68,13 +67,19 @@ public class MainScene extends Application {
         int amountOfClasses = 2;
         drawGrid(graphics, amountOfClasses);
         drawTimeGrid(graphics);
+
+        for ( DrawableShape drawableShape : drawableShapes ) {
+            drawableShape.draw(graphics);
+        }
     }
 
     /**
      * setup() initializes JavaFX components of the GUI
      */
     public void setup() {
-        //main tab pane setup
+        this.drawableShapes = new ArrayList<>();
+
+        this.mainPane = new BorderPane();
         this.mainTabPane = new TabPane();
         mainTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         Tab rosterTab = new Tab("Rooster");
@@ -83,6 +88,9 @@ public class MainScene extends Application {
         mainTabPane.getTabs().addAll(rosterTab, rosterInputTab, simulationTab);
         rosterTab.setContent(mainPane);
         rosterInputTab.setContent(new RosterInputScene().rosterInputScene());
+
+        //numbers are hard coded because i couldnt get screenwidth, screenHeigt to work
+        this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1850, 900 , 75, 75 ), new PopUpScene(), Color.CYAN, new Stage(), screenWidth, screenHeight));
 
 
     }
@@ -134,6 +142,12 @@ public class MainScene extends Application {
 
     public void onMousePressed(MouseEvent e){
         RectangleLogics.rectangleClicked(e);
+
+        for ( DrawableShape shape : drawableShapes ) {
+            if ( shape.getShape().contains(e.getX(), e.getY()) ){
+                shape.update();
+            }
+        }
 
 
     }
