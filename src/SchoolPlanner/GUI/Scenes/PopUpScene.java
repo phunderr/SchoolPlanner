@@ -14,8 +14,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -93,9 +91,9 @@ public class PopUpScene {
             File teacherFile = fileReader.readTextFile("src/TextFile/Docent.txt");
             File subjectFile = fileReader.readTextFile("src/TextFile/Subject.txt");
 
-            Set<String> classes = readFile(classfile);
-            Set<String> teachers = readFile(teacherFile);
-            Set<String> subjects = readFile(subjectFile);
+            Set<String> classes = fileReader.readFile(classfile);
+            Set<String> teachers = fileReader.readFile(teacherFile);
+            Set<String> subjects = fileReader.readFile(subjectFile);
 
             classroomComboBox.setItems(FXCollections.observableArrayList(classes));
             teacherComboBox.setItems(FXCollections.observableArrayList(teachers));
@@ -110,21 +108,4 @@ public class PopUpScene {
 
     }
 
-
-    /**
-     *readfile reads a file and set the content to a set
-     * @param file text file that contains data
-     * @return  a set of strings containig the data of the file
-     * @throws IOException throws this if the exception the file cannot be read
-     */
-    public Set<String> readFile(File file)throws IOException{
-        Scanner scanner = new Scanner(file);
-        StringBuilder stringBuilder = new StringBuilder();
-        Set<String> data = new HashSet<>();
-
-        while(scanner.hasNextLine()){
-            data.add(scanner.nextLine());
-        }
-        return data;
-    }
 }

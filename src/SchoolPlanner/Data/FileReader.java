@@ -1,8 +1,12 @@
 package SchoolPlanner.Data;
 import java.io.*;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
-public class FileReader {
+public class
+
+FileReader {
 //    private File path;
 
 
@@ -54,6 +58,23 @@ public class FileReader {
      *
      */
     public void writeTextFIle(){}
+
+    /**
+     *readfile reads a file and set the content to a set
+     * @param file text file that contains data
+     * @return  a set of strings containig the data of the file
+     * @throws IOException throws this if the exception the file cannot be read
+     */
+    public Set<String> readFile(File file)throws IOException{
+        Scanner scanner = new Scanner(file);
+        StringBuilder stringBuilder = new StringBuilder();
+        Set<String> data = new HashSet<>();
+
+        while(scanner.hasNextLine()){
+            data.add(scanner.nextLine());
+        }
+        return data;
+    }
 
 
 }
