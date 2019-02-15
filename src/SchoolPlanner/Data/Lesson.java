@@ -4,12 +4,14 @@ public class Lesson {
     private String subject;
     private String teacher;
     private LessonPeriod lessonPeriod;
-    private Class aClass;
+    private String aClass;
+    private Classroom classroom;
 
-    public Lesson(String subject, String teacher, LessonPeriod lessonPeriod) {
+    public Lesson(String subject, String teacher, LessonPeriod lessonPeriod, Classroom classroom) {
         this.subject = subject;
         this.teacher = teacher;
         this.lessonPeriod = lessonPeriod;
+        this.classroom = classroom;
     }
 
     public String getSubject() {
@@ -36,11 +38,19 @@ public class Lesson {
         this.lessonPeriod = lessonPeriod;
     }
 
-    public Class getaClass () {
+    public String getaClass () {
         return aClass;
     }
 
-    public void setaClass (Class aClass) {
+    public void setaClass (String aClass) {
         this.aClass = aClass;
+    }
+
+    public Classroom getClassroom () {
+        return classroom;
+    }
+
+    public void setClassroom (Classroom classroom) {
+        this.classroom = classroom;
     }
 }

@@ -1,4 +1,5 @@
 package SchoolPlanner.Data;
+
 import java.io.*;
 import java.util.HashSet;
 import java.util.Scanner;
