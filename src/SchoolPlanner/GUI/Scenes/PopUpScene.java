@@ -5,6 +5,7 @@ import SchoolPlanner.Data.FileReader;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -27,7 +28,9 @@ public class PopUpScene {
     private ComboBox teacherComboBox;
     private ComboBox classroomComboBox;
     private ComboBox<String> subjectComboBox;
-    private ComboBox timestampComboBox;
+    private ComboBox timeFromComboBox;
+    private ComboBox timeToComboBox;
+    private Button submitButton;
     private FileReader fileReader;
 
     public void generatePopUp (Stage stage) {
@@ -44,14 +47,22 @@ public class PopUpScene {
         classroomLabel.setMinWidth(100);
         Label courseLabel = new Label("Subject:");
         courseLabel.setMinWidth(100);
-        Label timestampLabel = new Label("Timestamp:");
-        timestampLabel.setMinWidth(100);
+        Label timeFromLabel = new Label("Start Time:");
+        timeFromLabel.setMinWidth(100);
+        Label timeToLabel = new Label("End Time:");
+        timeToLabel.setMinWidth(100);
         HBox hBoxComboBox = new HBox();
 
         this.teacherComboBox = new ComboBox();
+        this.teacherComboBox.setMinSize(200,10);
         this.classroomComboBox = new ComboBox();
+        this.classroomComboBox.setMinSize(200,10);
         this.subjectComboBox = new ComboBox<>();
-        this.timestampComboBox = new ComboBox();
+        this.subjectComboBox.setMinSize(200,10);
+        this.timeFromComboBox = new ComboBox();
+        this.timeFromComboBox.setMinSize(200,10);
+        this.timeToComboBox = new ComboBox();
+        this.timeToComboBox.setMinSize(200,10);
 
         HBox teacher = new HBox();
         teacher.getChildren().addAll(teacherLabel, teacherComboBox);
@@ -62,11 +73,16 @@ public class PopUpScene {
         HBox subject = new HBox();
         subject.getChildren().addAll(courseLabel, subjectComboBox);
 
-        HBox timestamp = new HBox();
-        timestamp.getChildren().addAll(timestampLabel, timestampComboBox);
+        HBox timeFrom= new HBox();
+        timeFrom.getChildren().addAll(timeFromLabel, timeFromComboBox);
+
+        HBox timeTo= new HBox();
+        timeTo.getChildren().addAll(timeToLabel, timeToComboBox);
+
+        this.submitButton = new Button("Submit");
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(teacher, classroom, subject, timestamp);
+        vBox.getChildren().addAll(teacher, classroom, subject, timeFrom,timeTo,submitButton);
         vBox.getChildren().addAll(hBoxLabel, hBoxComboBox);
 
         BorderPane borderPane = new BorderPane();
