@@ -4,7 +4,10 @@ import SchoolPlanner.GUI.Scenes.PopUpScene;
 import javafx.stage.Stage;
 import java.awt.*;
 
-
+/**
+ * Makes a small button that gives a pop up when clicked on
+ * @Autor Pascal Holthuijsen
+ */
 public class LessonButton implements DrawableShape {
 
     private Shape shape;
@@ -12,6 +15,7 @@ public class LessonButton implements DrawableShape {
     private Color color;
     private Stage stage;
     private double height, width;
+    private boolean isCLicked;
 
     public LessonButton (Shape shape, PopUpScene popUp, Color color, Stage stage, double screenWidth, double screenHeight) {
         this.shape = shape;
@@ -23,6 +27,14 @@ public class LessonButton implements DrawableShape {
     }
 
     @Override
+    public void setClicked(boolean isCLicked){
+        this.isCLicked = isCLicked;
+    }
+
+    @Override
+    public boolean isClicked(){
+        return isCLicked;
+    }
     public Shape getShape () {
         return shape;
     }
@@ -35,7 +47,10 @@ public class LessonButton implements DrawableShape {
     }
 
     @Override
-    public void update () {
-        popUp.generatePopUp(stage);
+    public void update (double x, double y) {
+        if ( shape.contains(x, y) ) {
+            popUp.generatePopUp(stage);
+            this.isCLicked = true;
+        }
     }
 }

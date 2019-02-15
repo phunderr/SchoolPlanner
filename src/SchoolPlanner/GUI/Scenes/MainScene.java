@@ -21,6 +21,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+
 public class MainScene extends Application {
 
     private BorderPane mainPane;
@@ -142,14 +143,27 @@ public class MainScene extends Application {
 
     public void onMousePressed(MouseEvent e){
         RectangleLogics.rectangleClicked(e);
-
         for ( DrawableShape shape : drawableShapes ) {
-            if ( shape.getShape().contains(e.getX(), e.getY()) ){
-                shape.update();
+            if ( shape.isClicked() ){
+                break;
+                // if a block is already being dragged it wont set an other value to true to avoid clipping of shapes
+            }
+            shape.update(e.getX(), e.getY());
+        }
+    }
+
+    public void onMouseReleased(MouseEvent e){
+        for ( DrawableShape shape : drawableShapes ) {
+            shape.setClicked(false);
+        }
+    }
+
+    public void onMouseDragged(MouseEvent e){
+        for ( DrawableShape shape : drawableShapes ) {
+            if ( shape.isClicked() ){
+                shape.update(e.getX(), e.getY());
             }
         }
-
-
     }
 
 

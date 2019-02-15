@@ -5,9 +5,11 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-public class
-
-FileReader {
+/**
+ * Reads and writes text and object files
+ * @Autor Pascal Holthuijsen & luke Taylor
+ */
+public class FileReader {
 //    private File path;
 
 
