@@ -39,6 +39,8 @@ public class RosterInputScene {
 //        TextField startTimeTxt = new TextField();
 //        TextField endTimeTxt = new TextField();
 
+
+        //todo: Adding Action evens to be able to add data
 //        button.setOnAction(event -> {
 //            if(!teachertxt.getText().contains("")){
 //
