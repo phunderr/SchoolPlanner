@@ -83,8 +83,8 @@ public class MainScene extends Application {
         this.mainPane = new BorderPane();
         this.mainTabPane = new TabPane();
         mainTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-        Tab rosterTab = new Tab("Rooster");
-        Tab rosterInputTab = new Tab("Rooster Input");
+        Tab rosterTab = new Tab("Roster");
+        Tab rosterInputTab = new Tab("Roster Input");
         Tab simulationTab = new Tab("Simulation");
         mainTabPane.getTabs().addAll(rosterTab, rosterInputTab, simulationTab);
         rosterTab.setContent(mainPane);
