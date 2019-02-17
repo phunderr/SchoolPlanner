@@ -89,28 +89,32 @@ public class FileReader {
 
     }
 
-    //TODO: RemoveFormFile
+
 
     public void removeFromFile(String pathName, String removeFile) throws IOException{
         FileInputStream fis = new FileInputStream(pathName);
-        FileOutputStream fos = new FileOutputStream(pathName, true);
+
         Scanner reader = new Scanner(fis);
+        StringBuilder dataKept = new StringBuilder();
 
-        String remove = "";
+        while(reader.hasNextLine()){
+            String data = reader.nextLine().trim();
 
-        String data = reader.nextLine();
-
-        if(data.equals(removeFile)){
-            remove = remove.replaceAll(data, "yo mama");
-            fos.write(remove.getBytes());
-            fos.close();
-        } else if(reader.hasNextLine()){
-            reader.nextLine();
-        } else {
-            System.out.println("This file does not have the requested data or is empty");
+            if ( !data.equals(removeFile) ){
+                dataKept.append(data).append("\n");
+            }
         }
 
+        FileWriter fl = new FileWriter(pathName);
+        fl.write("");
+        FileOutputStream out = new FileOutputStream(pathName);
+        out.write(dataKept.toString().trim().getBytes());
+        fl.close();
+        out.close();
+        fis.close();
     }
+
+
 
 
 }
