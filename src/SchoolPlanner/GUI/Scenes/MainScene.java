@@ -79,7 +79,7 @@ public class MainScene extends Application {
 
 
         //draws button + rosterblock
-        LessonButton ls = new LessonButton(new Ellipse2D.Double(1850, 900 , 75, 75 ), new PopUpScene(), Color.CYAN, new Stage(), screenWidth, screenHeight);
+        LessonButton ls = new LessonButton(new Ellipse2D.Double(1840, 915 , 75, 75 ), popUpScene, Color.CYAN, new Stage(), screenWidth, screenHeight);
         ls.draw(graphics);
         for ( DrawableShape drawableShape : drawableShapes ) {
             drawableShape.draw(graphics);
@@ -107,11 +107,7 @@ public class MainScene extends Application {
         mainTabPane.getTabs().addAll(rosterTab, rosterInputTab, simulationTab);
         rosterTab.setContent(mainPane);
         rosterInputTab.setContent(new RosterInputScene().rosterInputScene());
-
-
-        //numbers are hard coded because i couldnt get screenwidth, screenHeigt to work
-        this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1840, 915 , 75, 75 ), popUpScene, Color.CYAN, new Stage(), screenWidth, screenHeight));
-
+        
         //creates a plus sign path in the clickable circle on the bottom right
         GeneralPath path = new GeneralPath();
         path.moveTo(1840+33, 915+16.5);
