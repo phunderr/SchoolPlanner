@@ -110,7 +110,7 @@ public class MainScene extends Application {
 
 
         //numbers are hard coded because i couldnt get screenwidth, screenHeigt to work
-        this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1840, 915 , 75, 75 ), new PopUpScene(), Color.CYAN, new Stage(), screenWidth, screenHeight));
+        this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1840, 915 , 75, 75 ), popUpScene, Color.CYAN, new Stage(), screenWidth, screenHeight));
 
         //creates a plus sign path in the clickable circle on the bottom right
         GeneralPath path = new GeneralPath();
