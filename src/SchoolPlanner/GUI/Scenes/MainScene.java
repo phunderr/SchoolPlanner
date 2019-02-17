@@ -13,14 +13,14 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 import javafx.stage.Stage;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Arc2D;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 import java.util.ArrayList;
 
 
@@ -35,6 +35,7 @@ public class MainScene extends Application {
     private ArrayList<DrawableShape> drawableShapes;
     private DrawableShape ds;
     private PopUpScene popUpScene;
+    private GeneralPath plusSymbolPath;
 
 
     public void start(Stage primaryStage){
@@ -83,6 +84,10 @@ public class MainScene extends Application {
         for ( DrawableShape drawableShape : drawableShapes ) {
             drawableShape.draw(graphics);
         }
+
+        //draws the plus sign
+        graphics.setColor(Color.black);
+        graphics.fill(plusSymbolPath);
     }
 
 
@@ -105,8 +110,24 @@ public class MainScene extends Application {
 
 
         //numbers are hard coded because i couldnt get screenwidth, screenHeigt to work
-        this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1850, 900 , 75, 75 ), popUpScene, Color.CYAN, new Stage(), screenWidth, screenHeight));
+        this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1840, 915 , 75, 75 ), new PopUpScene(), Color.CYAN, new Stage(), screenWidth, screenHeight));
 
+        //creates a plus sign path in the clickable circle on the bottom right
+        GeneralPath path = new GeneralPath();
+        path.moveTo(1840+33, 915+16.5);
+        path.lineTo(1840+42,915+16.5);
+        path.lineTo(1840+42,930+16.5);
+        path.lineTo(1840+42+15,930+16.5);
+        path.lineTo(1840+42+15,939+16.5);
+        path.lineTo(1840+42,939+16.5);
+        path.lineTo(1840+42,939+15+16.5);
+        path.lineTo(1840+33,939+15+16.5);
+        path.lineTo(1840+33,939+16.5);
+        path.lineTo(1840+33-15,939+16.5);
+        path.lineTo(1840+33-15,939-9+16.5);
+        path.lineTo(1840+33,939-9+16.5);
+        path.closePath();
+        this.plusSymbolPath = path;
 
     }
 
