@@ -76,6 +76,7 @@ public class RosterInputScene {
 
                 }
             }
+            System.out.println(classroomTxt.getHeight());
         });
 
 
@@ -102,6 +103,8 @@ public class RosterInputScene {
         borderPane.setLeft(vBox1);
         borderPane.setCenter(vBox2);
         borderPane.setRight(button);
+
+
 
         return borderPane;
 
