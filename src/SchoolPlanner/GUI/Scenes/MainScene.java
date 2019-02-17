@@ -1,6 +1,7 @@
 package SchoolPlanner.GUI.Scenes;
 
 
+import SchoolPlanner.Data.FileReader;
 import SchoolPlanner.Data.Lesson;
 import SchoolPlanner.GUI.Logics.LessonButton;
 import SchoolPlanner.GUI.Logics.DrawableShape;
@@ -22,7 +23,12 @@ import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 import java.awt.*;
 import java.awt.geom.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 
 public class MainScene extends Application {
@@ -38,6 +44,8 @@ public class MainScene extends Application {
     private PopUpScene popUpScene;
     private GeneralPath plusSymbolPath;
     private static ArrayList<Lesson> lessons;
+    private ArrayList<LessonRectangle> lessonRectangles;
+    private ArrayList<String> classesList;
 
 
     public void start(Stage primaryStage){
@@ -72,9 +80,7 @@ public class MainScene extends Application {
         graphics.clearRect(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
 
         //draws the roster
-        int amountOfClasses = 2;
-        drawGrid(graphics, amountOfClasses);
-        drawTimeGrid(graphics);
+        drawClasses(graphics);
 
 
         //draws button + rosterblock
@@ -90,7 +96,7 @@ public class MainScene extends Application {
 
         if(!lessons.isEmpty()){
             for (Lesson lesson:lessons) {
-                LessonRectangle rect = new LessonRectangle(lesson,RectangleLogics.getRectangleIndex(0));
+                LessonRectangle rect = new LessonRectangle(lesson,RectangleLogics.getRectangleIndex(classesList.indexOf(lesson.getaClass())));
                 rect.draw(graphics);
             }
         }
@@ -100,6 +106,7 @@ public class MainScene extends Application {
      * setup() initializes JavaFX components of the GUI
      */
     public void setup() {
+        this.lessonRectangles = new ArrayList<>();
         this.lessons = new ArrayList<>();
         this.drawableShapes = new ArrayList<>();
         this.popUpScene = new PopUpScene();
@@ -133,6 +140,27 @@ public class MainScene extends Application {
         path.closePath();
         this.plusSymbolPath = path;
 
+    }
+
+    public void drawClasses(FXGraphics2D graphics){
+        try {
+            java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.PLAIN, 30);
+            FileReader fileReader = new FileReader();
+            File classfile = fileReader.readTextFile("src/TextFile/Classes.txt");
+            Set<String> classes = fileReader.readFile(classfile);
+            classesList = new ArrayList<>(classes);
+            Collections.sort(classesList);
+            int amountOfClasses = classesList.size();
+            drawGrid(graphics, amountOfClasses);
+            drawTimeGrid(graphics);
+            for (int i = 0; i < amountOfClasses; i++) {
+                Shape shape = font.createGlyphVector(graphics.getFontRenderContext(), classesList.get(i)).getOutline();
+                graphics.fill(AffineTransform.getTranslateInstance((getClickableRectangleList().get(i).getWidth()) / 2 + getClickableRectangleList().get(i).getX(), 50).createTransformedShape(shape));
+            }
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -189,6 +217,11 @@ public class MainScene extends Application {
     //event handelers
     public void onMousePressed(MouseEvent e){
         RectangleLogics.rectangleClicked(e);
+        if(RectangleLogics.rectangleClicked(e).contains(e.getX(),e.getY())){
+
+        }
+
+
         for ( DrawableShape shape : drawableShapes ) {
             if ( shape.isClicked() ) {
                 ds = shape;

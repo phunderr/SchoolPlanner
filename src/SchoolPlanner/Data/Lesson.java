@@ -7,11 +7,12 @@ public class Lesson {
     private String aClass;
     private Classroom classroom;
 
-    public Lesson(String subject, String teacher, LessonPeriod lessonPeriod, Classroom classroom) {
+    public Lesson(String subject, String teacher, LessonPeriod lessonPeriod, Classroom classroom, String aClass) {
         this.subject = subject;
         this.teacher = teacher;
         this.lessonPeriod = lessonPeriod;
         this.classroom = classroom;
+        this.aClass = aClass;
     }
 
     public String getSubject() {

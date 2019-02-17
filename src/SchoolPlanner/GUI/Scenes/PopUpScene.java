@@ -89,19 +89,19 @@ public class PopUpScene {
         timeTo.getChildren().addAll(timeToLabel, timeToComboBox);
 
         HBox classes = new HBox();
-        timeTo.getChildren().addAll(classLabel, classComboBox);
+        classes.getChildren().addAll(classLabel, classComboBox);
 
         this.submitButton = new Button("Submit");
         submitButton.setOnAction(event -> {
             Lesson lesson = new Lesson(subjectComboBox.getValue(),teacherComboBox.getValue().toString(),
                     new LessonPeriod(timeFromComboBox.getValue().toString(),timeToComboBox.getValue().toString()),
-                    new Classroom(classroomComboBox.getValue().toString()));
+                    new Classroom(classroomComboBox.getValue().toString()),classComboBox.getValue().toString());
             MainScene.addLesson(lesson);
             stage.close();
         });
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(teacher,classes, classroom, subject, timeFrom,timeTo,submitButton);
+        vBox.getChildren().addAll(classes,teacher, classroom, subject, timeFrom,timeTo,submitButton);
         vBox.getChildren().addAll(hBoxLabel, hBoxComboBox);
 
         BorderPane borderPane = new BorderPane();
@@ -142,7 +142,7 @@ public class PopUpScene {
             subjectComboBox.setItems(FXCollections.observableArrayList(subjects));
             timeFromComboBox.setItems(FXCollections.observableArrayList(sortedTimeList));
             timeToComboBox.setItems(FXCollections.observableArrayList(sortedTimeList));
-            timeToComboBox.setItems(FXCollections.observableArrayList(classes));
+            classComboBox.setItems(FXCollections.observableArrayList(classes));
 
 
 

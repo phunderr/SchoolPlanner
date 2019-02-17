@@ -68,8 +68,6 @@ public class LessonRectangle implements DrawableShape {
 
     @Override
     public void draw(Graphics2D g) {
-
-
         int Y = 0;
         int height = 0;
         int scale = 30;
@@ -112,12 +110,6 @@ public class LessonRectangle implements DrawableShape {
 
     @Override
     public void update(double x, double y) {
-
-
-
-
-
-
 //        if (shape.contains(x, y)) {
 //            double dx = previousPoint.getX() - x;
 //            double dy = previousPoint.getY() - y;
@@ -158,6 +150,7 @@ public class LessonRectangle implements DrawableShape {
 //
 //        }
     }
+
 
     @Override
     public boolean isClicked() {
