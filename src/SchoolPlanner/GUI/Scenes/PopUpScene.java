@@ -34,6 +34,7 @@ public class PopUpScene {
     private ComboBox<String> subjectComboBox;
     private ComboBox timeFromComboBox;
     private ComboBox timeToComboBox;
+    private ComboBox classComboBox;
     private Button submitButton;
     private FileReader fileReader;
 
@@ -55,6 +56,8 @@ public class PopUpScene {
         timeFromLabel.setMinWidth(100);
         Label timeToLabel = new Label("End Time:");
         timeToLabel.setMinWidth(100);
+        Label classLabel = new Label("Classes:");
+        classLabel.setMinWidth(100);
         HBox hBoxComboBox = new HBox();
 
         this.teacherComboBox = new ComboBox();
@@ -67,6 +70,8 @@ public class PopUpScene {
         this.timeFromComboBox.setMinSize(200,10);
         this.timeToComboBox = new ComboBox();
         this.timeToComboBox.setMinSize(200,10);
+        this.classComboBox = new ComboBox();
+        this.classComboBox.setMinSize(200,10);
 
         HBox teacher = new HBox();
         teacher.getChildren().addAll(teacherLabel, teacherComboBox);
@@ -77,11 +82,14 @@ public class PopUpScene {
         HBox subject = new HBox();
         subject.getChildren().addAll(courseLabel, subjectComboBox);
 
-        HBox timeFrom= new HBox();
+        HBox timeFrom = new HBox();
         timeFrom.getChildren().addAll(timeFromLabel, timeFromComboBox);
 
-        HBox timeTo= new HBox();
+        HBox timeTo = new HBox();
         timeTo.getChildren().addAll(timeToLabel, timeToComboBox);
+
+        HBox classes = new HBox();
+        timeTo.getChildren().addAll(classLabel, classComboBox);
 
         this.submitButton = new Button("Submit");
         submitButton.setOnAction(event -> {
@@ -93,7 +101,7 @@ public class PopUpScene {
         });
 
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(teacher, classroom, subject, timeFrom,timeTo,submitButton);
+        vBox.getChildren().addAll(teacher,classes, classroom, subject, timeFrom,timeTo,submitButton);
         vBox.getChildren().addAll(hBoxLabel, hBoxComboBox);
 
         BorderPane borderPane = new BorderPane();
@@ -114,24 +122,27 @@ public class PopUpScene {
      */
     public void fillComboBoxes(){
         try {
-            File classfile = fileReader.readTextFile("src/TextFile/Classrooms.txt");
+            File classRoomFile = fileReader.readTextFile("src/TextFile/Classrooms.txt");
             File teacherFile = fileReader.readTextFile("src/TextFile/Docent.txt");
             File subjectFile = fileReader.readTextFile("src/TextFile/Subject.txt");
             File timesFile = fileReader.readTextFile("src/TextFile/Times.txt");
+            File classfile = fileReader.readTextFile("src/TextFile/Classes.txt");
 
-            Set<String> classes = fileReader.readFile(classfile);
+            Set<String> classrooms = fileReader.readFile(classRoomFile);
             Set<String> teachers = fileReader.readFile(teacherFile);
             Set<String> subjects = fileReader.readFile(subjectFile);
             Set<String> times = fileReader.readFile(timesFile);
+            Set<String> classes = fileReader.readFile(classfile);
 
             List<String> sortedTimeList = new ArrayList<>(times);
             Collections.sort(sortedTimeList);
 
-            classroomComboBox.setItems(FXCollections.observableArrayList(classes));
+            classroomComboBox.setItems(FXCollections.observableArrayList(classrooms));
             teacherComboBox.setItems(FXCollections.observableArrayList(teachers));
             subjectComboBox.setItems(FXCollections.observableArrayList(subjects));
             timeFromComboBox.setItems(FXCollections.observableArrayList(sortedTimeList));
             timeToComboBox.setItems(FXCollections.observableArrayList(sortedTimeList));
+            timeToComboBox.setItems(FXCollections.observableArrayList(classes));
 
 
 

@@ -165,7 +165,7 @@ public class MainScene extends Application {
     public void drawGrid(FXGraphics2D graphics, int amountOfClasses) {
         clickableRectangeList = new ArrayList<>();
         int currentX;
-        int currentY = 0;
+        int currentY;
         for (int j = 1; j < 11; j++) {
             currentY = (int) (j * (screenHeight / 12));
             for (int i = 1; i < amountOfClasses + 1; i++) {
