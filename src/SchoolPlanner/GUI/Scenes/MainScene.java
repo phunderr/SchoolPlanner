@@ -81,6 +81,7 @@ public class MainScene extends Application {
         int amountOfClasses = 2;
         drawGrid(graphics, amountOfClasses);
         drawTimeGrid(graphics);
+        drawClasses(graphics);
 
 
         //draws button + rosterblock
