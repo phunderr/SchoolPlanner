@@ -29,9 +29,12 @@ public class RosterInputScene {
         BorderPane borderPane = new BorderPane();
         VBox vBox1 = new VBox();
         VBox vBox2 = new VBox();
+        VBox vBox3 = new VBox();
         Button button = new Button("Send");
+        Button delete = new Button("Delete");
 
-        button.setFont(new Font(105));
+        button.setFont(new Font(70));
+        delete.setFont(new Font(70));
 
         Label teacher = new Label("Teacher: ");
         Label lesson = new Label("Subject: ");
@@ -78,6 +81,40 @@ public class RosterInputScene {
             }
         });
 
+        delete.setOnAction(event -> {
+            if(!teacherTxt.getText().equals("")){
+                try {
+                    fr.removeFromFile("src/TextFile/Docent.txt", teacherTxt.getText().trim());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(!lessonTxt.getText().equals("")){
+                try {
+                    fr.removeFromFile("src/TextFile/Subject.txt", lessonTxt.getText().trim());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(!classroomTxt.getText().equals("")){
+                try {
+                    fr.removeFromFile("src/TextFile/Classrooms.txt", classroomTxt.getText().trim());
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+            }
+            if(!classTextfield.getText().equals("")){
+                try {
+                    fr.removeFromFile("src/TextFile/Classes.txt", classTextfield.getText().trim());
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+            }
+
+        });
+
 
 
 
@@ -93,15 +130,19 @@ public class RosterInputScene {
         classTextfield.setFont(new Font(35));
 //        endTimeTxt.setFont(new Font(35));
 
+        button.setMinWidth(365);
+        delete.setMinWidth(365);
+
         vBox1.getChildren().addAll(teacher, lesson, classroom, aClass);
 //        vBox1.getChildren().addAll(teacher, lesson, classroom,startTime,endTime);
         vBox1.setPadding(new Insets(0,0,0,10));
         vBox2.getChildren().addAll(teacherTxt, lessonTxt, classroomTxt, classTextfield);
 //        vBox2.getChildren().addAll(teacherTxt, lessonTxt, classroomTxt,startTimeTxt,endTimeTxt);
+        vBox3.getChildren().addAll(button, delete);
 
         borderPane.setLeft(vBox1);
         borderPane.setCenter(vBox2);
-        borderPane.setRight(button);
+        borderPane.setRight(vBox3);
 
         return borderPane;
 
