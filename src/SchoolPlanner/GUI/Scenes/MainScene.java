@@ -179,29 +179,7 @@ public class MainScene extends Application {
         }
         graphics.drawLine(0, (11 * (int) screenHeight / 12), (int) screenWidth, (11 * (int) screenHeight / 12));
     }
-
-    public void drawClasses(FXGraphics2D graphics){
-        try {
-            java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.PLAIN, 30);
-            FileReader fileReader = new FileReader();
-            File classfile = fileReader.readTextFile("src/TextFile/Classes.txt");
-            Set<String> classes = fileReader.readFile(classfile);
-            List<String> classesList = new ArrayList<>(classes);
-            Collections.sort(classesList);
-            int amountOfClasses = classesList.size();
-            drawGrid(graphics, amountOfClasses);
-            drawTimeGrid(graphics);
-            for (int i = 0; i < amountOfClasses; i++) {
-                Shape shape = font.createGlyphVector(graphics.getFontRenderContext(), classesList.get(i)).getOutline();
-                graphics.fill(AffineTransform.getTranslateInstance((getClickableRectangleList().get(i).getWidth()) / 2 + getClickableRectangleList().get(i).getX(), 50).createTransformedShape(shape));
-            }
-
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-
+    
     /**
      * drawGrid() draws main grid with rectangles which are saved in attribute "clickableRectangleList"
      * @param graphics
