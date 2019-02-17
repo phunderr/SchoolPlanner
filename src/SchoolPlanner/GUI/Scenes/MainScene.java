@@ -50,7 +50,7 @@ public class MainScene extends Application {
     private boolean removeState = false;
 
 
-    public void start(Stage primaryStage){
+    public void start(Stage primaryStage) {
         setup();
         primaryStage.setMaximized(true);
         this.canvas = new ResizableCanvas(this::draw, mainPane);
@@ -77,12 +77,12 @@ public class MainScene extends Application {
         canvas.setOnMouseMoved(this::onMouseMoved);
 
 
-
 //      new PopUpScene().generatePopUp(new Stage());
     }
 
     /**
      * draw draws the GUI components on the canvas
+     *
      * @param graphics
      */
     public void draw(FXGraphics2D graphics) {
@@ -96,13 +96,13 @@ public class MainScene extends Application {
         drawClasses(graphics);
 
         AffineTransform tx = new AffineTransform();
-        tx.translate(14,912);
+        tx.translate(14, 912);
         tx.scale(0.16f, 0.16f);
         graphics.drawImage(image, tx, null);
         //draws button + rosterblock
-        LessonButton ls = new LessonButton(new Ellipse2D.Double(1840, 915 , 75, 75 ), popUpScene, Color.GREEN, new Stage(), screenWidth, screenHeight);
+        LessonButton ls = new LessonButton(new Ellipse2D.Double(1840, 915, 75, 75), popUpScene, Color.GREEN, new Stage(), screenWidth, screenHeight);
         ls.draw(graphics);
-        for ( DrawableShape drawableShape : drawableShapes ) {
+        for (DrawableShape drawableShape : drawableShapes) {
             drawableShape.draw(graphics);
         }
 
@@ -110,9 +110,9 @@ public class MainScene extends Application {
         graphics.setColor(Color.black);
         graphics.fill(plusSymbolPath);
 
-        if(!lessons.isEmpty()){
-            for (Lesson lesson:lessons) {
-                LessonRectangle rect = new LessonRectangle(lesson,RectangleLogics.getRectangleIndex(classesList.indexOf(lesson.getaClass())));
+        if (!lessons.isEmpty()) {
+            for (Lesson lesson : lessons) {
+                LessonRectangle rect = new LessonRectangle(lesson, RectangleLogics.getRectangleIndex(classesList.indexOf(lesson.getaClass())));
                 rect.draw(graphics);
             }
         }
@@ -137,28 +137,28 @@ public class MainScene extends Application {
         rosterInputTab.setContent(new RosterInputScene().rosterInputScene());
 
 
-        this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1840,915,75,75), popUpScene, Color.green, new Stage(), screenWidth,screenHeight));
+        this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1840, 915, 75, 75), popUpScene, Color.green, new Stage(), screenWidth, screenHeight));
 
         //creates a plus sign path in the clickable circle on the bottom right
         GeneralPath path = new GeneralPath();
-        path.moveTo(1840+33, 915+16.5);
-        path.lineTo(1840+42,915+16.5);
-        path.lineTo(1840+42,930+16.5);
-        path.lineTo(1840+42+15,930+16.5);
-        path.lineTo(1840+42+15,939+16.5);
-        path.lineTo(1840+42,939+16.5);
-        path.lineTo(1840+42,939+15+16.5);
-        path.lineTo(1840+33,939+15+16.5);
-        path.lineTo(1840+33,939+16.5);
-        path.lineTo(1840+33-15,939+16.5);
-        path.lineTo(1840+33-15,939-9+16.5);
-        path.lineTo(1840+33,939-9+16.5);
+        path.moveTo(1840 + 33, 915 + 16.5);
+        path.lineTo(1840 + 42, 915 + 16.5);
+        path.lineTo(1840 + 42, 930 + 16.5);
+        path.lineTo(1840 + 42 + 15, 930 + 16.5);
+        path.lineTo(1840 + 42 + 15, 939 + 16.5);
+        path.lineTo(1840 + 42, 939 + 16.5);
+        path.lineTo(1840 + 42, 939 + 15 + 16.5);
+        path.lineTo(1840 + 33, 939 + 15 + 16.5);
+        path.lineTo(1840 + 33, 939 + 16.5);
+        path.lineTo(1840 + 33 - 15, 939 + 16.5);
+        path.lineTo(1840 + 33 - 15, 939 - 9 + 16.5);
+        path.lineTo(1840 + 33, 939 - 9 + 16.5);
         path.closePath();
         this.plusSymbolPath = path;
 
     }
 
-    public void drawClasses(FXGraphics2D graphics){
+    public void drawClasses(FXGraphics2D graphics) {
         try {
             java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.PLAIN, 30);
             FileReader fileReader = new FileReader();
@@ -171,16 +171,17 @@ public class MainScene extends Application {
             drawTimeGrid(graphics);
             for (int i = 0; i < amountOfClasses; i++) {
                 Shape shape = font.createGlyphVector(graphics.getFontRenderContext(), classesList.get(i)).getOutline();
-                graphics.fill(AffineTransform.getTranslateInstance((getClickableRectangleList().get(i).getWidth()) / 2 + getClickableRectangleList().get(i).getX()-30, 50).createTransformedShape(shape));
+                graphics.fill(AffineTransform.getTranslateInstance((getClickableRectangleList().get(i).getWidth()) / 2 + getClickableRectangleList().get(i).getX() - 30, 50).createTransformedShape(shape));
             }
 
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
      * drawTimeGrid() draws horizontal lines with time in the left column
+     *
      * @param graphics
      */
     public void drawTimeGrid(FXGraphics2D graphics) {
@@ -197,6 +198,7 @@ public class MainScene extends Application {
 
     /**
      * drawGrid() draws main grid with rectangles which are saved in attribute "clickableRectangleList"
+     *
      * @param graphics
      * @param amountOfClasses the amount of classes corresponds to the amount of columns
      */
@@ -209,7 +211,7 @@ public class MainScene extends Application {
             for (int i = 1; i < amountOfClasses + 1; i++) {
                 currentX = (int) (i * (screenWidth / (amountOfClasses + 1)));
                 graphics.setColor(Color.black);
-                graphics.drawLine(currentX,0,currentX,currentY);
+                graphics.drawLine(currentX, 0, currentX, currentY);
                 Rectangle2D.Double rectangle = new Rectangle2D.Double(currentX, currentY, screenWidth / (amountOfClasses + 1), screenHeight / 12);
                 graphics.draw(rectangle);
                 clickableRectangeList.add(rectangle);
@@ -222,56 +224,60 @@ public class MainScene extends Application {
         return clickableRectangeList;
     }
 
-    public static void addLesson(Lesson lesson){
-       lessons.add(lesson);
+    public static void addLesson(Lesson lesson) {
+        lessons.add(lesson);
     }
 
-    public static ArrayList<Lesson> getLessons(){
+    public static ArrayList<Lesson> getLessons() {
         return lessons;
     }
 
     //event handelers
 
-    public void onMouseMoved(MouseEvent e){
-       if(!removeState){
-           draw(new FXGraphics2D(canvas.getGraphicsContext2D()));
-       }
+    public void onMouseMoved(MouseEvent e) {
+        if (!removeState) {
+            draw(new FXGraphics2D(canvas.getGraphicsContext2D()));
+        }
     }
 
-    public void onMousePressed(MouseEvent e){
+    public void onMousePressed(MouseEvent e) {
         FXGraphics2D graphics = new FXGraphics2D(canvas.getGraphicsContext2D());
         RectangleLogics.rectangleClicked(e);
-        Rectangle bounds = new Rectangle(14, 912, (int)(image.getWidth()*0.16), (int)(image.getHeight()*0.16));
-        if (bounds.contains(new Point2D.Double(e.getX(),e.getY()))) {
-            removeState = true;
+        Rectangle bounds = new Rectangle(14, 912, (int) (image.getWidth() * 0.16), (int) (image.getHeight() * 0.16));
+        if (bounds.contains(new Point2D.Double(e.getX(), e.getY()))) {
+            if (removeState) {
+                removeState = !removeState;
+            } else {
+                removeState = true;
+            }
             java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.PLAIN, 30);
             Shape shape = font.createGlyphVector(graphics.getFontRenderContext(), "Click on a Lesson to remove").getOutline();
             graphics.fill(AffineTransform.getTranslateInstance(830, 960).createTransformedShape(shape));
             System.out.println("clik");
         }
-        for ( DrawableShape shape : drawableShapes ) {
-            if ( shape.isClicked() ) {
+        for (DrawableShape shape : drawableShapes) {
+            if (shape.isClicked()) {
                 ds = shape;
             }
-                shape.update(e.getX(), e.getY());
+            shape.update(e.getX(), e.getY());
 
         }
 
     }
 
-    public void onMouseReleased(MouseEvent e){
-        for ( DrawableShape shape : drawableShapes ) {
+    public void onMouseReleased(MouseEvent e) {
+        for (DrawableShape shape : drawableShapes) {
             shape.setClicked(false);
         }
     }
 
-    public void onMouseDragged(MouseEvent e){
+    public void onMouseDragged(MouseEvent e) {
 //        if(ds.isClicked()){
 //            ds.update(e.getX(), e.getY());
 //        }
     }
 
-    private void createLesson (ActionEvent actionEvent) {
+    private void createLesson(ActionEvent actionEvent) {
 //        drawableShapes.add(new LessonRectangle());
     }
 
