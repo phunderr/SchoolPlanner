@@ -69,8 +69,7 @@ public class LessonRectangle implements DrawableShape {
     @Override
     public void draw(Graphics2D g) {
         int Y = 0;
-        int height = 0;
-        int scale = 30;
+        int scale = 26;
         String firstTime = "";
         String endTime = "";
         for (String time : timeValues.keySet()) {
@@ -85,7 +84,7 @@ public class LessonRectangle implements DrawableShape {
         int firstNum = Integer.parseInt(firstTime.substring(0,firstTime.length()-3));
         int lastNum = Integer.parseInt(endTime.substring(0,endTime.length()-3));
         int difference = lastNum-firstNum;
-        height = difference * 83;
+        int height = difference * 83;
         int yTeacher = Y + 30;
         int ySubject = Y + 80;
         int yClassroom = Y + 130;
@@ -106,6 +105,11 @@ public class LessonRectangle implements DrawableShape {
         g.fill(AffineTransform.getTranslateInstance(rectangle.getX() + 10, yTeacher).createTransformedShape(shapeTeacher));
         g.fill(AffineTransform.getTranslateInstance(rectangle.getX() + 10, ySubject).createTransformedShape(shapeSubject));
         g.fill(AffineTransform.getTranslateInstance(rectangle.getX() + 10, yClassroom).createTransformedShape(shapeClassRoom));
+    }
+
+
+    public Shape getShape(){
+        return shape;
     }
 
     @Override
@@ -151,6 +155,9 @@ public class LessonRectangle implements DrawableShape {
 //        }
     }
 
+    public Lesson getLesson(){
+        return lesson;
+    }
 
     @Override
     public boolean isClicked() {

@@ -113,6 +113,7 @@ public class MainScene extends Application {
         if (!lessons.isEmpty()) {
             for (Lesson lesson : lessons) {
                 LessonRectangle rect = new LessonRectangle(lesson, RectangleLogics.getRectangleIndex(classesList.indexOf(lesson.getaClass())));
+                lessonRectangles.add(rect);
                 rect.draw(graphics);
             }
         }
@@ -245,16 +246,28 @@ public class MainScene extends Application {
         RectangleLogics.rectangleClicked(e);
         Rectangle bounds = new Rectangle(14, 912, (int) (image.getWidth() * 0.16), (int) (image.getHeight() * 0.16));
         if (bounds.contains(new Point2D.Double(e.getX(), e.getY()))) {
-            if (removeState) {
-                removeState = !removeState;
-            } else {
-                removeState = true;
-            }
+            removeState = true;
             java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.PLAIN, 30);
             Shape shape = font.createGlyphVector(graphics.getFontRenderContext(), "Click on a Lesson to remove").getOutline();
             graphics.fill(AffineTransform.getTranslateInstance(830, 960).createTransformedShape(shape));
             System.out.println("clik");
         }
+        if(removeState){
+            Point2D.Double mouseLocation = new Point2D.Double(e.getX(),e.getY());
+            for (LessonRectangle lessonRectangle:lessonRectangles) {
+                if(lessonRectangle.getShape().contains(mouseLocation)){
+                    Rectangle2D rect = lessonRectangle.getShape().getBounds2D();
+                    if(removeState) {
+                        lessons.remove(lessonRectangle.getLesson());
+                    }
+                    drawClasses(graphics);
+//                    graphics.clearRect((int)rect.getX(),(int)rect.getY(),(int)rect.getWidth(),(int)rect.getHeight());
+                    removeState = false;
+                }
+            }
+        }
+
+
         for (DrawableShape shape : drawableShapes) {
             if (shape.isClicked()) {
                 ds = shape;
