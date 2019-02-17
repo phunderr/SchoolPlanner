@@ -15,9 +15,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.RadialGradient;
-import javafx.scene.paint.Stop;
 import javafx.stage.Stage;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
@@ -31,7 +28,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 
@@ -70,6 +66,7 @@ public class MainScene extends Application {
         canvas.setOnMousePressed(this::onMousePressed);
         canvas.setOnMouseDragged(this::onMouseDragged);
         canvas.setOnMouseReleased(this::onMouseReleased);
+        canvas.setOnMouseMoved(e -> draw(new FXGraphics2D(canvas.getGraphicsContext2D())));
 //      popUpScene.getSubmitButton().setOnAction(this::createLesson);
         primaryStage.setScene(new Scene(mainTabPane));
         primaryStage.setTitle("Rooster Application");
@@ -277,4 +274,6 @@ public class MainScene extends Application {
     private void createLesson (ActionEvent actionEvent) {
 //        drawableShapes.add(new LessonRectangle());
     }
+
+
 }

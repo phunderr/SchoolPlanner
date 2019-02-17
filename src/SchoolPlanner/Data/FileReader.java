@@ -53,9 +53,6 @@ public class FileReader {
      */
     public File readTextFile(String pathName)throws IOException{
         File file = new File(pathName);
-
-
-
         return file;
     }
 

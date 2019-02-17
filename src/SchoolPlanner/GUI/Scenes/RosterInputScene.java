@@ -79,6 +79,7 @@ public class RosterInputScene {
 
                 }
             }
+            System.out.println(classroomTxt.getHeight());
         });
 
         delete.setOnAction(event -> {
@@ -143,6 +144,8 @@ public class RosterInputScene {
         borderPane.setLeft(vBox1);
         borderPane.setCenter(vBox2);
         borderPane.setRight(vBox3);
+
+
 
         return borderPane;
 
