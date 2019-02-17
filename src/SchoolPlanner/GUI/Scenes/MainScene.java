@@ -179,7 +179,7 @@ public class MainScene extends Application {
         }
         graphics.drawLine(0, (11 * (int) screenHeight / 12), (int) screenWidth, (11 * (int) screenHeight / 12));
     }
-    
+
     /**
      * drawGrid() draws main grid with rectangles which are saved in attribute "clickableRectangleList"
      * @param graphics

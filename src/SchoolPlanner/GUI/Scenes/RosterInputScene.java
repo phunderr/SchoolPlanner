@@ -90,7 +90,7 @@ public class RosterInputScene {
         teacherTxt.setFont(new Font(35));
         lessonTxt.setFont(new Font(35));
         classroomTxt.setFont(new Font(35));
-        classroom.setFont(new Font(35));
+        classTextfield.setFont(new Font(35));
 //        endTimeTxt.setFont(new Font(35));
 
         vBox1.getChildren().addAll(teacher, lesson, classroom, aClass);
