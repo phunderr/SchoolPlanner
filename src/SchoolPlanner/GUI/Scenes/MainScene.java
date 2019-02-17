@@ -1,6 +1,7 @@
 package SchoolPlanner.GUI.Scenes;
 
 
+import SchoolPlanner.Data.FileReader;
 import SchoolPlanner.Data.Lesson;
 import SchoolPlanner.GUI.Logics.LessonButton;
 import SchoolPlanner.GUI.Logics.DrawableShape;
@@ -21,8 +22,13 @@ import javafx.stage.Stage;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 import java.awt.*;
+import java.util.List;
 import java.awt.geom.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Set;
 
 
 public class MainScene extends Application {
@@ -154,8 +160,29 @@ public class MainScene extends Application {
             graphics.fill(AffineTransform.getTranslateInstance(10, distanceBetweenLines / 1.5 + (i * screenHeight / 12)).createTransformedShape(shape));
         }
         graphics.drawLine(0, (11 * (int) screenHeight / 12), (int) screenWidth, (11 * (int) screenHeight / 12));
-
     }
+
+    public void drawClasses(FXGraphics2D graphics){
+        try {
+            java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.PLAIN, 30);
+            FileReader fileReader = new FileReader();
+            File classfile = fileReader.readTextFile("src/TextFile/Classes.txt");
+            Set<String> classes = fileReader.readFile(classfile);
+            List<String> classesList = new ArrayList<>(classes);
+            Collections.sort(classesList);
+            int amountOfClasses = classesList.size();
+            drawGrid(graphics, amountOfClasses);
+            drawTimeGrid(graphics);
+            for (int i = 0; i < amountOfClasses; i++) {
+                Shape shape = font.createGlyphVector(graphics.getFontRenderContext(), classesList.get(i)).getOutline();
+                graphics.fill(AffineTransform.getTranslateInstance((getClickableRectangleList().get(i).getWidth()) / 2 + getClickableRectangleList().get(i).getX(), 50).createTransformedShape(shape));
+            }
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * drawGrid() draws main grid with rectangles which are saved in attribute "clickableRectangleList"
@@ -177,6 +204,7 @@ public class MainScene extends Application {
                 clickableRectangeList.add(rectangle);
             }
         }
+
     }
 
     public static ArrayList<Rectangle2D.Double> getClickableRectangleList() {

@@ -68,7 +68,6 @@ public class LessonRectangle implements DrawableShape {
 
     @Override
     public void draw(Graphics2D g) {
-        //TODO drawing the shape
 
         int Y = 0;
         int height = 0;
