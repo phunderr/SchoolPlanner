@@ -124,4 +124,8 @@ public class PopUpScene {
 
     }
 
+    public Button getSubmitButton(){
+        return submitButton;
+    }
+
 }

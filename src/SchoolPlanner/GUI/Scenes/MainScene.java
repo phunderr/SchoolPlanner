@@ -3,9 +3,11 @@ package SchoolPlanner.GUI.Scenes;
 
 import SchoolPlanner.GUI.Logics.LessonButton;
 import SchoolPlanner.GUI.Logics.DrawableShape;
+import SchoolPlanner.GUI.Logics.LessonRectangle;
 import SchoolPlanner.GUI.Logics.RectangleLogics;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -31,6 +33,8 @@ public class MainScene extends Application {
     private static ArrayList<Rectangle2D.Double> clickableRectangeList;
     private TabPane mainTabPane;
     private ArrayList<DrawableShape> drawableShapes;
+    private DrawableShape ds;
+    private PopUpScene popUpScene;
 
 
     public void start(Stage primaryStage){
@@ -45,6 +49,9 @@ public class MainScene extends Application {
 
         //primaryStage.setFullScreen(true);
         canvas.setOnMousePressed(this::onMousePressed);
+        canvas.setOnMouseDragged(this::onMouseDragged);
+        canvas.setOnMouseReleased(this::onMouseReleased);
+//        popUpScene.getSubmitButton().setOnAction(this::createLesson);
         primaryStage.setScene(new Scene(mainTabPane));
         primaryStage.setTitle("Rooster Application");
         primaryStage.show();
@@ -69,17 +76,23 @@ public class MainScene extends Application {
         drawGrid(graphics, amountOfClasses);
         drawTimeGrid(graphics);
 
+
+        //draws button + rosterblock
+        LessonButton ls = new LessonButton(new Ellipse2D.Double(1850, 900 , 75, 75 ), new PopUpScene(), Color.CYAN, new Stage(), screenWidth, screenHeight);
+        ls.draw(graphics);
         for ( DrawableShape drawableShape : drawableShapes ) {
             drawableShape.draw(graphics);
         }
     }
+
+
 
     /**
      * setup() initializes JavaFX components of the GUI
      */
     public void setup() {
         this.drawableShapes = new ArrayList<>();
-
+        this.popUpScene = new PopUpScene();
         this.mainPane = new BorderPane();
         this.mainTabPane = new TabPane();
         mainTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
@@ -90,8 +103,9 @@ public class MainScene extends Application {
         rosterTab.setContent(mainPane);
         rosterInputTab.setContent(new RosterInputScene().rosterInputScene());
 
+
         //numbers are hard coded because i couldnt get screenwidth, screenHeigt to work
-        this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1850, 900 , 75, 75 ), new PopUpScene(), Color.CYAN, new Stage(), screenWidth, screenHeight));
+        this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1850, 900 , 75, 75 ), popUpScene, Color.CYAN, new Stage(), screenWidth, screenHeight));
 
 
     }
@@ -108,8 +122,10 @@ public class MainScene extends Application {
             graphics.drawLine(0, (i * (int) screenHeight / 12), (int) screenWidth, (i * (int) screenHeight / 12));
             Shape shape = font.createGlyphVector(graphics.getFontRenderContext(), (i + 7) + ":00").getOutline();
             graphics.fill(AffineTransform.getTranslateInstance(10, distanceBetweenLines / 1.5 + (i * screenHeight / 12)).createTransformedShape(shape));
+            System.out.println(( i * (int) screenHeight / 12 ));
         }
         graphics.drawLine(0, (11 * (int) screenHeight / 12), (int) screenWidth, (11 * (int) screenHeight / 12));
+
     }
 
     /**
@@ -144,11 +160,11 @@ public class MainScene extends Application {
     public void onMousePressed(MouseEvent e){
         RectangleLogics.rectangleClicked(e);
         for ( DrawableShape shape : drawableShapes ) {
-            if ( shape.isClicked() ){
-                break;
-                // if a block is already being dragged it wont set an other value to true to avoid clipping of shapes
+            if ( shape.isClicked() ) {
+                ds = shape;
             }
-            shape.update(e.getX(), e.getY());
+                shape.update(e.getX(), e.getY());
+
         }
     }
 
@@ -159,11 +175,13 @@ public class MainScene extends Application {
     }
 
     public void onMouseDragged(MouseEvent e){
-        for ( DrawableShape shape : drawableShapes ) {
-            if ( shape.isClicked() ){
-                shape.update(e.getX(), e.getY());
-            }
+        if(ds.isClicked()){
+            ds.update(e.getX(), e.getY());
         }
+    }
+
+    private void createLesson (ActionEvent actionEvent) {
+        drawableShapes.add(new LessonRectangle());
     }
 
 
