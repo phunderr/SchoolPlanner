@@ -1,6 +1,8 @@
 package SchoolPlanner.Data;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -88,6 +90,27 @@ public class FileReader {
     }
 
     //TODO: RemoveFormFile
+
+    public void removeFromFile(String pathName, String removeFile) throws IOException{
+        FileInputStream fis = new FileInputStream(pathName);
+        FileOutputStream fos = new FileOutputStream(pathName, true);
+        Scanner reader = new Scanner(fis);
+
+        String remove = "";
+
+        String data = reader.nextLine();
+
+        if(data.equals(removeFile)){
+            remove = remove.replaceAll(data, "yo mama");
+            fos.write(remove.getBytes());
+            fos.close();
+        } else if(reader.hasNextLine()){
+            reader.nextLine();
+        } else {
+            System.out.println("This file does not have the requested data or is empty");
+        }
+
+    }
 
 
 }
