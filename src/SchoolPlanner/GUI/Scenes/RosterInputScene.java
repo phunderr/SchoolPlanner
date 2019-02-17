@@ -1,5 +1,6 @@
 package SchoolPlanner.GUI.Scenes;
 
+import SchoolPlanner.Data.FileReader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,13 +9,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+import java.io.IOException;
+
 
 /**
- * @Author Luke Taylor & Jelmer Surewaard
+ * @Author Luke Taylor & Jelmer Surewaard & Pascal Holthuijsen
  * creates the scene for "Roster Input" tab in the main application.
  */
 
 public class RosterInputScene {
+
+    private FileReader fr = new FileReader();
 
     /**
      * @return the RosterInput borderpane.
@@ -40,12 +45,32 @@ public class RosterInputScene {
 //        TextField endTimeTxt = new TextField();
 
 
-        //todo: Adding Action evens to be able to add data
-//        button.setOnAction(event -> {
-//            if(!teachertxt.getText().contains("")){
-//
-//            }
-//        });
+        button.setOnAction(event -> {
+            if(!teacherTxt.getText().equals("")){
+                try {
+                    fr.addToFile("src/TextFile/Docent.txt", teacherTxt.getText().trim());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(!lessonTxt.getText().equals("")){
+                try {
+                    fr.addToFile("src/TextFile/Subject.txt", lessonTxt.getText().trim());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(!classroomTxt.getText().equals("")){
+                try {
+                    fr.addToFile("src/TextFile/Classrooms.txt", classroomTxt.getText().trim());
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+            }
+        });
+
+
 
 
         teacher.setFont(new Font(50));

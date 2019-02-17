@@ -79,5 +79,15 @@ public class FileReader {
         return data;
     }
 
+    public void addToFile(String pathName, String message) throws IOException{
+        FileOutputStream fos = new FileOutputStream(pathName, true);
+        message = "\n" + message;
+        fos.write(message.getBytes());
+        fos.close();
+
+    }
+
+    //TODO: RemoveFormFile
+
 
 }
