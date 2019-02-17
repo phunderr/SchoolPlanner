@@ -1,6 +1,7 @@
 package SchoolPlanner.GUI.Scenes;
 
 
+import SchoolPlanner.Data.Lesson;
 import SchoolPlanner.GUI.Logics.LessonButton;
 import SchoolPlanner.GUI.Logics.DrawableShape;
 import SchoolPlanner.GUI.Logics.LessonRectangle;
@@ -36,6 +37,7 @@ public class MainScene extends Application {
     private DrawableShape ds;
     private PopUpScene popUpScene;
     private GeneralPath plusSymbolPath;
+    private static ArrayList<Lesson> lessons;
 
 
     public void start(Stage primaryStage){
@@ -88,6 +90,13 @@ public class MainScene extends Application {
         //draws the plus sign
         graphics.setColor(Color.black);
         graphics.fill(plusSymbolPath);
+
+        if(!lessons.isEmpty()){
+            for (Lesson lesson:lessons) {
+                LessonRectangle rect = new LessonRectangle(lesson,RectangleLogics.getRectangleIndex(0));
+                rect.draw(graphics);
+            }
+        }
     }
 
 
@@ -96,6 +105,7 @@ public class MainScene extends Application {
      * setup() initializes JavaFX components of the GUI
      */
     public void setup() {
+        this.lessons = new ArrayList<>();
         this.drawableShapes = new ArrayList<>();
         this.popUpScene = new PopUpScene();
         this.mainPane = new BorderPane();
@@ -107,7 +117,10 @@ public class MainScene extends Application {
         mainTabPane.getTabs().addAll(rosterTab, rosterInputTab, simulationTab);
         rosterTab.setContent(mainPane);
         rosterInputTab.setContent(new RosterInputScene().rosterInputScene());
-        
+
+
+        this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1840,915,75,75), popUpScene, Color.CYAN, new Stage(), screenWidth,screenHeight));
+
         //creates a plus sign path in the clickable circle on the bottom right
         GeneralPath path = new GeneralPath();
         path.moveTo(1840+33, 915+16.5);
@@ -139,7 +152,6 @@ public class MainScene extends Application {
             graphics.drawLine(0, (i * (int) screenHeight / 12), (int) screenWidth, (i * (int) screenHeight / 12));
             Shape shape = font.createGlyphVector(graphics.getFontRenderContext(), (i + 7) + ":00").getOutline();
             graphics.fill(AffineTransform.getTranslateInstance(10, distanceBetweenLines / 1.5 + (i * screenHeight / 12)).createTransformedShape(shape));
-            System.out.println(( i * (int) screenHeight / 12 ));
         }
         graphics.drawLine(0, (11 * (int) screenHeight / 12), (int) screenWidth, (11 * (int) screenHeight / 12));
 
@@ -171,9 +183,15 @@ public class MainScene extends Application {
         return clickableRectangeList;
     }
 
+    public static void addLesson(Lesson lesson){
+       lessons.add(lesson);
+    }
+
+    public static ArrayList<Lesson> getLessons(){
+        return lessons;
+    }
 
     //event handelers
-
     public void onMousePressed(MouseEvent e){
         RectangleLogics.rectangleClicked(e);
         for ( DrawableShape shape : drawableShapes ) {
@@ -183,6 +201,7 @@ public class MainScene extends Application {
                 shape.update(e.getX(), e.getY());
 
         }
+        draw(new FXGraphics2D(canvas.getGraphicsContext2D()));
     }
 
     public void onMouseReleased(MouseEvent e){
@@ -192,13 +211,13 @@ public class MainScene extends Application {
     }
 
     public void onMouseDragged(MouseEvent e){
-        if(ds.isClicked()){
-            ds.update(e.getX(), e.getY());
-        }
+//        if(ds.isClicked()){
+//            ds.update(e.getX(), e.getY());
+//        }
     }
 
     private void createLesson (ActionEvent actionEvent) {
-        drawableShapes.add(new LessonRectangle());
+//        drawableShapes.add(new LessonRectangle());
     }
 
 

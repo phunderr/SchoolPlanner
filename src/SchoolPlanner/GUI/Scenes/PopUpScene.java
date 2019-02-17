@@ -1,7 +1,11 @@
 package SchoolPlanner.GUI.Scenes;
 
+import SchoolPlanner.Data.Classroom;
 import SchoolPlanner.Data.FileReader;
 
+import SchoolPlanner.Data.Lesson;
+import SchoolPlanner.Data.LessonPeriod;
+import SchoolPlanner.GUI.Logics.LessonRectangle;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -15,10 +19,10 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Set;
+import java.util.*;
 
 /**
- * @Author Stijn van Berkel & Jelmer Surewaard & Pascal Holthuijsen
+ * @Author Stijn van Berkel & Jelmer Surewaard & Pascal Holthuijsen & Arno Nagtzaam
  * Creates a pop-up panel with 4 comboboxes containing:
  * teachers, classrooms, subjects, timestamps.
  */
@@ -80,6 +84,13 @@ public class PopUpScene {
         timeTo.getChildren().addAll(timeToLabel, timeToComboBox);
 
         this.submitButton = new Button("Submit");
+        submitButton.setOnAction(event -> {
+            Lesson lesson = new Lesson(subjectComboBox.getValue(),teacherComboBox.getValue().toString(),
+                    new LessonPeriod(timeFromComboBox.getValue().toString(),timeToComboBox.getValue().toString()),
+                    new Classroom(classroomComboBox.getValue().toString()));
+            MainScene.addLesson(lesson);
+            stage.close();
+        });
 
         VBox vBox = new VBox();
         vBox.getChildren().addAll(teacher, classroom, subject, timeFrom,timeTo,submitButton);
@@ -106,14 +117,21 @@ public class PopUpScene {
             File classfile = fileReader.readTextFile("src/TextFile/Classes.txt");
             File teacherFile = fileReader.readTextFile("src/TextFile/Docent.txt");
             File subjectFile = fileReader.readTextFile("src/TextFile/Subject.txt");
+            File timesFile = fileReader.readTextFile("src/TextFile/Times.txt");
 
             Set<String> classes = fileReader.readFile(classfile);
             Set<String> teachers = fileReader.readFile(teacherFile);
             Set<String> subjects = fileReader.readFile(subjectFile);
+            Set<String> times = fileReader.readFile(timesFile);
+
+            List<String> sortedTimeList = new ArrayList<>(times);
+            Collections.sort(sortedTimeList);
 
             classroomComboBox.setItems(FXCollections.observableArrayList(classes));
             teacherComboBox.setItems(FXCollections.observableArrayList(teachers));
             subjectComboBox.setItems(FXCollections.observableArrayList(subjects));
+            timeFromComboBox.setItems(FXCollections.observableArrayList(sortedTimeList));
+            timeToComboBox.setItems(FXCollections.observableArrayList(sortedTimeList));
 
 
 

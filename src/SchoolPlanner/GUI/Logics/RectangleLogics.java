@@ -9,14 +9,17 @@ import java.awt.geom.Rectangle2D;
 
 public class RectangleLogics {
 
-    public static void rectangleClicked(MouseEvent event){
+    public static Rectangle2D.Double rectangleClicked(MouseEvent event){
         Point2D clickedLocation = new Point2D.Double(event.getX(),event.getY());
         for (Rectangle2D.Double rectangle: MainScene.getClickableRectangleList()) {
             if(rectangle.contains(clickedLocation)){
-                System.out.println(MainScene.getClickableRectangleList().indexOf(rectangle));
-                
+                return rectangle;
             }
         }
+        return new Rectangle2D.Double(0,0,0,0);
+    }
 
+    public static Rectangle2D.Double getRectangleIndex(int index){
+        return MainScene.getClickableRectangleList().get(index);
     }
 }
