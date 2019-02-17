@@ -42,25 +42,22 @@ public class MainScene extends Application {
 
     public void start(Stage primaryStage){
         setup();
-
-
         primaryStage.setMaximized(true);
         this.canvas = new ResizableCanvas(this::draw, mainPane);
         mainPane.setCenter(canvas);
         draw(new FXGraphics2D(canvas.getGraphicsContext2D()));
-        //mainPane.setTop(placeClasses(classes));
-
-        //primaryStage.setFullScreen(true);
+//      mainPane.setTop(placeClasses(classes));
+//      primaryStage.setFullScreen(true);
         canvas.setOnMousePressed(this::onMousePressed);
         canvas.setOnMouseDragged(this::onMouseDragged);
         canvas.setOnMouseReleased(this::onMouseReleased);
-//        popUpScene.getSubmitButton().setOnAction(this::createLesson);
+//      popUpScene.getSubmitButton().setOnAction(this::createLesson);
         primaryStage.setScene(new Scene(mainTabPane));
         primaryStage.setTitle("Rooster Application");
         primaryStage.show();
+        primaryStage.setMaximized(true);
         primaryStage.setResizable(false);
-
-        //new PopUpScene().generatePopUp(new Stage());
+//      new PopUpScene().generatePopUp(new Stage());
     }
 
     /**
@@ -98,8 +95,6 @@ public class MainScene extends Application {
             }
         }
     }
-
-
 
     /**
      * setup() initializes JavaFX components of the GUI
@@ -219,12 +214,4 @@ public class MainScene extends Application {
     private void createLesson (ActionEvent actionEvent) {
 //        drawableShapes.add(new LessonRectangle());
     }
-
-
-
 }
-
-
-
-
-

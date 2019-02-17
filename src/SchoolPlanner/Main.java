@@ -10,7 +10,6 @@ import static javafx.application.Application.launch;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        FileReader fileReader = new FileReader();
-        fileReader.removeFromFile("src/TextFile/Docent.txt", "johan talboom");
+        launch(MainScene.class);
     }
 }
