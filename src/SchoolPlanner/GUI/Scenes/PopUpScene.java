@@ -114,7 +114,7 @@ public class PopUpScene {
      */
     public void fillComboBoxes(){
         try {
-            File classfile = fileReader.readTextFile("src/TextFile/Classes.txt");
+            File classfile = fileReader.readTextFile("src/TextFile/Classrooms.txt");
             File teacherFile = fileReader.readTextFile("src/TextFile/Docent.txt");
             File subjectFile = fileReader.readTextFile("src/TextFile/Subject.txt");
             File timesFile = fileReader.readTextFile("src/TextFile/Times.txt");

@@ -7,10 +7,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Makes a rectangle that contains lesson data
@@ -26,7 +23,7 @@ public class LessonRectangle implements DrawableShape {
     private boolean isReleased;
     private AffineTransform af;
     private Rectangle2D.Double rectangle;
-    HashMap<String, Integer> timeValues;
+    LinkedHashMap<String, Integer> timeValues;
 
     //Lesson info
     private Lesson lesson;
@@ -48,7 +45,7 @@ public class LessonRectangle implements DrawableShape {
     private Set<Double> XCoordinates;
 
     public LessonRectangle(Lesson lesson, Rectangle2D.Double rectangle) {
-        timeValues = new HashMap<>();
+        timeValues = new LinkedHashMap<>();
         XCoordinates = new HashSet<>();
         this.lesson = lesson;
         color = Color.blue;
@@ -76,18 +73,24 @@ public class LessonRectangle implements DrawableShape {
         int Y = 0;
         int height = 0;
         int scale = 30;
+        String firstTime = "";
+        String endTime = "";
         for (String time : timeValues.keySet()) {
             if (time.equals(lesson.getLessonPeriod().getLessonStartTime())) {
                 Y = timeValues.get(time);
+                firstTime = time;
             }
             if (time.equals(lesson.getLessonPeriod().getLessonEndTime())) {
-                height = timeValues.get(time) - 83;
+                endTime = time;
             }
         }
+        int firstNum = Integer.parseInt(firstTime.substring(0,firstTime.length()-3));
+        int lastNum = Integer.parseInt(endTime.substring(0,endTime.length()-3));
+        int difference = lastNum-firstNum;
+        height = difference * 83;
         int yTeacher = Y + 30;
         int ySubject = Y + 80;
         int yClassroom = Y + 130;
-
         if(height-Y <= 83){
             yTeacher -= 4;
             ySubject -= 29;
@@ -101,7 +104,7 @@ public class LessonRectangle implements DrawableShape {
         Shape shapeTeacher = font.createGlyphVector(g.getFontRenderContext(), "Teacher: " + lesson.getTeacher()).getOutline();
         Shape shapeSubject = font.createGlyphVector(g.getFontRenderContext(), "Subject: " + lesson.getSubject()).getOutline();
         Shape shapeClassRoom = font.createGlyphVector(g.getFontRenderContext(), "Classroom: " + lesson.getClassroom().getClassID()).getOutline();
-        g.setColor(color.BLACK);
+        g.setColor(Color.BLACK);
         g.fill(AffineTransform.getTranslateInstance(rectangle.getX() + 10, yTeacher).createTransformedShape(shapeTeacher));
         g.fill(AffineTransform.getTranslateInstance(rectangle.getX() + 10, ySubject).createTransformedShape(shapeSubject));
         g.fill(AffineTransform.getTranslateInstance(rectangle.getX() + 10, yClassroom).createTransformedShape(shapeClassRoom));
