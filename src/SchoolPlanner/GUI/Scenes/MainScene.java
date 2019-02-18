@@ -250,7 +250,6 @@ public class MainScene extends Application {
             java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.PLAIN, 30);
             Shape shape = font.createGlyphVector(graphics.getFontRenderContext(), "Click on a Lesson to remove").getOutline();
             graphics.fill(AffineTransform.getTranslateInstance(830, 960).createTransformedShape(shape));
-            System.out.println("clik");
         }
         if(removeState){
             Point2D.Double mouseLocation = new Point2D.Double(e.getX(),e.getY());

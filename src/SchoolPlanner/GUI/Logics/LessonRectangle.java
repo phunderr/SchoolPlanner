@@ -48,7 +48,7 @@ public class LessonRectangle implements DrawableShape {
         timeValues = new LinkedHashMap<>();
         XCoordinates = new HashSet<>();
         this.lesson = lesson;
-        color = Color.blue;
+        color = Color.cyan;
         this.rectangle = rectangle;
         for (int i = 1; i < 11; i++) {
             String time = "";
