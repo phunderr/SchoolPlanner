@@ -24,7 +24,7 @@ public class FileReader {
      * @throws Exception because we  use objectio
      */
 
-    public Object ReadObject(String path) throws Exception{
+    public Object readObject(String path) throws Exception{
         FileInputStream fis = new FileInputStream(path);
         ObjectInputStream ois = new ObjectInputStream(fis);
 
@@ -37,11 +37,12 @@ public class FileReader {
      * @throws Exception because we use objectio
      */
 
-    public void WriteObject(Object obj, String path)throws Exception{
+    public void writeObject(Object obj, String path)throws IOException{
         FileOutputStream fos = new FileOutputStream(path);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
 
         oos.writeObject(obj);
+        oos.close();
     }
 
     /**

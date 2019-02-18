@@ -1,5 +1,6 @@
 package SchoolPlanner.GUI.Scenes;
 
+import SchoolPlanner.Data.Classroom;
 import SchoolPlanner.Data.FileReader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -65,8 +66,11 @@ public class RosterInputScene {
             }
             if(!classroomTxt.getText().equals("")){
                 try {
-                    fr.addToFile("src/TextFile/Classrooms.txt", classroomTxt.getText().trim());
-                } catch (IOException e) {
+//                    fr.addToFile("src/TextFile/Classrooms.txt", classroomTxt.getText().trim());
+
+                    fr.writeObject(new Classroom(classroomTxt.getText().trim()), "C:\\Users\\Jelmer\\Documents\\GitKraken\\SchoolPlanner\\SchoolPlanner\\src\\TextFile\\Classrooms.dat");
+                    System.out.println(fr.readObject("C:\\Users\\Jelmer\\Documents\\GitKraken\\SchoolPlanner\\SchoolPlanner\\src\\TextFile\\Classrooms.dat"));
+                } catch (Exception e) {
                     e.printStackTrace();
 
                 }

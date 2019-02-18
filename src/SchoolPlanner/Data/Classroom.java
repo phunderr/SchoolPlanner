@@ -21,4 +21,9 @@ public class Classroom implements Serializable {
     public void setClassID(String classID) {
         this.classID = classID;
     }
+
+    @Override
+    public String toString() {
+        return classID;
+    }
 }

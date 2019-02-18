@@ -125,7 +125,6 @@ public class PopUpScene {
             /**
              *These paths are specific for Jelmer's computer.
              */
-
 //            File classRoomFile = fileReader.readTextFile("C:\\Users\\Jelmer\\Documents\\GitKraken\\SchoolPlanner\\SchoolPlanner\\src\\TextFile\\Classrooms.txt");
 //            File teacherFile = fileReader.readTextFile("C:\\Users\\Jelmer\\Documents\\GitKraken\\SchoolPlanner\\SchoolPlanner\\src\\TextFile\\Docent.txt");
 //            File subjectFile = fileReader.readTextFile("C:\\Users\\Jelmer\\Documents\\GitKraken\\SchoolPlanner\\SchoolPlanner\\src\\TextFile\\Subject.txt");
