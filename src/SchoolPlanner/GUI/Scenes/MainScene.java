@@ -60,7 +60,6 @@ public class MainScene extends Application {
             e.printStackTrace();
         }
         draw(new FXGraphics2D(canvas.getGraphicsContext2D()));
-//      mainPane.setTop(placeClasses(classes));
 //      primaryStage.setFullScreen(true);
         canvas.setOnMousePressed(this::onMousePressed);
         canvas.setOnMouseDragged(this::onMouseDragged);
@@ -162,9 +161,7 @@ public class MainScene extends Application {
         try {
             java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.PLAIN, 30);
             FileReader fileReader = new FileReader();
-            //Jelmer's specific path. Do not touch plz.
-//            File classfile = fileReader.readTextFile("C:\\Users\\Jelmer\\Documents\\GitKraken\\SchoolPlanner\\SchoolPlanner\\src\\TextFile\\Classes.txt");
-            File classfile = fileReader.readTextFile("TextFile/Classes.txt");
+            File classfile = fileReader.readTextFile("src/TextFile/Classes.txt");
             Set<String> classes = fileReader.readFile(classfile);
             classesList = new ArrayList<>(classes);
             Collections.sort(classesList);
@@ -202,7 +199,7 @@ public class MainScene extends Application {
      * drawGrid() draws main grid with rectangles which are saved in attribute "clickableRectangleList"
      *
      * @param graphics
-     * @param amountOfClasses the amount of classes corresponds to the amount of columns
+     * @param amountOfClasses the amount of className corresponds to the amount of columns
      */
     public void drawGrid(FXGraphics2D graphics, int amountOfClasses) {
         clickableRectangeList = new ArrayList<>();

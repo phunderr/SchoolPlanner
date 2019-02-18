@@ -1,11 +1,13 @@
 package SchoolPlanner.Data;
 
-public class Class {
+import java.io.Serializable;
+
+public class ClassName implements Serializable {
 
     private String name;
     private int numberOfStudents;
 
-    public Class(String name, int numberOfStudents) {
+    public ClassName(String name, int numberOfStudents) {
         this.name = name;
         this.numberOfStudents = numberOfStudents;
     }
@@ -28,7 +30,7 @@ public class Class {
 
     @Override
     public String toString() {
-        return "Class{" +
+        return "ClassName{" +
                 "name='" + name + '\'' +
                 ", numberOfStudents=" + numberOfStudents +
                 '}';

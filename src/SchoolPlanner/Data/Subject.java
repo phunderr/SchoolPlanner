@@ -1,6 +1,8 @@
 package SchoolPlanner.Data;
 
-public class Subject {
+import java.io.Serializable;
+
+public class Subject implements Serializable {
 
     private String name;
     private int popularity;
