@@ -22,7 +22,6 @@ import org.jfree.fx.ResizableCanvas;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.List;
 import java.awt.geom.*;
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +40,7 @@ public class MainScene extends Application {
     private TabPane mainTabPane;
     private ArrayList<DrawableShape> drawableShapes;
     private DrawableShape ds;
-    private PopUpScene popUpScene;
+    private AddLessonPopUpScene addLessonPopUpScene;
     private GeneralPath plusSymbolPath;
     private static ArrayList<Lesson> lessons;
     private ArrayList<LessonRectangle> lessonRectangles;
@@ -67,7 +66,7 @@ public class MainScene extends Application {
         canvas.setOnMouseDragged(this::onMouseDragged);
         canvas.setOnMouseReleased(this::onMouseReleased);
         canvas.setOnMouseMoved(e -> draw(new FXGraphics2D(canvas.getGraphicsContext2D())));
-//      popUpScene.getSubmitButton().setOnAction(this::createLesson);
+//      addLessonPopUpScene.getSubmitButton().setOnAction(this::createLesson);
         primaryStage.setScene(new Scene(mainTabPane));
         primaryStage.setTitle("Rooster Application");
         primaryStage.show();
@@ -77,7 +76,7 @@ public class MainScene extends Application {
         canvas.setOnMouseMoved(this::onMouseMoved);
 
 
-//      new PopUpScene().generatePopUp(new Stage());
+//      new AddLessonPopUpScene().generatePopUp(new Stage());
     }
 
     /**
@@ -100,7 +99,7 @@ public class MainScene extends Application {
         tx.scale(0.16f, 0.16f);
         graphics.drawImage(image, tx, null);
         //draws button + rosterblock
-        LessonButton ls = new LessonButton(new Ellipse2D.Double(1840, 915, 75, 75), popUpScene, Color.GREEN, new Stage(), screenWidth, screenHeight);
+        LessonButton ls = new LessonButton(new Ellipse2D.Double(1840, 915, 75, 75), addLessonPopUpScene, Color.GREEN, new Stage(), screenWidth, screenHeight);
         ls.draw(graphics);
         for (DrawableShape drawableShape : drawableShapes) {
             drawableShape.draw(graphics);
@@ -126,7 +125,7 @@ public class MainScene extends Application {
         this.lessonRectangles = new ArrayList<>();
         this.lessons = new ArrayList<>();
         this.drawableShapes = new ArrayList<>();
-        this.popUpScene = new PopUpScene();
+        this.addLessonPopUpScene = new AddLessonPopUpScene();
         this.mainPane = new BorderPane();
         this.mainTabPane = new TabPane();
         mainTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
@@ -138,7 +137,7 @@ public class MainScene extends Application {
         rosterInputTab.setContent(new RosterInputScene().rosterInputScene());
 
 
-        this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1840, 915, 75, 75), popUpScene, Color.green, new Stage(), screenWidth, screenHeight));
+        this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1840, 915, 75, 75), addLessonPopUpScene, Color.green, new Stage(), screenWidth, screenHeight));
 
         //creates a plus sign path in the clickable circle on the bottom right
         GeneralPath path = new GeneralPath();

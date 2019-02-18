@@ -27,7 +27,7 @@ import java.util.*;
  * teachers, classrooms, subjects, timestamps.
  */
 
-public class PopUpScene {
+public class AddLessonPopUpScene {
 
     private ComboBox teacherComboBox;
     private ComboBox classroomComboBox;
@@ -50,8 +50,8 @@ public class PopUpScene {
         teacherLabel.setMinWidth(100);
         Label classroomLabel = new Label("Classroom:");
         classroomLabel.setMinWidth(100);
-        Label courseLabel = new Label("Subject:");
-        courseLabel.setMinWidth(100);
+        Label subjectLabel = new Label("Subject:");
+        subjectLabel.setMinWidth(100);
         Label timeFromLabel = new Label("Start Time:");
         timeFromLabel.setMinWidth(100);
         Label timeToLabel = new Label("End Time:");
@@ -80,7 +80,7 @@ public class PopUpScene {
         classroom.getChildren().addAll(classroomLabel, classroomComboBox);
 
         HBox subject = new HBox();
-        subject.getChildren().addAll(courseLabel, subjectComboBox);
+        subject.getChildren().addAll(subjectLabel, subjectComboBox);
 
         HBox timeFrom = new HBox();
         timeFrom.getChildren().addAll(timeFromLabel, timeFromComboBox);

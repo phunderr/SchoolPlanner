@@ -1,6 +1,6 @@
 package SchoolPlanner.GUI.Logics;
 
-import SchoolPlanner.GUI.Scenes.PopUpScene;
+import SchoolPlanner.GUI.Scenes.AddLessonPopUpScene;
 import javafx.stage.Stage;
 import java.awt.*;
 
@@ -11,13 +11,13 @@ import java.awt.*;
 public class LessonButton implements DrawableShape {
 
     private Shape shape;
-    private PopUpScene popUp;
+    private AddLessonPopUpScene popUp;
     private Color color;
     private Stage stage;
     private double height, width;
     private boolean isCLicked;
 
-    public LessonButton (Shape shape, PopUpScene popUp, Color color, Stage stage, double screenWidth, double screenHeight) {
+    public LessonButton (Shape shape, AddLessonPopUpScene popUp, Color color, Stage stage, double screenWidth, double screenHeight) {
         this.shape = shape;
         this.popUp = popUp;
         this.color = color;
