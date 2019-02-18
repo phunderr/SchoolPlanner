@@ -122,11 +122,21 @@ public class PopUpScene {
      */
     public void fillComboBoxes(){
         try {
-            File classRoomFile = fileReader.readTextFile("src/TextFile/Classrooms.txt");
-            File teacherFile = fileReader.readTextFile("src/TextFile/Docent.txt");
-            File subjectFile = fileReader.readTextFile("src/TextFile/Subject.txt");
-            File timesFile = fileReader.readTextFile("src/TextFile/Times.txt");
-            File classfile = fileReader.readTextFile("src/TextFile/Classes.txt");
+            /**
+             *These paths are specific for Jelmer's computer.
+             */
+
+//            File classRoomFile = fileReader.readTextFile("C:\\Users\\Jelmer\\Documents\\GitKraken\\SchoolPlanner\\SchoolPlanner\\src\\TextFile\\Classrooms.txt");
+//            File teacherFile = fileReader.readTextFile("C:\\Users\\Jelmer\\Documents\\GitKraken\\SchoolPlanner\\SchoolPlanner\\src\\TextFile\\Docent.txt");
+//            File subjectFile = fileReader.readTextFile("C:\\Users\\Jelmer\\Documents\\GitKraken\\SchoolPlanner\\SchoolPlanner\\src\\TextFile\\Subject.txt");
+//            File timesFile = fileReader.readTextFile("C:\\Users\\Jelmer\\Documents\\GitKraken\\SchoolPlanner\\SchoolPlanner\\src\\TextFile\\Times.txt");
+//            File classfile = fileReader.readTextFile("C:\\Users\\Jelmer\\Documents\\GitKraken\\SchoolPlanner\\SchoolPlanner\\src\\TextFile\\Classes.txt");
+
+            File classRoomFile = fileReader.readTextFile("TextFile/Classrooms.txt");
+            File teacherFile = fileReader.readTextFile("TextFile/Docent.txt");
+            File subjectFile = fileReader.readTextFile("TextFile/Subject.txt");
+            File timesFile = fileReader.readTextFile("TextFile/Times.txt");
+            File classfile = fileReader.readTextFile("TextFile/Classes.txt");
 
             Set<String> classrooms = fileReader.readFile(classRoomFile);
             Set<String> teachers = fileReader.readFile(teacherFile);

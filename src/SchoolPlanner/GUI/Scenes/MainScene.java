@@ -163,7 +163,9 @@ public class MainScene extends Application {
         try {
             java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.PLAIN, 30);
             FileReader fileReader = new FileReader();
-            File classfile = fileReader.readTextFile("src/TextFile/Classes.txt");
+            //Jelmer's specific path. Do not touch plz.
+//            File classfile = fileReader.readTextFile("C:\\Users\\Jelmer\\Documents\\GitKraken\\SchoolPlanner\\SchoolPlanner\\src\\TextFile\\Classes.txt");
+            File classfile = fileReader.readTextFile("TextFile/Classes.txt");
             Set<String> classes = fileReader.readFile(classfile);
             classesList = new ArrayList<>(classes);
             Collections.sort(classesList);
