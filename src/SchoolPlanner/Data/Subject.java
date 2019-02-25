@@ -4,25 +4,26 @@ import java.io.Serializable;
 
 /**
  * @Author Jelmer Surewaard
- * Object Teacher that contains the Teachers and its Popularity
+ * Object Subject which contains the Subject and its Popularity
+ *
  */
-public class Teacher implements Serializable {
+public class Subject implements Serializable {
 
     private String name;
     private int popularity;
 
+    public Subject(String name, int popularity) {
 
-    public Teacher (String name, int popularity) {
         this.name = name;
         this.popularity = popularity;
     }
 
-    public int getPopularity () {
-        return popularity;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public int getPopularity() {
+        return popularity;
     }
 
     public void setName(String name) {
@@ -35,7 +36,7 @@ public class Teacher implements Serializable {
 
     @Override
     public String toString() {
-        return "Teacher{" +
+        return "Subject{" +
                 "name='" + name + '\'' +
                 ", popularity=" + popularity +
                 '}';

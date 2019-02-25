@@ -1,16 +1,15 @@
 package SchoolPlanner;
 
 import SchoolPlanner.Data.FileReader;
+import SchoolPlanner.GUI.Scenes.MainScene;
+
+import java.io.IOException;
+
+import static javafx.application.Application.launch;
 
 public class Main {
 
-    public static void main(String[] args) {
-        System.out.println("1 2 3, motherfucker yeah ~Jack black Playing the Sax-A-Boom~");
-        FileReader lol = new FileReader("src/TextFile/Docent.txt");
-        try {
-            lol.ReadFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) throws IOException {
+        launch(MainScene.class);
     }
 }

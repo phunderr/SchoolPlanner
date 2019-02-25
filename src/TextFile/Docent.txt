@@ -1,3 +1,2 @@
-johan talboom#male#2DGraphics#100
-etienne goosens#male#2DGraphics#90
-jessica van der heiden#female#OOM#0
+jessica van der heiden
+etienne goosens

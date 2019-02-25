@@ -1,15 +1,23 @@
 package SchoolPlanner.Data;
 
+
+/**
+ * @author Arno Nagtzaam
+ * An object lesson that contains a subject, teacher, lesson Period, aClass and a classroom
+ */
 public class Lesson {
     private String subject;
-    private Teacher teacher;
+    private String teacher;
     private LessonPeriod lessonPeriod;
-    private Class aClass;
+    private String aClass;
+    private Classroom classroom;
 
-    public Lesson(String subject, Teacher teacher, LessonPeriod lessonPeriod) {
+    public Lesson(String subject, String teacher, LessonPeriod lessonPeriod, Classroom classroom, String aClass) {
         this.subject = subject;
         this.teacher = teacher;
         this.lessonPeriod = lessonPeriod;
+        this.classroom = classroom;
+        this.aClass = aClass;
     }
 
     public String getSubject() {
@@ -20,11 +28,11 @@ public class Lesson {
         this.subject = subject;
     }
 
-    public Teacher getTeacher() {
+    public String getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
+    public void setTeacher(String teacher) {
         this.teacher = teacher;
     }
 
@@ -36,11 +44,19 @@ public class Lesson {
         this.lessonPeriod = lessonPeriod;
     }
 
-    public Class getaClass () {
+    public String getaClass () {
         return aClass;
     }
 
-    public void setaClass (Class aClass) {
+    public void setaClass (String aClass) {
         this.aClass = aClass;
+    }
+
+    public Classroom getClassroom () {
+        return classroom;
+    }
+
+    public void setClassroom (Classroom classroom) {
+        this.classroom = classroom;
     }
 }

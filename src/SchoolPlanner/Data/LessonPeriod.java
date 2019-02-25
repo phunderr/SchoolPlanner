@@ -1,29 +1,32 @@
 package SchoolPlanner.Data;
 
-import java.time.LocalDateTime;
 
+/**
+ * @Author Arno Nagtzaam
+ * Draws a PeriodBlock to mark the lessons
+ */
 public class LessonPeriod {
-    private LocalDateTime lessonStartTime;
-    private LocalDateTime lessonEndTime;
+    private String lessonStartTime;
+    private String lessonEndTime;
 
-    public LessonPeriod(LocalDateTime lessonStartTime, LocalDateTime lessonEndTime) {
+    public LessonPeriod(String lessonStartTime, String lessonEndTime) {
         this.lessonStartTime = lessonStartTime;
         this.lessonEndTime = lessonEndTime;
     }
 
-    public LocalDateTime getLessonStartTime() {
+    public String getLessonStartTime() {
         return lessonStartTime;
     }
 
-    public void setLessonStartTime(LocalDateTime lessonStartTime) {
+    public void setLessonStartTime(String lessonStartTime) {
         this.lessonStartTime = lessonStartTime;
     }
 
-    public LocalDateTime getLessonEndTime() {
+    public String getLessonEndTime() {
         return lessonEndTime;
     }
 
-    public void setLessonEndTime(LocalDateTime lessonEndTime) {
+    public void setLessonEndTime(String lessonEndTime) {
         this.lessonEndTime = lessonEndTime;
     }
 
