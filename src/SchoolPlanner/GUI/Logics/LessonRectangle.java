@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * Makes a rectangle that contains lesson data
  *
- * @Autor Pascal Holthuijsen & Arno Nagtzaam
+ * @Autor Arno Nagtzaam & Pascal Holthuijsen
  */
 public class LessonRectangle implements DrawableShape {
 
@@ -60,7 +60,6 @@ public class LessonRectangle implements DrawableShape {
             timeValues.put(time, 83 * i);
         }
     }
-
 
     public void addXCoordinates(Double x) {
         XCoordinates.add(x);
