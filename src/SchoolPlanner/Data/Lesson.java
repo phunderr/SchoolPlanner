@@ -1,5 +1,11 @@
 package SchoolPlanner.Data;
 
+
+/**
+ * @author ***
+ *
+ * An o
+ */
 public class Lesson {
     private String subject;
     private String teacher;

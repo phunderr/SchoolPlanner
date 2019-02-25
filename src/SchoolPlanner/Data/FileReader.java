@@ -1,8 +1,6 @@
 package SchoolPlanner.Data;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -12,11 +10,10 @@ import java.util.Set;
  * @Autor Pascal Holthuijsen & luke Taylor
  */
 public class FileReader {
-//    private File path;
+
 
 
     public FileReader(){
-//        this.path = new File(path);
     }
 
     /**
@@ -79,6 +76,13 @@ public class FileReader {
         return data;
     }
 
+
+    /**
+     * adds a message to the bottom of the file
+     * @param pathName the path name as a string
+     * @param message A text that gets added to the file at the bottom
+     * @throws IOException Throws an io exception if it cant find the file
+     */
     public void addToFile(String pathName, String message) throws IOException{
         FileOutputStream fos = new FileOutputStream(pathName, true);
         message = "\n" + message;
@@ -88,7 +92,12 @@ public class FileReader {
     }
 
 
-
+    /**
+     * removes a string from a file
+     * @param pathName the path name as a string
+     * @param removeFile if this string is in this file it gets removed
+     * @throws IOException Throws an io exception if it cant find the file
+     */
     public void removeFromFile(String pathName, String removeFile) throws IOException{
         FileInputStream fis = new FileInputStream(pathName);
 

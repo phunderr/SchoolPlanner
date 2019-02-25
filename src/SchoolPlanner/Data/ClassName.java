@@ -2,6 +2,11 @@ package SchoolPlanner.Data;
 
 import java.io.Serializable;
 
+/**
+ * @Author Jelmer Surewaard
+ * an object that contains a name and a size
+ */
+
 public class ClassName implements Serializable {
 
     private String name;
