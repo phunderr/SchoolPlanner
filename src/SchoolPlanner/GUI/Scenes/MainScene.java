@@ -48,7 +48,7 @@ public class MainScene extends Application {
     private BufferedImage image;
     private boolean removeState = false;
 
-
+    @Override
     public void start(Stage primaryStage) {
         setup();
         primaryStage.setMaximized(true);
@@ -157,6 +157,10 @@ public class MainScene extends Application {
 
     }
 
+    /**
+     * draws a new column for the class to add lessons
+     * @param graphics
+     */
     public void drawClasses(FXGraphics2D graphics) {
         try {
             java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.PLAIN, 30);
@@ -231,7 +235,7 @@ public class MainScene extends Application {
         return lessons;
     }
 
-    //event handelers
+    //event handlers
 
     public void onMouseMoved(MouseEvent e) {
         if (!removeState) {
@@ -239,6 +243,10 @@ public class MainScene extends Application {
         }
     }
 
+    /**
+     * Mouse event handler for deleting lessons
+     * @param e
+     */
     public void onMousePressed(MouseEvent e) {
         FXGraphics2D graphics = new FXGraphics2D(canvas.getGraphicsContext2D());
         RectangleLogics.rectangleClicked(e);
@@ -286,10 +294,4 @@ public class MainScene extends Application {
 //            ds.update(e.getX(), e.getY());
 //        }
     }
-
-    private void createLesson(ActionEvent actionEvent) {
-//        drawableShapes.add(new LessonRectangle());
-    }
-
-
 }
