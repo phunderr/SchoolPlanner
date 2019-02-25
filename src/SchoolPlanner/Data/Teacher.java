@@ -2,6 +2,10 @@ package SchoolPlanner.Data;
 
 import java.io.Serializable;
 
+/**
+ * @Author Jelmer Surewaard
+ * Object Teacher that contains the Teachers and its Popularity
+ */
 public class Teacher implements Serializable {
 
     private String name;

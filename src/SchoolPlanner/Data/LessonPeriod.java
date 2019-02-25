@@ -2,6 +2,10 @@ package SchoolPlanner.Data;
 
 import java.time.LocalDateTime;
 
+/**
+ * @Author Arno Nagtzaam
+ * Draws a PeriodBlock to mark the lessons
+ */
 public class LessonPeriod {
     private String lessonStartTime;
     private String lessonEndTime;

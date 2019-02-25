@@ -2,6 +2,11 @@ package SchoolPlanner.Data;
 
 import java.io.Serializable;
 
+/**
+ * @Author Jelmer Surewaard
+ * Object Subject which contains the Subject and its Popularity
+ *
+ */
 public class Subject implements Serializable {
 
     private String name;
