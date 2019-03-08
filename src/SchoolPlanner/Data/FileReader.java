@@ -18,7 +18,7 @@ public class FileReader {
 
     /**
      * ReadObject reads an object from the object stream.
-     * @throws Exception because we  use objectio
+     * @throws Exception because we use objectio
      */
 
     public Object readObject(String path) throws Exception{
