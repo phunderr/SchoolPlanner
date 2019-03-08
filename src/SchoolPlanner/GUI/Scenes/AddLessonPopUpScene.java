@@ -122,9 +122,6 @@ public class AddLessonPopUpScene {
      */
     public void fillComboBoxes(){
         try {
-            /**
-             *These paths are specific for Jelmer's computer.
-             */
             File classRoomFile = fileReader.readTextFile("src/TextFile/Classrooms.txt");
             File teacherFile = fileReader.readTextFile("src/TextFile/Docent.txt");
             File subjectFile = fileReader.readTextFile("src/TextFile/Subject.txt");
