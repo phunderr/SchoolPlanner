@@ -47,7 +47,7 @@ public class RosterInputScene {
 
         TableView tableView = new TableView();
 
-        File teacherFile = new File("src/TextFile/TeacherPathNames");
+        File teacherFile = new File("src/TextFile/TeacherPathNames.txt");
         try (Scanner scanner = new Scanner(teacherFile)) {
             scanner.nextLine();
                 while (scanner.hasNextLine()){
@@ -56,7 +56,7 @@ public class RosterInputScene {
             }
         } catch (Exception e) { e.printStackTrace(); }
 
-        File classNameFile = new File("src/TextFile/ClassnamePathNames");
+        File classNameFile = new File("src/TextFile/ClassnamePathNames.txt");
         try (Scanner scanner = new Scanner(classNameFile)) {
             scanner.nextLine();
             while (scanner.hasNextLine()){
@@ -65,7 +65,7 @@ public class RosterInputScene {
             }
         } catch (Exception e) { e.printStackTrace(); }
 
-        File classRoomFile = new File("src/TextFile/ClassroomPathNames");
+        File classRoomFile = new File("src/TextFile/ClassroomPathNames.txt");
         try (Scanner scanner = new Scanner(classRoomFile)) {
             scanner.nextLine();
             while (scanner.hasNextLine()){
@@ -74,7 +74,7 @@ public class RosterInputScene {
             }
         } catch (Exception e) { e.printStackTrace(); }
 
-        File subjectFile = new File("src/TextFile/SubjectPathNames");
+        File subjectFile = new File("src/TextFile/SubjectPathNames.txt");
         try (Scanner scanner = new Scanner(subjectFile)) {
             scanner.nextLine();
             while (scanner.hasNextLine()){
@@ -187,7 +187,7 @@ public class RosterInputScene {
                     int text = Integer.parseInt(popularityTextField.getText());
                     Teacher teacher = new Teacher(nameTextField.getText(), text);
                     fr.writeObject(teacher, "src/objectFile/teacher/" + nameTextField.getText() + ".dat");
-                    fr.addToFile("src/TextFile/TeacherPathNames", "src/objectFile/teacher/" + nameTextField.getText() + ".dat");
+                    fr.addToFile("src/TextFile/TeacherPathNames.txt", "src/objectFile/teacher/" + nameTextField.getText() + ".dat");
                     stage.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -224,7 +224,7 @@ public class RosterInputScene {
                     int text = Integer.parseInt(popularityTextField.getText());
                     Subject subject = new Subject(nameTextField.getText(), text);
                     fr.writeObject(subject, "src/objectFile/subject/" + nameTextField.getText() + ".dat");
-                    fr.addToFile("src/TextFile/SubjectPathNames", "src/objectFile/subject/" + nameTextField.getText() + ".dat");
+                    fr.addToFile("src/TextFile/SubjectPathNames.txt", "src/objectFile/subject/" + nameTextField.getText() + ".dat");
                     stage.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -262,7 +262,7 @@ public class RosterInputScene {
                         numberOfStudents = Integer.parseInt(numberOfStudentsTextField.getText());
                         ClassName className = new ClassName(nameTextField.getText(), numberOfStudents);
                         fr.writeObject(className, "src/objectFile/className/" + nameTextField.getText() + ".dat");
-                        fr.addToFile("src/TextFile/ClassnamePathNames", "src/objectFile/className/" + nameTextField.getText() + ".dat");
+                        fr.addToFile("src/TextFile/ClassnamePathNames.txt", "src/objectFile/className/" + nameTextField.getText() + ".dat");
                         classNameObservableList.add(className);
                         stage.close();
                     }
@@ -294,7 +294,7 @@ public class RosterInputScene {
                 try {
                     Classroom classroom = new Classroom(nameTextField.getText());
                     fr.writeObject(classroom, "src/objectFile/classroom/" + nameTextField.getText() + ".dat");
-                    fr.addToFile("src/TextFile/ClassroomPathNames", "src/objectFile/classroom/" + nameTextField.getText() + ".dat");
+                    fr.addToFile("src/TextFile/ClassroomPathNames.txt", "src/objectFile/classroom/" + nameTextField.getText() + ".dat");
                     classroomObservableList.add(classroom);
                     stage.close();
                 } catch (IOException e) {
