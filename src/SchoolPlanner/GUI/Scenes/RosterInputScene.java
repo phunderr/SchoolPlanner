@@ -45,12 +45,15 @@ public class RosterInputScene {
 
         BorderPane borderPane = new BorderPane();
 
-        TableView tableView = new TableView();
+        TableView teacherView = new TableView();
+        TableView classNameView = new TableView();
+        TableView classroomView = new TableView();
+        TableView subjectView = new TableView();
 
         File teacherFile = new File("src/TextFile/TeacherPathNames.txt");
         try (Scanner scanner = new Scanner(teacherFile)) {
             scanner.nextLine();
-                while (scanner.hasNextLine()){
+                while (scanner.hasNext()){
                     String path = scanner.nextLine();
                     teacherObservableList.add((Teacher) fr.readObject(path));
             }
@@ -59,7 +62,7 @@ public class RosterInputScene {
         File classNameFile = new File("src/TextFile/ClassnamePathNames.txt");
         try (Scanner scanner = new Scanner(classNameFile)) {
             scanner.nextLine();
-            while (scanner.hasNextLine()){
+            while (scanner.hasNext()){
                 String path = scanner.nextLine();
                 classNameObservableList.add((ClassName) fr.readObject(path));
             }
@@ -68,7 +71,7 @@ public class RosterInputScene {
         File classRoomFile = new File("src/TextFile/ClassroomPathNames.txt");
         try (Scanner scanner = new Scanner(classRoomFile)) {
             scanner.nextLine();
-            while (scanner.hasNextLine()){
+            while (scanner.hasNext()){
                 String path = scanner.nextLine();
                 classroomObservableList.add((Classroom) fr.readObject(path));
             }
@@ -77,51 +80,44 @@ public class RosterInputScene {
         File subjectFile = new File("src/TextFile/SubjectPathNames.txt");
         try (Scanner scanner = new Scanner(subjectFile)) {
             scanner.nextLine();
-            while (scanner.hasNextLine()){
+            while (scanner.hasNext()){
                 String path = scanner.nextLine();
                 subjectObservableList.add((Subject) fr.readObject(path));
             }
         } catch (Exception e) { e.printStackTrace(); }
 
-        TableColumn teacherCollumn = new TableColumn("Teacher");
         TableColumn teacherNamecollumn = new TableColumn("Name");
         teacherNamecollumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("name"));
         TableColumn teacherPopularityCollumn = new TableColumn("Popularity");
         teacherPopularityCollumn.setCellValueFactory(new PropertyValueFactory<Teacher, Integer>("popularity"));
-        teacherCollumn.getColumns().addAll(teacherNamecollumn, teacherPopularityCollumn);
+        teacherView.getColumns().addAll(teacherNamecollumn, teacherPopularityCollumn);
         teacherNamecollumn.setPrefWidth(125);
         teacherPopularityCollumn.setPrefWidth(125);
-        TableColumn subjectCollumn = new TableColumn("Subject");
         TableColumn subjectNameCollumn = new TableColumn("Name");
         subjectNameCollumn.setCellValueFactory(new PropertyValueFactory<Subject, String>("name"));
         TableColumn subjectPopularityCollumn = new TableColumn("Popularity");
         subjectPopularityCollumn.setCellValueFactory(new PropertyValueFactory<Subject, Integer>("popularity"));
-        subjectCollumn.getColumns().addAll(subjectNameCollumn, subjectPopularityCollumn);
+        subjectView.getColumns().addAll(subjectNameCollumn, subjectPopularityCollumn);
         subjectNameCollumn.setPrefWidth(125);
         subjectPopularityCollumn.setPrefWidth(125);
-        TableColumn classroomCollumn = new TableColumn("Classroom");
         TableColumn classroomNameCollumn = new TableColumn("Name");
-        classroomNameCollumn.setCellValueFactory(new PropertyValueFactory<ClassName, String>("name"));
-        classroomCollumn.getColumns().addAll(classroomNameCollumn);
+        classroomNameCollumn.setCellValueFactory(new PropertyValueFactory<Classroom, String>("classID"));
+        classroomView.getColumns().addAll(classroomNameCollumn);
         classroomNameCollumn.setPrefWidth(250);
-        TableColumn classCollumn = new TableColumn("ClassName");
         TableColumn classNameCollumn = new TableColumn("Name");
         classNameCollumn.setCellValueFactory(new PropertyValueFactory<ClassName, String>("name"));
         TableColumn classNumberOfStudents = new TableColumn("Number of students");
         classNumberOfStudents.setCellValueFactory(new PropertyValueFactory<ClassName, Integer>("numberOfStudents"));
-        classCollumn.getColumns().addAll(classNameCollumn, classNumberOfStudents);
+        classNameView.getColumns().addAll(classNameCollumn, classNumberOfStudents);
         classNameCollumn.setPrefWidth(125);
         classNumberOfStudents.setPrefWidth(125);
 
         //todo Textfile with pathnames
 
-        tableView.setItems(teacherObservableList);
-        tableView.setItems(subjectObservableList);
-        tableView.setItems(classNameObservableList);
-        tableView.setItems(classroomObservableList);
-
-        tableView.getColumns().addAll(teacherCollumn,subjectCollumn,classroomCollumn,classCollumn);
-        tableView.setMaxWidth(1000);
+        teacherView.setItems(teacherObservableList);
+        subjectView.setItems(subjectObservableList);
+        classNameView.setItems(classNameObservableList);
+        classroomView.setItems(classroomObservableList);
 
         Button addButton = new Button("ADD");
         addButton.setFont(new Font(60));
@@ -135,7 +131,39 @@ public class RosterInputScene {
         changeButton.setFont(new Font(60));
         changeButton.setPadding(new Insets(20,20,20,20));
 
-        borderPane.setCenter(tableView);
+        VBox teacherVBox = new VBox();
+        Label teacherLabel = new Label("Teachers");
+        teacherLabel.setFont(new Font("Ariel", 20));
+        teacherVBox.setSpacing(5);
+        teacherVBox.setPadding(new Insets(10, 0, 0, 10));
+        teacherVBox.getChildren().addAll(teacherLabel, teacherView);
+
+        VBox subjectVBox = new VBox();
+        Label subjectLabel = new Label("Subject");
+        subjectLabel.setFont(new Font("Ariel", 20));
+        subjectVBox.setSpacing(5);
+        subjectVBox.setPadding(new Insets(10, 0, 0, 10));
+        subjectVBox.getChildren().addAll(subjectLabel, subjectView);
+
+        VBox classnameVBox = new VBox();
+        Label classnameLabel = new Label("Class");
+        classnameLabel.setFont(new Font("Ariel", 20));
+        classnameVBox.setSpacing(5);
+        classnameVBox.setPadding(new Insets(10, 0, 0, 10));
+        classnameVBox.getChildren().addAll(classnameLabel, classNameView);
+
+        VBox classroomVBox = new VBox();
+        Label classroomLabel = new Label("Classroom");
+        classroomLabel.setFont(new Font("Ariel", 20));
+        classroomVBox.setSpacing(5);
+        classroomVBox.setPadding(new Insets(10, 0, 0, 10));
+        classroomVBox.getChildren().addAll(classroomLabel, classroomView);
+
+        HBox hBox = new HBox();
+
+        hBox.getChildren().addAll(teacherVBox, subjectVBox, classnameVBox, classroomVBox);
+
+        borderPane.setCenter(hBox);
         borderPane.setLeft(addButton);
         borderPane.setRight(changeButton);
 
