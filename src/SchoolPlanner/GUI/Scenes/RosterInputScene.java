@@ -1,6 +1,8 @@
 package SchoolPlanner.GUI.Scenes;
 
 import SchoolPlanner.Data.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -16,13 +18,17 @@ import java.io.IOException;
 
 
 /**
- * @Author Luke Taylor & Jelmer Surewaard & Pascal Holthuijsen
+ * @Author Luke Taylor & Jelmer Surewaard & Pascal Holthuijsen & Stijn van Berkel
  * creates the scene for "Roster Input" tab in the main application.
  */
 
 public class RosterInputScene {
 
     private FileReader fr = new FileReader();
+    private ObservableList<Teacher> teachersData = FXCollections.observableArrayList();
+    private ObservableList<ClassName> classNameData = FXCollections.observableArrayList();
+    private ObservableList<Classroom> classroomData = FXCollections.observableArrayList();
+    private ObservableList<Subject> subjectData = FXCollections.observableArrayList();
 
     /**
      * @return the RosterInput borderpane.
@@ -57,11 +63,12 @@ public class RosterInputScene {
         classNameCollumn.setPrefWidth(125);
         classNumberOfStudents.setPrefWidth(125);
 
+
         tableView.getColumns().addAll(teacherCollumn,subjectCollumn,classroomCollumn,classCollumn);
         tableView.setMaxWidth(1000);
 
         Button addButton = new Button("ADD");
-        addButton.setFont(new Font(100));
+        addButton.setFont(new Font(60));
         addButton.setPadding(new Insets(20,50,20,50));
 
         addButton.setOnAction(event -> {
@@ -69,7 +76,7 @@ public class RosterInputScene {
         });
 
         Button changeButton = new Button("CHANGE");
-        changeButton.setFont(new Font(100));
+        changeButton.setFont(new Font(60));
         changeButton.setPadding(new Insets(20,20,20,20));
 //
 
@@ -162,6 +169,7 @@ public class RosterInputScene {
                     Subject subject = new Subject(nameTextField.getText(), text);
                     fr.writeObject(subject, "src/objectFile/subject/" + nameTextField.getText() + ".dat");
                     stage.close();
+                    subjectData.add(subject);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
