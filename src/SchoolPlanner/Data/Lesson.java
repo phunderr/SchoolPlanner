@@ -2,9 +2,8 @@ package SchoolPlanner.Data;
 
 
 /**
- * @author ***
- *
- * An o
+ * @author Arno Nagtzaam
+ * An object lesson that contains a subject, teacher, lesson Period, aClass and a classroom
  */
 public class Lesson {
     private String subject;

@@ -1,6 +1,5 @@
 package SchoolPlanner.Data;
 
-import java.time.LocalDateTime;
 
 /**
  * @Author Arno Nagtzaam
