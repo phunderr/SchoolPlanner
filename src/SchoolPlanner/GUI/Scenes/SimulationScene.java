@@ -8,6 +8,9 @@ import org.jfree.fx.ResizableCanvas;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
+/**
+ * @Author Pascal Holthuijsen
+ */
 public class SimulationScene {
 
     private Graphics2D g;
