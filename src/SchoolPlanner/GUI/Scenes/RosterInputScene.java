@@ -30,19 +30,16 @@ import java.util.Set;
 public class RosterInputScene {
 
     private FileReader fr = new FileReader();
-    private ArrayList<Teacher> teachers = new ArrayList<>();
     private ObservableList<Teacher> teacherObservableList = FXCollections.observableArrayList();
     private ObservableList<ClassName> classNameObservableList = FXCollections.observableArrayList();
     private ObservableList<Subject> subjectObservableList = FXCollections.observableArrayList();
     private ObservableList<Classroom> classroomObservableList = FXCollections.observableArrayList();
-    private FileReader fileReader;
 
     /**
      * @return the RosterInput borderpane.
      */
 
     public BorderPane rosterInputScene(){
-        fileReader = new FileReader();
 
         BorderPane borderPane = new BorderPane();
 
@@ -153,7 +150,7 @@ public class RosterInputScene {
                     int text = Integer.parseInt(popularityTextField.getText());
                     Teacher teacher = new Teacher(nameTextField.getText(), text);
                     fr.writeObject(teacher, "src/objectFile/teacher/" + nameTextField.getText() + ".dat");
-                    fileReader.addToFile("src/TextFile/TeacherPathNames", "src/objectFile/teacher/" + nameTextField.getText() + ".dat");
+                    fr.addToFile("src/TextFile/TeacherPathNames", "src/objectFile/teacher/" + nameTextField.getText() + ".dat");
                     stage.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -192,7 +189,6 @@ public class RosterInputScene {
                     fr.writeObject(subject, "src/objectFile/subject/" + nameTextField.getText() + ".dat");
                     subjectObservableList.add(subject);
                     stage.close();
-                    subjectData.add(subject);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
