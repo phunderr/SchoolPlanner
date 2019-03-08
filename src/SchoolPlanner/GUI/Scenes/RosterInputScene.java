@@ -216,6 +216,7 @@ public class RosterInputScene {
                     Teacher teacher = new Teacher(nameTextField.getText(), text);
                     fr.writeObject(teacher, "src/objectFile/teacher/" + nameTextField.getText() + ".dat");
                     fr.addToFile("src/TextFile/TeacherPathNames.txt", "src/objectFile/teacher/" + nameTextField.getText() + ".dat");
+                    teacherObservableList.add((teacher));
                     stage.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -253,6 +254,7 @@ public class RosterInputScene {
                     Subject subject = new Subject(nameTextField.getText(), text);
                     fr.writeObject(subject, "src/objectFile/subject/" + nameTextField.getText() + ".dat");
                     fr.addToFile("src/TextFile/SubjectPathNames.txt", "src/objectFile/subject/" + nameTextField.getText() + ".dat");
+                    subjectObservableList.add(subject);
                     stage.close();
                 } catch (IOException e) {
                     e.printStackTrace();
