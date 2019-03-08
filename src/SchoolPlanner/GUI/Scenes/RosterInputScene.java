@@ -78,7 +78,6 @@ public class RosterInputScene {
         Button changeButton = new Button("CHANGE");
         changeButton.setFont(new Font(60));
         changeButton.setPadding(new Insets(20,20,20,20));
-//
 
         borderPane.setCenter(tableView);
         borderPane.setLeft(addButton);
