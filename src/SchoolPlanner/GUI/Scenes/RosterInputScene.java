@@ -23,7 +23,7 @@ import java.util.Set;
 
 
 /**
- * @Author Luke Taylor & Jelmer Surewaard & Pascal Holthuijsen
+ * @Author Luke Taylor & Jelmer Surewaard & Pascal Holthuijsen & Stijn van Berkel
  * creates the scene for "Roster Input" tab in the main application.
  */
 
@@ -90,7 +90,7 @@ public class RosterInputScene {
         tableView.setMaxWidth(1000);
 
         Button addButton = new Button("ADD");
-        addButton.setFont(new Font(100));
+        addButton.setFont(new Font(60));
         addButton.setPadding(new Insets(20,50,20,50));
 
         addButton.setOnAction(event -> {
@@ -98,9 +98,8 @@ public class RosterInputScene {
         });
 
         Button changeButton = new Button("CHANGE");
-        changeButton.setFont(new Font(100));
+        changeButton.setFont(new Font(60));
         changeButton.setPadding(new Insets(20,20,20,20));
-//
 
         borderPane.setCenter(tableView);
         borderPane.setLeft(addButton);
@@ -193,6 +192,7 @@ public class RosterInputScene {
                     fr.writeObject(subject, "src/objectFile/subject/" + nameTextField.getText() + ".dat");
                     subjectObservableList.add(subject);
                     stage.close();
+                    subjectData.add(subject);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

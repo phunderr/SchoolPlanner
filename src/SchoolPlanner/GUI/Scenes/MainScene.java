@@ -74,6 +74,7 @@ public class MainScene extends Application {
         canvas.setOnMouseMoved(this::onMouseMoved);
 
 
+
 //      new AddLessonPopUpScene().generatePopUp(new Stage());
     }
 
@@ -133,6 +134,7 @@ public class MainScene extends Application {
         mainTabPane.getTabs().addAll(rosterTab, rosterInputTab, simulationTab);
         rosterTab.setContent(mainPane);
         rosterInputTab.setContent(new RosterInputScene().rosterInputScene());
+        simulationTab.setContent(new SimulationScene().simulationScene());
 
 
         this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1840, 915, 75, 75), addLessonPopUpScene, Color.green, new Stage(), screenWidth, screenHeight));
@@ -289,8 +291,6 @@ public class MainScene extends Application {
     }
 
     public void onMouseDragged(MouseEvent e) {
-//        if(ds.isClicked()){
-//            ds.update(e.getX(), e.getY());
-//        }
+
     }
 }
