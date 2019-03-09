@@ -58,7 +58,7 @@ public class RosterInputScene {
 
         File teacherFile = new File("src/TextFile/TeacherPathNames.txt");
         try (Scanner scanner = new Scanner(teacherFile)) {
-            scanner.nextLine();
+//            scanner.nextLine();
                 while (scanner.hasNext()){
                     String path = scanner.nextLine();
                     teacherObservableList.add((Teacher) fr.readObject(path));
@@ -368,19 +368,15 @@ public class RosterInputScene {
         deleteButton.setOnAction(e -> {
             Teacher selectedTeacher = (Teacher) teacherView.getSelectionModel().getSelectedItem();
             if (selectedTeacher != null) {
-                File teacherPathNamesFile = new File("src/TextFile/TeacherPathNames.txt");
                 try {
-                    Scanner scanner = new Scanner(teacherPathNamesFile);
-                    while(scanner.hasNext()){
-                        if (scanner.nextLine().equals("src/objectFile/teacher/" + selectedTeacher + ".dat")){
-//                            scanner.
-                        }
-                    }
-                } catch (FileNotFoundException e1) {
+                    fr.removeFromFile("src/TextFile/TeacherPathNames.txt", "src/objectFile/teacher/" + selectedTeacher.getName() + ".dat");
+                } catch (IOException e1) {
                     e1.printStackTrace();
                 }
+                teacherObservableList.remove(selectedTeacher);
+                File deleteFile = new File("src/objectFile/teacher/" + selectedTeacher.getName() + ".dat");
+                deleteFile.delete();
 
-                    teacherObservableList.remove(selectedTeacher);
             }
         });
 
