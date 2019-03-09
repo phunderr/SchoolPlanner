@@ -36,6 +36,12 @@ public class RosterInputScene {
     private ObservableList<ClassName> classNameObservableList = FXCollections.observableArrayList();
     private ObservableList<Subject> subjectObservableList = FXCollections.observableArrayList();
     private ObservableList<Classroom> classroomObservableList = FXCollections.observableArrayList();
+    private TableView teacherView;
+    private TableView classNameView;
+    private TableView classroomView;
+    private TableView subjectView;
+    private Button changeButton;
+    private Button deleteButton;
 
     /**
      * @return the RosterInput borderpane.
@@ -45,10 +51,10 @@ public class RosterInputScene {
 
         BorderPane borderPane = new BorderPane();
 
-        TableView teacherView = new TableView();
-        TableView classNameView = new TableView();
-        TableView classroomView = new TableView();
-        TableView subjectView = new TableView();
+        this.teacherView = new TableView();
+        this.classNameView = new TableView();
+        this.classroomView = new TableView();
+        this.subjectView = new TableView();
 
         File teacherFile = new File("src/TextFile/TeacherPathNames.txt");
         try (Scanner scanner = new Scanner(teacherFile)) {
@@ -121,15 +127,30 @@ public class RosterInputScene {
 
         Button addButton = new Button("ADD");
         addButton.setFont(new Font(60));
-        addButton.setPadding(new Insets(20,50,20,50));
+        addButton.setMaxWidth(400);
+
+        this.changeButton = new Button("CHANGE");
+        changeButton.setFont(new Font(60));
+        changeButton.setMaxWidth(400);
+
+        this.deleteButton = new Button("DELETE");
+        deleteButton.setFont(new Font(60));
+        deleteButton.setMaxWidth(400);
+
+        VBox buttonVbox = new VBox();
+        buttonVbox.getChildren().addAll(addButton,changeButton,deleteButton);
 
         addButton.setOnAction(event -> {
             addButton();
         });
 
-        Button changeButton = new Button("CHANGE");
-        changeButton.setFont(new Font(60));
-        changeButton.setPadding(new Insets(20,20,20,20));
+        changeButton.setOnAction(event -> {
+            changeButton();
+        });
+
+        deleteButton.setOnAction(event -> {
+            deleteButton();
+        });
 
         VBox teacherVBox = new VBox();
         Label teacherLabel = new Label("Teachers");
@@ -164,8 +185,7 @@ public class RosterInputScene {
         hBox.getChildren().addAll(teacherVBox, subjectVBox, classnameVBox, classroomVBox);
 
         borderPane.setCenter(hBox);
-        borderPane.setLeft(addButton);
-        borderPane.setRight(changeButton);
+        borderPane.setLeft(buttonVbox);
 
         return borderPane;
     }
@@ -338,6 +358,32 @@ public class RosterInputScene {
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void changeButton(){
+
+    }
+
+    public void deleteButton(){
+        deleteButton.setOnAction(e -> {
+            Teacher selectedTeacher = (Teacher) teacherView.getSelectionModel().getSelectedItem();
+            if (selectedTeacher != null) {
+                File teacherPathNamesFile = new File("src/TextFile/TeacherPathNames.txt");
+                try {
+                    Scanner scanner = new Scanner(teacherPathNamesFile);
+                    while(scanner.hasNext()){
+                        if (scanner.nextLine().equals("src/objectFile/teacher/" + selectedTeacher + ".dat")){
+//                            scanner.
+                        }
+                    }
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+
+                    teacherObservableList.remove(selectedTeacher);
+            }
+        });
+
     }
 }
 
