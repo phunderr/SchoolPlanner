@@ -376,7 +376,39 @@ public class RosterInputScene {
                 teacherObservableList.remove(selectedTeacher);
                 File deleteFile = new File("src/objectFile/teacher/" + selectedTeacher.getName() + ".dat");
                 deleteFile.delete();
-
+            }
+            Subject selectedSubject = (Subject) subjectView.getSelectionModel().getSelectedItem();
+            if ( selectedSubject != null) {
+                try {
+                    fr.removeFromFile("src/TextFile/SubjectPathNames.txt", "src/objectFile/subject/" + selectedSubject.getName() + ".dat");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                subjectObservableList.remove(selectedSubject);
+                File deleteFile = new File("src/objectFile/Subject/" + selectedSubject.getName() + ".dat");
+                deleteFile.delete();
+            }
+            ClassName selectedClassName = (ClassName) classNameView.getSelectionModel().getSelectedItem();
+            if(selectedClassName != null){
+                try {
+                    fr.removeFromFile("src/TextFile/ClassnamePathNames.txt", "src/objectFile/className/" + selectedClassName.getName() + ".dat");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                classNameObservableList.remove(selectedClassName);
+                File deleteFile = new File("src/objectFile/className/" + selectedClassName.getName() + ".dat");
+                deleteFile.delete();
+            }
+            Classroom selectedClassroom = (Classroom) classroomView.getSelectionModel().getSelectedItem();
+            if( selectedClassroom != null){
+                try {
+                    fr.removeFromFile("src/TextFile/ClassroomPathNames.txt", "src/objectFile/classroom/" + selectedClassroom.getClassID() + ".dat");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                classroomObservableList.remove(selectedClassroom);
+                File deleteFile = new File("src/objectFile/classroom/" + selectedClassroom.getClassID() + ".dat");
+                deleteFile.delete();
             }
         });
 

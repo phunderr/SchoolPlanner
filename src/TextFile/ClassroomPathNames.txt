@@ -1,3 +1,2 @@
 
-src/objectFile/classroom/LA307.dat
-src/objectFile/classroom/LD101.dat
+src/objectFile/classroom/LA301.dat

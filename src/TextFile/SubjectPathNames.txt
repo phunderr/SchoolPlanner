@@ -1,4 +1,2 @@
 
-src/objectFile/subject/OGP.dat
-src/objectFile/subject/Math.dat
-src/objectFile/subject/Scheitkunde.dat
+src/objectFile/subject/Maths.dat

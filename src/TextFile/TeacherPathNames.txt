@@ -1,3 +1,2 @@
 src/objectFile/teacher/Johan.dat
 src/objectFile/teacher/Pieter.dat
-src/objectFile/teacher/Henk.dat
