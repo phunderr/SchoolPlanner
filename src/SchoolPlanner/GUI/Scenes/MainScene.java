@@ -110,7 +110,7 @@ public class MainScene extends Application {
 
         if (!lessons.isEmpty()) {
             for (Lesson lesson : lessons) {
-                LessonRectangle rect = new LessonRectangle(lesson, RectangleLogics.getRectangleIndex(classesList.indexOf(lesson.getaClass())));
+                LessonRectangle rect = new LessonRectangle(lesson, RectangleLogics.getRectangleIndex(classesList.indexOf(lesson.getaClass().getName())));
                 lessonRectangles.add(rect);
                 rect.draw(graphics);
             }

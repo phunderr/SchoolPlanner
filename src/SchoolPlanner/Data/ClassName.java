@@ -35,9 +35,6 @@ public class ClassName implements Serializable {
 
     @Override
     public String toString() {
-        return "ClassName{" +
-                "name='" + name + '\'' +
-                ", numberOfStudents=" + numberOfStudents +
-                '}';
+        return name;
     }
 }

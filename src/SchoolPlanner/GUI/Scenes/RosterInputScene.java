@@ -58,7 +58,6 @@ public class RosterInputScene {
 
         File teacherFile = new File("src/TextFile/TeacherPathNames.txt");
         try (Scanner scanner = new Scanner(teacherFile)) {
-//            scanner.nextLine();
                 while (scanner.hasNext()){
                     String path = scanner.nextLine();
                     teacherObservableList.add((Teacher) fr.readObject(path));
@@ -67,7 +66,6 @@ public class RosterInputScene {
 
         File classNameFile = new File("src/TextFile/ClassnamePathNames.txt");
         try (Scanner scanner = new Scanner(classNameFile)) {
-            scanner.nextLine();
             while (scanner.hasNext()){
                 String path = scanner.nextLine();
                 classNameObservableList.add((ClassName) fr.readObject(path));
@@ -76,7 +74,6 @@ public class RosterInputScene {
 
         File classRoomFile = new File("src/TextFile/ClassroomPathNames.txt");
         try (Scanner scanner = new Scanner(classRoomFile)) {
-            scanner.nextLine();
             while (scanner.hasNext()){
                 String path = scanner.nextLine();
                 classroomObservableList.add((Classroom) fr.readObject(path));
@@ -85,7 +82,6 @@ public class RosterInputScene {
 
         File subjectFile = new File("src/TextFile/SubjectPathNames.txt");
         try (Scanner scanner = new Scanner(subjectFile)) {
-            scanner.nextLine();
             while (scanner.hasNext()){
                 String path = scanner.nextLine();
                 subjectObservableList.add((Subject) fr.readObject(path));
