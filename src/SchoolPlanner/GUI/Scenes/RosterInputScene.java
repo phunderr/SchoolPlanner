@@ -425,9 +425,150 @@ public class RosterInputScene {
                     stage.close();
                 });
             });
+        });
 
+        subjectButton.setOnAction(event -> {
+            ComboBox subjectComboBox = new ComboBox();
+            subjectComboBox.setItems(subjectObservableList);
 
+            VBox vBox = new VBox();
+            vBox.getChildren().add(subjectComboBox);
 
+            borderPane.setCenter(vBox);
+
+            subjectComboBox.setOnAction(event1 -> {
+                Label nameLabel = new Label("Name:");
+                TextField nameTextField = new TextField();
+                Subject selectedSubject = (Subject) subjectComboBox.getSelectionModel().getSelectedItem();
+                nameTextField.setText(selectedSubject.getName());
+
+                Label popularityLabel = new Label("Popularity:");
+                TextField popularityTextField = new TextField();
+                String popularity = String.valueOf(selectedSubject.getPopularity());
+                popularityTextField.setText(popularity);
+
+                HBox nameHbox = new HBox();
+                nameHbox.getChildren().addAll(nameLabel, nameTextField);
+
+                HBox popularityHbox = new HBox();
+                popularityHbox.getChildren().addAll(popularityLabel, popularityTextField);
+
+                vBox.getChildren().addAll(nameHbox, popularityHbox);
+
+                Button changeButton = new Button("Change");
+                borderPane.setBottom(changeButton);
+
+                changeButton.setOnAction(event2 -> {
+                    subjectObservableList.remove(selectedSubject);
+                    int popularitySubject = Integer.parseInt(popularityTextField.getText());
+                    Subject subject = new Subject(nameTextField.getText(), popularitySubject);
+                    subjectObservableList.add(subject);
+                    File deleteFile = new File("src/objectFile/subject/" + selectedSubject.getName() + ".dat");
+                    deleteFile.delete();
+                    try {
+                        fr.writeObject(subject, "src/objectFile/subject/" + nameTextField.getText() + ".dat");
+                        fr.removeFromFile("src/TextFile/SubjectPathNames.txt", "src/objectFile/subject/" + selectedSubject.getName() + ".dat");
+                        fr.addToFile("src/TextFile/SubjectPathNames.txt", "src/objectFile/subject/" + nameTextField.getText() + ".dat");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    stage.close();
+                });
+            });
+        });
+
+        classButton.setOnAction(event -> {
+            ComboBox classComboBox = new ComboBox();
+            classComboBox.setItems(classNameObservableList);
+
+            VBox vBox = new VBox();
+            vBox.getChildren().add(classComboBox);
+
+            borderPane.setCenter(vBox);
+
+            classComboBox.setOnAction(event1 -> {
+                Label nameLabel = new Label("Name:");
+                TextField nameTextField = new TextField();
+                ClassName selectedClass = (ClassName) classComboBox.getSelectionModel().getSelectedItem();
+                nameTextField.setText(selectedClass.getName());
+
+                Label numberOfStudentsLabel = new Label("Number of Students:");
+                TextField numberOfStudentsTextField = new TextField();
+                String numberOfStudents = String.valueOf(selectedClass.getNumberOfStudents());
+                numberOfStudentsTextField.setText(numberOfStudents);
+
+                HBox nameHbox = new HBox();
+                nameHbox.getChildren().addAll(nameLabel, nameTextField);
+
+                HBox numberOfStudentsHbox = new HBox();
+                numberOfStudentsHbox.getChildren().addAll(numberOfStudentsLabel, numberOfStudentsTextField);
+
+                vBox.getChildren().addAll(nameHbox, numberOfStudentsHbox);
+
+                Button changeButton = new Button("Change");
+                borderPane.setBottom(changeButton);
+
+                changeButton.setOnAction(event2 -> {
+                    classNameObservableList.remove(selectedClass);
+                    int numberOfStudentsClass = Integer.parseInt(numberOfStudentsTextField.getText());
+                    ClassName className = new ClassName(nameTextField.getText(), numberOfStudentsClass);
+                    classNameObservableList.add(className);
+                    File deleteFile = new File("src/objectFile/className/" + selectedClass.getName() + ".dat");
+                    deleteFile.delete();
+                    try {
+                        fr.writeObject(className, "src/objectFile/className/" + nameTextField.getText() + ".dat");
+                        fr.removeFromFile("src/TextFile/ClassnamePathNames.txt", "src/objectFile/className/" + selectedClass.getName() + ".dat");
+                        fr.addToFile("src/TextFile/ClassnamePathNames.txt", "src/objectFile/className/" + nameTextField.getText() + ".dat");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    stage.close();
+                });
+            });
+        });
+
+        classroomButton.setOnAction(event -> {
+            ComboBox classroomComboBox = new ComboBox();
+            classroomComboBox.setItems(classroomObservableList);
+
+            VBox vBox = new VBox();
+            vBox.getChildren().add(classroomComboBox);
+
+            borderPane.setCenter(vBox);
+
+            classroomComboBox.setOnAction(event1 -> {
+                Label nameLabel = new Label("Name:");
+                TextField nameTextField = new TextField();
+                Classroom selectedClassroom = (Classroom) classroomComboBox.getSelectionModel().getSelectedItem();
+                nameTextField.setText(selectedClassroom.getClassID());
+
+                HBox nameHbox = new HBox();
+                nameHbox.getChildren().addAll(nameLabel, nameTextField);
+
+                vBox.getChildren().addAll(nameHbox);
+
+                Button changeButton = new Button("Change");
+                borderPane.setBottom(changeButton);
+
+                changeButton.setOnAction(event2 -> {
+                    classroomObservableList.remove(selectedClassroom);
+                    Classroom classroom = new Classroom(nameTextField.getText());
+                    classroomObservableList.add(classroom);
+                    File deleteFile = new File("src/objectFile/classroom/" + selectedClassroom.getClassID() + ".dat");
+                    deleteFile.delete();
+                    try {
+                        fr.writeObject(classroom, "src/objectFile/classroom/" + nameTextField.getText() + ".dat");
+                        fr.removeFromFile("src/TextFile/ClassroomPathNames.txt", "src/objectFile/classroom/" + selectedClassroom.getClassID() + ".dat");
+                        fr.addToFile("src/TextFile/ClassroomPathNames.txt", "src/objectFile/classroom/" + nameTextField.getText() + ".dat");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    stage.close();
+                });
+            });
         });
 
         Scene scene = new Scene(borderPane);
