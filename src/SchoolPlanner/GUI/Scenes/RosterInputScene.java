@@ -118,8 +118,6 @@ public class RosterInputScene {
         classNameCollumn.setPrefWidth(125);
         classNumberOfStudents.setPrefWidth(125);
 
-        //todo Textfile with pathnames
-
         teacherView.setItems(teacherObservableList);
         subjectView.setItems(subjectObservableList);
         classNameView.setItems(classNameObservableList);
@@ -200,7 +198,7 @@ public class RosterInputScene {
 
         Button teacherButton = new Button("Teacher");
         Button subjectButton = new Button("Subject");
-        Button classButton = new Button("ClassName");
+        Button classButton = new Button("Class");
         Button classroomButton = new Button("Classroom");
 
         HBox buttonHbox = new HBox();
@@ -362,6 +360,79 @@ public class RosterInputScene {
 
     public void changeButton(){
 
+        Stage stage = new Stage();
+        stage.setTitle("Change");
+
+        BorderPane borderPane = new BorderPane();
+        borderPane.setMinHeight(150);
+
+        Button teacherButton = new Button("Teacher");
+        Button subjectButton = new Button("Subject");
+        Button classButton = new Button("Class");
+        Button classroomButton = new Button("Classroom");
+
+        HBox buttonHbox = new HBox();
+        buttonHbox.getChildren().addAll(teacherButton, subjectButton, classButton, classroomButton);
+        buttonHbox.setSpacing(20);
+        borderPane.setTop(buttonHbox);
+
+        teacherButton.setOnAction(event -> {
+            ComboBox teacherComboBox = new ComboBox();
+            teacherComboBox.setItems(teacherObservableList);
+
+            VBox vBox = new VBox();
+            vBox.getChildren().add(teacherComboBox);
+
+            borderPane.setCenter(vBox);
+
+            teacherComboBox.setOnAction(event1 -> {
+                Label nameLabel = new Label("Name:");
+                TextField nameTextField = new TextField();
+                Teacher selectedTeacher = (Teacher) teacherComboBox.getSelectionModel().getSelectedItem();
+                nameTextField.setText(selectedTeacher.getName());
+
+                Label popularityLabel = new Label("Popularity:");
+                TextField popularityTextField = new TextField();
+                String popularity = String.valueOf(selectedTeacher.getPopularity());
+                popularityTextField.setText(popularity);
+
+                HBox nameHbox = new HBox();
+                nameHbox.getChildren().addAll(nameLabel, nameTextField);
+
+                HBox popularityHbox = new HBox();
+                popularityHbox.getChildren().addAll(popularityLabel, popularityTextField);
+
+                vBox.getChildren().addAll(nameHbox, popularityHbox);
+
+                Button changeButton = new Button("Change");
+                borderPane.setBottom(changeButton);
+
+                changeButton.setOnAction(event2 -> {
+                    teacherObservableList.remove(selectedTeacher);
+                    int popularityTeacher = Integer.parseInt(popularityTextField.getText());
+                    Teacher teacher = new Teacher(nameTextField.getText(), popularityTeacher);
+                    teacherObservableList.add(teacher);
+                    File deleteFile = new File("src/objectFile/teacher/" + selectedTeacher.getName() + ".dat");
+                    deleteFile.delete();
+                    try {
+                        fr.writeObject(teacher, "src/objectFile/teacher/" + nameTextField.getText() + ".dat");
+                        fr.removeFromFile("src/TextFile/TeacherPathNames.txt", "src/objectFile/teacher/" + selectedTeacher.getName() + ".dat");
+                        fr.addToFile("src/TextFile/TeacherPathNames.txt", "src/objectFile/teacher/" + nameTextField.getText() + ".dat");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    stage.close();
+                });
+            });
+
+
+
+        });
+
+        Scene scene = new Scene(borderPane);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void deleteButton(){
