@@ -1,1 +1,3 @@
 src/objectFile/subject/Maths.dat
+src/objectFile/subject/OGP.dat
+src/objectFile/subject/2DGraphics.dat
