@@ -3,6 +3,7 @@ package SchoolPlanner.GUI.Scenes;
 
 import SchoolPlanner.Data.FileReader;
 import SchoolPlanner.Data.Lesson;
+import SchoolPlanner.Data.Teacher;
 import SchoolPlanner.GUI.Logics.LessonButton;
 import SchoolPlanner.GUI.Logics.DrawableShape;
 import SchoolPlanner.GUI.Logics.LessonRectangle;
@@ -26,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 import java.util.Set;
 
 
@@ -46,6 +48,7 @@ public class MainScene extends Application {
     private ArrayList<String> classesList;
     private BufferedImage image;
     private boolean removeState = false;
+    private FileReader fileReader;
 
     @Override
     public void start(Stage primaryStage) {
@@ -122,6 +125,7 @@ public class MainScene extends Application {
      */
     public void setup() {
         this.lessonRectangles = new ArrayList<>();
+        this.fileReader = new FileReader();
         this.lessons = new ArrayList<>();
         this.drawableShapes = new ArrayList<>();
         this.addLessonPopUpScene = new AddLessonPopUpScene();
@@ -135,6 +139,14 @@ public class MainScene extends Application {
         rosterTab.setContent(mainPane);
         rosterInputTab.setContent(new RosterInputScene().rosterInputScene());
         simulationTab.setContent(new SimulationScene().simulationScene());
+
+        File lessonFile = new File("src/TextFile/LessonPathNames.txt");
+        try (Scanner scanner = new Scanner(lessonFile)) {
+            while (scanner.hasNext()){
+                String path = scanner.nextLine();
+                lessons.add((Lesson) fileReader.readObject(path));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
 
 
         this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1840, 915, 75, 75), addLessonPopUpScene, Color.green, new Stage(), screenWidth, screenHeight));

@@ -98,6 +98,12 @@ public class AddLessonPopUpScene {
             Lesson lesson = new Lesson((Subject) subjectComboBox.getValue(), (Teacher) teacherComboBox.getValue(),
                     new LessonPeriod(timeFromComboBox.getValue().toString(),timeToComboBox.getValue().toString()),
                     (Classroom) classroomComboBox.getValue(),(ClassName) classComboBox.getValue());
+            try {
+                fileReader.writeObject(lesson, "src/objectFile/lesson/" + classComboBox.getValue() + teacherComboBox.getValue() + subjectComboBox.getValue() + classroomComboBox.getValue() + ".dat");
+                fileReader.addToFile("src/TextFile/LessonPathNames.txt", "src/objectFile/lesson/" + classComboBox.getValue() + teacherComboBox.getValue() + subjectComboBox.getValue() + classroomComboBox.getValue()+ ".dat");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             MainScene.addLesson(lesson);
             stage.close();
         });

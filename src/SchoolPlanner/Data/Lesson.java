@@ -1,11 +1,13 @@
 package SchoolPlanner.Data;
 
 
+import java.io.Serializable;
+
 /**
  * @author Arno Nagtzaam
  * An object lesson that contains a subject, teacher, lesson Period, aClass and a classroom
  */
-public class Lesson {
+public class Lesson implements Serializable {
     private Subject subject;
     private Teacher teacher;
     private LessonPeriod lessonPeriod;
