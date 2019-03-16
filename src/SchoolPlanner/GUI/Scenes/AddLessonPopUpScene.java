@@ -39,6 +39,7 @@ public class AddLessonPopUpScene {
     private ObservableList<ClassName> classNameObservableList = FXCollections.observableArrayList();
     private ObservableList<Subject> subjectObservableList = FXCollections.observableArrayList();
     private ObservableList<Classroom> classroomObservableList = FXCollections.observableArrayList();
+    private ObservableList<Lesson> lessonObservableList = FXCollections.observableArrayList();
 
     public void generatePopUp (Stage stage) {
         this.fileReader = new FileReader();
@@ -98,6 +99,11 @@ public class AddLessonPopUpScene {
             Lesson lesson = new Lesson((Subject) subjectComboBox.getValue(), (Teacher) teacherComboBox.getValue(),
                     new LessonPeriod(timeFromComboBox.getValue().toString(),timeToComboBox.getValue().toString()),
                     (Classroom) classroomComboBox.getValue(),(ClassName) classComboBox.getValue());
+            //todo: Add lessonConstraints
+//            for (Lesson lesson1 : lessonObservableList){
+//                if(lesson.getaClass().getName() == lesson1.getaClass().getName() && lesson.getLessonPeriod().getLessonStartTime() <= lesson1.getLessonPeriod().getLessonEndTime() )
+
+//            }
             try {
                 fileReader.writeObject(lesson, "src/objectFile/lesson/" + classComboBox.getValue() + teacherComboBox.getValue() + subjectComboBox.getValue() + classroomComboBox.getValue() + ".dat");
                 fileReader.addToFile("src/TextFile/LessonPathNames.txt", "src/objectFile/lesson/" + classComboBox.getValue() + teacherComboBox.getValue() + subjectComboBox.getValue() + classroomComboBox.getValue()+ ".dat");
@@ -160,6 +166,14 @@ public class AddLessonPopUpScene {
                 while (scanner.hasNext()){
                     String path = scanner.nextLine();
                     subjectObservableList.add((Subject) fileReader.readObject(path));
+                }
+            } catch (Exception e) { e.printStackTrace(); }
+
+            File lessonFile = new File("src/TextFile/LessonPathNames.txt");
+            try (Scanner scanner = new Scanner(lessonFile)) {
+                while (scanner.hasNext()){
+                    String path = scanner.nextLine();
+                    lessonObservableList.add((Lesson) fileReader.readObject(path));
                 }
             } catch (Exception e) { e.printStackTrace(); }
 

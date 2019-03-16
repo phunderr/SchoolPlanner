@@ -1,4 +1,0 @@
-Klas B
-Klas C
-Klas A
-Klas D
