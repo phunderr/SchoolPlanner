@@ -1,10 +1,7 @@
 package SchoolPlanner.GUI.Scenes;
 
 
-import SchoolPlanner.Data.ClassName;
-import SchoolPlanner.Data.FileReader;
-import SchoolPlanner.Data.Lesson;
-import SchoolPlanner.Data.Teacher;
+import SchoolPlanner.Data.*;
 import SchoolPlanner.GUI.Logics.LessonButton;
 import SchoolPlanner.GUI.Logics.DrawableShape;
 import SchoolPlanner.GUI.Logics.LessonRectangle;
@@ -283,7 +280,18 @@ public class MainScene extends Application {
                 if(lessonRectangle.getShape().contains(mouseLocation)){
                     Rectangle2D rect = lessonRectangle.getShape().getBounds2D();
                     if(removeState) {
-                        lessons.remove(lessonRectangle.getLesson());
+                        Lesson selectedLesson = lessonRectangle.getLesson();
+                        if (selectedLesson != null) {
+                            try {
+                                fileReader.removeFromFile("src/TextFile/LessonPathNames.txt", "src/objectFile/lesson/" + selectedLesson.getaClass().getName() + selectedLesson.getTeacher().getName() + selectedLesson.getSubject().getName() + selectedLesson.getClassroom().getClassID() + ".dat");
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                            File deleteFile = new File("src/objectFile/lesson/" + selectedLesson.getaClass().getName() + selectedLesson.getTeacher().getName() + selectedLesson.getSubject().getName() + selectedLesson.getClassroom().getClassID() + ".dat");
+                            deleteFile.delete();
+
+                            lessons.remove(lessonRectangle.getLesson());
+                        }
                     }
                     drawClasses(graphics);
                     graphics.clearRect((int)rect.getX(),(int)rect.getY(),(int)rect.getWidth(),(int)rect.getHeight());
