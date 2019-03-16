@@ -1,6 +1,7 @@
 package SchoolPlanner.GUI.Scenes;
 
 
+import SchoolPlanner.Data.ClassName;
 import SchoolPlanner.Data.FileReader;
 import SchoolPlanner.Data.Lesson;
 import SchoolPlanner.Data.Teacher;
@@ -178,19 +179,25 @@ public class MainScene extends Application {
         try {
             java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.PLAIN, 30);
             FileReader fileReader = new FileReader();
-            File classfile = fileReader.readTextFile("src/TextFile/Classes.txt");
-            Set<String> classes = fileReader.readFile(classfile);
-            classesList = new ArrayList<>(classes);
+            File classfile = fileReader.readTextFile("src/TextFile/ClassnamePathNames.txt");
+            Scanner scanner = new Scanner(classfile);
+            classesList = new ArrayList<>();
+            while(scanner.hasNextLine()){
+                ClassName className = (ClassName) fileReader.readObject(scanner.nextLine());
+                classesList.add(className.getName());
+            }
             Collections.sort(classesList);
             int amountOfClasses = classesList.size();
             drawGrid(graphics, amountOfClasses);
             drawTimeGrid(graphics);
-            for (int i = 0; i < amountOfClasses; i++) {
+            for (int i = 0; i < classesList.size(); i++) {
                 Shape shape = font.createGlyphVector(graphics.getFontRenderContext(), classesList.get(i)).getOutline();
                 graphics.fill(AffineTransform.getTranslateInstance((getClickableRectangleList().get(i).getWidth()) / 2 + getClickableRectangleList().get(i).getX() - 30, 50).createTransformedShape(shape));
             }
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -279,7 +286,7 @@ public class MainScene extends Application {
                         lessons.remove(lessonRectangle.getLesson());
                     }
                     drawClasses(graphics);
-//                    graphics.clearRect((int)rect.getX(),(int)rect.getY(),(int)rect.getWidth(),(int)rect.getHeight());
+                    graphics.clearRect((int)rect.getX(),(int)rect.getY(),(int)rect.getWidth(),(int)rect.getHeight());
                     removeState = false;
                 }
             }
