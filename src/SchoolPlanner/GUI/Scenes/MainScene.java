@@ -1,18 +1,13 @@
 package SchoolPlanner.GUI.Scenes;
 
 
-import SchoolPlanner.Data.ClassName;
-import SchoolPlanner.Data.FileReader;
-import SchoolPlanner.Data.Lesson;
-import SchoolPlanner.Data.Teacher;
+import SchoolPlanner.Data.*;
 import SchoolPlanner.GUI.Logics.LessonButton;
 import SchoolPlanner.GUI.Logics.DrawableShape;
 import SchoolPlanner.GUI.Logics.LessonRectangle;
 import SchoolPlanner.GUI.Logics.RectangleLogics;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -33,8 +28,6 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.util.Set;
 
-import static javafx.collections.FXCollections.observableArrayList;
-
 
 public class MainScene extends Application {
 
@@ -54,7 +47,6 @@ public class MainScene extends Application {
     private BufferedImage image;
     private boolean removeState = false;
     private FileReader fileReader;
-    private ObservableList<ClassName> classNameObservableList = observableArrayList();
 
     @Override
     public void start(Stage primaryStage) {
@@ -184,10 +176,13 @@ public class MainScene extends Application {
         try {
             java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.PLAIN, 30);
             FileReader fileReader = new FileReader();
-            File classfile = fileReader.readTextFile("src/TextFile/Classes.txt");
-//            File classfile = fileReader.readObject("src/objectFile/className");
-            Set<String> classes = fileReader.readFile(classfile);
-            classesList = new ArrayList<>(classes);
+            File classfile = fileReader.readTextFile("src/TextFile/ClassnamePathNames.txt");
+            Scanner scanner = new Scanner(classfile);
+            classesList = new ArrayList<>();
+            while(scanner.hasNextLine()){
+                ClassName className = (ClassName) fileReader.readObject(scanner.nextLine());
+                classesList.add(className.getName());
+            }
             Collections.sort(classesList);
             int amountOfClasses = classesList.size();
             drawGrid(graphics, amountOfClasses);
