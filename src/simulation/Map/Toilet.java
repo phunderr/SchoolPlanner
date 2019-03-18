@@ -1,7 +1,5 @@
 package simulation.Map;
 
-import simulation.NPC.Gender;
-
 /**
  * @author Stijn van Berkel
  */
