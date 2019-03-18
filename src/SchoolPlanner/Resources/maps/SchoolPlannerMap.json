@@ -274,7 +274,7 @@
         {
          "columns":8,
          "firstgid":1,
-         "image":"..\/Users\/Jelmer\/Documents\/TiledSpriteSchool\/256473STSchlE01.png",
+         "image":"/maps/tileSets/256473STSchlE01.png",
          "imageheight":1600,
          "imagewidth":256,
          "margin":0,
@@ -287,7 +287,7 @@
         {
          "columns":8,
          "firstgid":401,
-         "image":"..\/Users\/Jelmer\/Documents\/TiledSpriteSchool\/610101STSchlWE01.png",
+         "image":"/maps/tileSets/610101STSchlWE01.png",
          "imageheight":1600,
          "imagewidth":256,
          "margin":0,
@@ -300,7 +300,7 @@
         {
          "columns":8,
          "firstgid":801,
-         "image":"..\/Users\/Jelmer\/Documents\/TiledSpriteSchool\/837123STSchlI02.png",
+         "image":"/maps/tileSets/837123STSchlI02.png",
          "imageheight":1600,
          "imagewidth":256,
          "margin":0,
@@ -313,7 +313,7 @@
         {
          "columns":8,
          "firstgid":1201,
-         "image":"..\/Users\/Jelmer\/Documents\/TiledSpriteSchool\/interior\/152048school.png",
+         "image":"/maps/tileSets/152048school.png",
          "imageheight":448,
          "imagewidth":256,
          "margin":0,
@@ -326,7 +326,7 @@
         {
          "columns":8,
          "firstgid":1313,
-         "image":"..\/Users\/Jelmer\/Documents\/TiledSpriteSchool\/890280SPTWSchool01.png",
+         "image":"/maps/tileSets/890280SPTWSchool01.png",
          "imageheight":128,
          "imagewidth":256,
          "margin":0,
@@ -339,7 +339,7 @@
         {
          "columns":3,
          "firstgid":1345,
-         "image":"..\/Users\/Jelmer\/Documents\/TiledSpriteSchool\/267232whiteboard.png",
+         "image":"/maps/tileSets/267232whiteboard.png",
          "imageheight":64,
          "imagewidth":96,
          "margin":0,
@@ -352,7 +352,7 @@
         {
          "columns":7,
          "firstgid":1351,
-         "image":"..\/Users\/Jelmer\/Pictures\/red.png",
+         "image":"/maps/tileSets/red.png",
          "imageheight":225,
          "imagewidth":225,
          "margin":0,
@@ -365,7 +365,7 @@
         {
          "columns":40,
          "firstgid":1400,
-         "image":"..\/Users\/Jelmer\/Pictures\/green block.gif",
+         "image":"/maps/tileSets/green block.gif",
          "imageheight":720,
          "imagewidth":1280,
          "margin":0,

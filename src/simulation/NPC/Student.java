@@ -1,9 +1,8 @@
 package simulation.NPC;
 
-import simulation.NPC.NPC;
+public class Student extends Character{
 
-/**
- * @author Stijn van Berkel
- */
-public class Student extends NPC {
+    public Student() {
+
+    }
 }

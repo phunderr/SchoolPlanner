@@ -1,0 +1,14 @@
+{ "columns":17,
+ "image":"/7.png",
+ "imageheight":192,
+ "imagewidth":560,
+ "margin":0,
+ "name":"shizzle",
+ "spacing":0,
+ "tilecount":102,
+ "tiledversion":"1.2.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":1.2
+}

@@ -1,9 +1,14 @@
 package simulation.NPC;
 
-import simulation.NPC.NPC;
+import org.jfree.fx.FXGraphics2D;
 
-/**
- * @author Stijn van Berkel
- */
-public class Teacher extends NPC {
+import java.awt.*;
+
+public class Teacher extends Character {
+
+    @Override
+    public void draw(Graphics2D g) {
+        g.setColor(Color.decode("#5c42f4"));
+        g.fill(getTransformedShape());
+    }
 }
