@@ -11,5 +11,6 @@ public class NPC {
     private BufferedImage image;
     private int popularity;
     private Gender gender;
+    private String name;
 
 }
