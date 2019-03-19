@@ -20,6 +20,7 @@ public class Map {
 
     private int width;
     private int height;
+    private ArrayList<BufferedImage> tilesetSubImages;
 
     private ArrayList<BufferedImage> sprites;
 
@@ -44,9 +45,18 @@ public class Map {
             for (int i = 0; i < tileset.size(); i++){
                 sprites.add(ImageIO.read(getClass().getResourceAsStream(tileset.getJsonObject(i).get("image").toString())));
             }
-            JsonReader reader2 = Json.createReader(getClass().getResourceAsStream(fileName));
+            for (int i = 0; i < tileset.size(); i++) {
+
+                int tilecount = Integer.parseInt((root.getJsonArray("tilesets").getJsonObject(i).get("tilecount").toString()));
+                int collumnWidth = Integer.parseInt((root.getJsonArray("tilesets").getJsonObject(i).get("columns").toString()));
+
+                    for (int j = 0; j < tilecount; j++){
+                    BufferedImage layerImage = sprites.get(i);
+                    tilesetSubImages.add(layerImage.getSubimage(32 * (j % collumnWidth), 32 * (j / collumnWidth), 32,32));
+                }
+            }
             for (int i = 0; i < layerAmount; i++) {
-                layers.add(new Layer(root.getJsonArray("layers").getJsonObject(i), sprites, root.getJsonArray("tilesets")));
+                layers.add(new Layer(root.getJsonArray("layers").getJsonObject(i),tilesetSubImages));
             }
 
         } catch (IOException e) {
@@ -67,6 +77,7 @@ public class Map {
 
     public void init() {
         layers = new ArrayList<>();
+        tilesetSubImages = new ArrayList<>();
     }
 
     public int getWidth() {
