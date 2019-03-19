@@ -34,7 +34,7 @@ public class Map {
 
         width = root.getInt("width");
         height = root.getInt("height");
-
+        JsonArray layersArray = root.getJsonArray("layers");
         JsonArray tileset = root.getJsonArray("tilesets");
         sprites = new ArrayList<>();
         int layerAmount = root.getJsonArray("layers").size();
@@ -56,7 +56,9 @@ public class Map {
                 }
             }
             for (int i = 0; i < layerAmount; i++) {
-                layers.add(new Layer(root.getJsonArray("layers").getJsonObject(i),tilesetSubImages));
+                if (layersArray.getJsonObject(i).getJsonString("type").toString().equals("tilelayer")){
+                    layers.add(new Layer(root.getJsonArray("layers").getJsonObject(i), tilesetSubImages));
+                }
             }
 
         } catch (IOException e) {

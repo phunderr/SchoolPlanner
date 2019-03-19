@@ -28,22 +28,22 @@ public class Layer {
         this.layer = layer;
         tilesets = bf;
         this.dataArray = new ArrayList<>();
-
-        for (int i = 0; i < data.size(); i++){
-            dataArray.add(data.getInt(i));
+        for (int i = 0; i < 10000; i++){
+                dataArray.add(data.getInt(i));
         }
-        System.out.println(dataArray);
         tiles = new ArrayList<>();
         int index = 0;
         for (int y = 0; y < 100; y++) {
             for (int x = 0; x < 100; x++) {
-
                     tiles.add(new Tile(new Point2D.Double(x * 32, y * 32), tilesets.get(dataArray.get(index))));
                     index++;
-
             }
         }
     }
+
+//    public BufferedImage getImageByIndex(int index) {
+//        return
+//    }
 
     public ArrayList<Tile> getTiles() {
         return tiles;
