@@ -35,8 +35,9 @@ public class Layer {
         int index = 0;
         for (int y = 0; y < 100; y++) {
             for (int x = 0; x < 100; x++) {
+                if ( dataArray.get(index) != 0)
                     tiles.add(new Tile(new Point2D.Double(x * 32, y * 32), tilesets.get(dataArray.get(index))));
-                    index++;
+                index++;
             }
         }
     }

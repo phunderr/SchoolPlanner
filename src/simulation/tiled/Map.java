@@ -73,7 +73,7 @@ public class Map {
         for (Layer layer:layers) {
             layer.draw(g);
         }
-        }
+    }
 
 
 
