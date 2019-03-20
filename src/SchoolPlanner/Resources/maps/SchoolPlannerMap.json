@@ -176,7 +176,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
@@ -187,7 +187,7 @@
          "name":"CollisionLayer",
          "opacity":0.16,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":100,
          "x":0,
          "y":0
@@ -199,7 +199,7 @@
          "name":"LA101Seats",
          "opacity":0,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":100,
          "x":0,
          "y":0
@@ -211,7 +211,7 @@
          "name":"LA102Seats",
          "opacity":0,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":100,
          "x":0,
          "y":0
@@ -223,7 +223,7 @@
          "name":"LA103Seats",
          "opacity":0,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":100,
          "x":0,
          "y":0
@@ -235,7 +235,7 @@
          "name":"LA104Seats",
          "opacity":0,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":100,
          "x":0,
          "y":0
@@ -247,7 +247,7 @@
          "name":"CafetariaSeats",
          "opacity":0,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":100,
          "x":0,
          "y":0
@@ -259,7 +259,7 @@
          "name":"TeacherRoomSeats",
          "opacity":0,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":100,
          "x":0,
          "y":0

@@ -56,7 +56,7 @@ public class Map {
                 }
             }
             for (int i = 0; i < layerAmount; i++) {
-                if (layersArray.getJsonObject(i).getJsonString("type").toString().equals("tilelayer")){
+                if (layersArray.getJsonObject(i).getJsonString("type").toString().equals("tilelayer") && layersArray.getJsonObject(i).getBoolean("visible")){
                     layers.add(new Layer(root.getJsonArray("layers").getJsonObject(i), tilesetSubImages));
                 }
             }

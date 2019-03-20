@@ -36,15 +36,11 @@ public class Layer {
         for (int y = 0; y < 100; y++) {
             for (int x = 0; x < 100; x++) {
                 if ( dataArray.get(index) != 0)
-                    tiles.add(new Tile(new Point2D.Double(x * 32, y * 32), tilesets.get(dataArray.get(index))));
+                    tiles.add(new Tile(new Point2D.Double(x * 32, y * 32), tilesets.get(dataArray.get(index) -1)));
                 index++;
             }
         }
     }
-
-//    public BufferedImage getImageByIndex(int index) {
-//        return
-//    }
 
     public ArrayList<Tile> getTiles() {
         return tiles;
