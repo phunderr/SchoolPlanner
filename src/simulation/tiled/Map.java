@@ -1,5 +1,6 @@
 package simulation.tiled;
 
+import org.jfree.fx.FXGraphics2D;
 import simulation.NPC.Character;
 import javax.imageio.ImageIO;
 import javax.json.Json;
@@ -69,7 +70,7 @@ public class Map {
     }
 
 
-    public void draw(Graphics2D g) {
+    public void draw(FXGraphics2D g) {
         for (Layer layer:layers) {
             layer.draw(g);
         }

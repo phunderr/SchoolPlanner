@@ -1,6 +1,7 @@
 package simulation.tiled;
 
 import com.sun.istack.internal.Nullable;
+import org.jfree.fx.FXGraphics2D;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -46,7 +47,7 @@ public class Layer {
         return tiles;
     }
 
-    public void draw(Graphics2D g) {
+    public void draw(FXGraphics2D g) {
         //if ( layerImage != null ){
         for (Tile tile : tiles) {
             g.drawImage(tile.getBf(),(int)tile.getLocation().getX(),(int)tile.getLocation().getY(),null);

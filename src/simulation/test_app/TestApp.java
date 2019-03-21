@@ -24,22 +24,19 @@ public class TestApp extends Application {
     private ResizableCanvas canvas;
     private Map map;
     private ArrayList<Character> characterArrayList;
-    Camera camera = new Camera();
-    Point2D startingPoint = new Point2D.Double(960,1000);
+    private Camera camera;
+    private Point2D startingPoint = new Point2D.Double(960,1000);
 
 
     @Override
     public void start (Stage stage) throws Exception {
         BorderPane mainPane = new BorderPane();
-        this.canvas = new ResizableCanvas(this::draw, mainPane);
+        this.canvas = new ResizableCanvas(g -> draw(g), mainPane);
         mainPane.setCenter(canvas);
         canvas.setHeight(1080);
         canvas.setWidth(1920);
-        Graphics2D g =new FXGraphics2D(canvas.getGraphicsContext2D());
+        FXGraphics2D g2d =new FXGraphics2D(canvas.getGraphicsContext2D());
 
-        stage.setScene(new Scene(mainPane));
-        stage.setTitle("Test");
-        stage.show();
 
         new AnimationTimer() {
             long last = -1;
@@ -49,35 +46,24 @@ public class TestApp extends Application {
                     last = now;
                 update((now - last) * 1.0e9);
                 last = now;
-                draw(g);
+                draw(g2d);
             }
         }.start();
 
-        canvas.setOnMouseDragged(e -> {
-            try {
-                camera.mouseDragged(e);
-            } catch (NoninvertibleTransformException e1) {
-                e1.printStackTrace();
-            }
-        });
-        canvas.setOnScroll(e-> camera.mouseScroll(e));
-        canvas.setOnMousePressed(e-> {
-            try {
-                camera.mousePressed(e);
-            } catch (NoninvertibleTransformException e1) {
-                e1.printStackTrace();
-            }
-        });
+        camera = new Camera(canvas, g -> draw(g), g2d);
 
-
+        stage.setScene(new Scene(mainPane));
+        stage.setTitle("Test");
+        stage.show();
     }
 
 
-    public void draw(Graphics2D g){
+    public void draw(FXGraphics2D g){
         g.setTransform(new AffineTransform());
         g.setBackground(Color.BLACK);
         g.clearRect(0, 0, (int)canvas.getWidth(), (int)canvas.getHeight());
-        g.setTransform(camera.getCameraTransform());
+        g.setTransform(camera.getTransform((int) canvas.getWidth(), (int) canvas.getHeight()));
+
         map.draw(g);
         for (Character character : this.characterArrayList) {
             character.draw(g);

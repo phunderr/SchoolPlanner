@@ -7,7 +7,7 @@ import java.awt.*;
 public class Teacher extends Character {
 
     @Override
-    public void draw(Graphics2D g) {
+    public void draw(FXGraphics2D g) {
         g.setColor(Color.decode("#5c42f4"));
         g.fill(getTransformedShape());
     }

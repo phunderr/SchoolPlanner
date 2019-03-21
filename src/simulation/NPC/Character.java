@@ -1,6 +1,7 @@
 package simulation.NPC;
 
 import javafx.scene.input.MouseEvent;
+import org.jfree.fx.FXGraphics2D;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -24,7 +25,7 @@ public  class Character {
         this.target = new Point2D.Double(100,100);
     }
 
-    public void draw(Graphics2D g){
+    public void draw(FXGraphics2D g){
         g.setColor(Color.decode("#ffff00"));
         g.fill(getTransformedShape());
     }
