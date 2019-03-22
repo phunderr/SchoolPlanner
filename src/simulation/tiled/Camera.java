@@ -12,7 +12,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 public class Camera {
-    private Point2D centerPoint = new Point2D.Double(0,0);
+    private Point2D centerPoint = new Point2D.Double(-1472,-2752);
     private double zoom = 1;
     private double rotation = 0;
     private Point2D lastMousePos;
