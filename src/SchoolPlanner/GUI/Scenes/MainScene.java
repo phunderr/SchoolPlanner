@@ -1,8 +1,7 @@
 package SchoolPlanner.GUI.Scenes;
 
 
-import SchoolPlanner.Data.FileReader;
-import SchoolPlanner.Data.Lesson;
+import SchoolPlanner.Data.*;
 import SchoolPlanner.GUI.Logics.LessonButton;
 import SchoolPlanner.GUI.Logics.DrawableShape;
 import SchoolPlanner.GUI.Logics.LessonRectangle;
@@ -26,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 import java.util.Set;
 
 
@@ -46,6 +46,7 @@ public class MainScene extends Application {
     private ArrayList<String> classesList;
     private BufferedImage image;
     private boolean removeState = false;
+    private FileReader fileReader;
 
     @Override
     public void start(Stage primaryStage) {
@@ -72,6 +73,7 @@ public class MainScene extends Application {
         primaryStage.setResizable(false);
 
         canvas.setOnMouseMoved(this::onMouseMoved);
+
 
 
 //      new AddLessonPopUpScene().generatePopUp(new Stage());
@@ -109,7 +111,7 @@ public class MainScene extends Application {
 
         if (!lessons.isEmpty()) {
             for (Lesson lesson : lessons) {
-                LessonRectangle rect = new LessonRectangle(lesson, RectangleLogics.getRectangleIndex(classesList.indexOf(lesson.getaClass())));
+                LessonRectangle rect = new LessonRectangle(lesson, RectangleLogics.getRectangleIndex(classesList.indexOf(lesson.getaClass().getName())));
                 lessonRectangles.add(rect);
                 rect.draw(graphics);
             }
@@ -121,6 +123,7 @@ public class MainScene extends Application {
      */
     public void setup() {
         this.lessonRectangles = new ArrayList<>();
+        this.fileReader = new FileReader();
         this.lessons = new ArrayList<>();
         this.drawableShapes = new ArrayList<>();
         this.addLessonPopUpScene = new AddLessonPopUpScene();
@@ -133,6 +136,15 @@ public class MainScene extends Application {
         mainTabPane.getTabs().addAll(rosterTab, rosterInputTab, simulationTab);
         rosterTab.setContent(mainPane);
         rosterInputTab.setContent(new RosterInputScene().rosterInputScene());
+        simulationTab.setContent(new SimulationScene().simulationScene());
+
+        File lessonFile = new File("src/TextFile/LessonPathNames.txt");
+        try (Scanner scanner = new Scanner(lessonFile)) {
+            while (scanner.hasNext()){
+                String path = scanner.nextLine();
+                lessons.add((Lesson) fileReader.readObject(path));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
 
 
         this.drawableShapes.add(new LessonButton(new Ellipse2D.Double(1840, 915, 75, 75), addLessonPopUpScene, Color.green, new Stage(), screenWidth, screenHeight));
@@ -164,19 +176,25 @@ public class MainScene extends Application {
         try {
             java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.PLAIN, 30);
             FileReader fileReader = new FileReader();
-            File classfile = fileReader.readTextFile("src/TextFile/Classes.txt");
-            Set<String> classes = fileReader.readFile(classfile);
-            classesList = new ArrayList<>(classes);
+            File classfile = fileReader.readTextFile("src/TextFile/ClassnamePathNames.txt");
+            Scanner scanner = new Scanner(classfile);
+            classesList = new ArrayList<>();
+            while(scanner.hasNextLine()){
+                ClassName className = (ClassName) fileReader.readObject(scanner.nextLine());
+                classesList.add(className.getName());
+            }
             Collections.sort(classesList);
             int amountOfClasses = classesList.size();
             drawGrid(graphics, amountOfClasses);
             drawTimeGrid(graphics);
-            for (int i = 0; i < amountOfClasses; i++) {
+            for (int i = 0; i < classesList.size(); i++) {
                 Shape shape = font.createGlyphVector(graphics.getFontRenderContext(), classesList.get(i)).getOutline();
                 graphics.fill(AffineTransform.getTranslateInstance((getClickableRectangleList().get(i).getWidth()) / 2 + getClickableRectangleList().get(i).getX() - 30, 50).createTransformedShape(shape));
             }
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -262,10 +280,21 @@ public class MainScene extends Application {
                 if(lessonRectangle.getShape().contains(mouseLocation)){
                     Rectangle2D rect = lessonRectangle.getShape().getBounds2D();
                     if(removeState) {
-                        lessons.remove(lessonRectangle.getLesson());
+                        Lesson selectedLesson = lessonRectangle.getLesson();
+                        if (selectedLesson != null) {
+                            try {
+                                fileReader.removeFromFile("src/TextFile/LessonPathNames.txt", "src/objectFile/lesson/" + selectedLesson.getaClass().getName() + selectedLesson.getTeacher().getName() + selectedLesson.getSubject().getName() + selectedLesson.getClassroom().getClassID() + ".dat");
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                            File deleteFile = new File("src/objectFile/lesson/" + selectedLesson.getaClass().getName() + selectedLesson.getTeacher().getName() + selectedLesson.getSubject().getName() + selectedLesson.getClassroom().getClassID() + ".dat");
+                            deleteFile.delete();
+
+                            lessons.remove(lessonRectangle.getLesson());
+                        }
                     }
                     drawClasses(graphics);
-//                    graphics.clearRect((int)rect.getX(),(int)rect.getY(),(int)rect.getWidth(),(int)rect.getHeight());
+                    graphics.clearRect((int)rect.getX(),(int)rect.getY(),(int)rect.getWidth(),(int)rect.getHeight());
                     removeState = false;
                 }
             }
@@ -289,8 +318,6 @@ public class MainScene extends Application {
     }
 
     public void onMouseDragged(MouseEvent e) {
-//        if(ds.isClicked()){
-//            ds.update(e.getX(), e.getY());
-//        }
+
     }
 }

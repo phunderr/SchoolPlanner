@@ -1,12 +1,10 @@
 package SchoolPlanner.GUI.Scenes;
 
-import SchoolPlanner.Data.Classroom;
-import SchoolPlanner.Data.FileReader;
+import SchoolPlanner.Data.*;
 
-import SchoolPlanner.Data.Lesson;
-import SchoolPlanner.Data.LessonPeriod;
 import SchoolPlanner.GUI.Logics.LessonRectangle;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -31,12 +29,17 @@ public class AddLessonPopUpScene {
 
     private ComboBox teacherComboBox;
     private ComboBox classroomComboBox;
-    private ComboBox<String> subjectComboBox;
+    private ComboBox subjectComboBox;
     private ComboBox timeFromComboBox;
     private ComboBox timeToComboBox;
     private ComboBox classComboBox;
     private Button submitButton;
     private FileReader fileReader;
+    private ObservableList<Teacher> teacherObservableList = FXCollections.observableArrayList();
+    private ObservableList<ClassName> classNameObservableList = FXCollections.observableArrayList();
+    private ObservableList<Subject> subjectObservableList = FXCollections.observableArrayList();
+    private ObservableList<Classroom> classroomObservableList = FXCollections.observableArrayList();
+    private ObservableList<Lesson> lessonObservableList = FXCollections.observableArrayList();
 
     public void generatePopUp (Stage stage) {
         this.fileReader = new FileReader();
@@ -64,7 +67,7 @@ public class AddLessonPopUpScene {
         this.teacherComboBox.setMinSize(200,10);
         this.classroomComboBox = new ComboBox();
         this.classroomComboBox.setMinSize(200,10);
-        this.subjectComboBox = new ComboBox<>();
+        this.subjectComboBox = new ComboBox();
         this.subjectComboBox.setMinSize(200,10);
         this.timeFromComboBox = new ComboBox();
         this.timeFromComboBox.setMinSize(200,10);
@@ -93,9 +96,20 @@ public class AddLessonPopUpScene {
 
         this.submitButton = new Button("Submit");
         submitButton.setOnAction(event -> {
-            Lesson lesson = new Lesson(subjectComboBox.getValue(),teacherComboBox.getValue().toString(),
+            Lesson lesson = new Lesson((Subject) subjectComboBox.getValue(), (Teacher) teacherComboBox.getValue(),
                     new LessonPeriod(timeFromComboBox.getValue().toString(),timeToComboBox.getValue().toString()),
-                    new Classroom(classroomComboBox.getValue().toString()),classComboBox.getValue().toString());
+                    (Classroom) classroomComboBox.getValue(),(ClassName) classComboBox.getValue());
+            //todo: Add lessonConstraints
+//            for (Lesson lesson1 : lessonObservableList){
+//                if(lesson.getaClass().getName() == lesson1.getaClass().getName() && lesson.getLessonPeriod().getLessonStartTime() <= lesson1.getLessonPeriod().getLessonEndTime() )
+
+//            }
+            try {
+                fileReader.writeObject(lesson, "src/objectFile/lesson/" + classComboBox.getValue() + teacherComboBox.getValue() + subjectComboBox.getValue() + classroomComboBox.getValue() + ".dat");
+                fileReader.addToFile("src/TextFile/LessonPathNames.txt", "src/objectFile/lesson/" + classComboBox.getValue() + teacherComboBox.getValue() + subjectComboBox.getValue() + classroomComboBox.getValue()+ ".dat");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             MainScene.addLesson(lesson);
             stage.close();
         });
@@ -122,30 +136,60 @@ public class AddLessonPopUpScene {
      */
     public void fillComboBoxes(){
         try {
-            /**
-             *These paths are specific for Jelmer's computer.
-             */
-            File classRoomFile = fileReader.readTextFile("src/TextFile/Classrooms.txt");
-            File teacherFile = fileReader.readTextFile("src/TextFile/Docent.txt");
-            File subjectFile = fileReader.readTextFile("src/TextFile/Subject.txt");
-            File timesFile = fileReader.readTextFile("src/TextFile/Times.txt");
-            File classfile = fileReader.readTextFile("src/TextFile/Classes.txt");
 
-            Set<String> classrooms = fileReader.readFile(classRoomFile);
-            Set<String> teachers = fileReader.readFile(teacherFile);
-            Set<String> subjects = fileReader.readFile(subjectFile);
+            File teacherFile = new File("src/TextFile/TeacherPathNames.txt");
+            try (Scanner scanner = new Scanner(teacherFile)) {
+                while (scanner.hasNext()){
+                    String path = scanner.nextLine();
+                    teacherObservableList.add((Teacher) fileReader.readObject(path));
+                }
+            } catch (Exception e) { e.printStackTrace(); }
+
+            File classNameFile = new File("src/TextFile/ClassnamePathNames.txt");
+            try (Scanner scanner = new Scanner(classNameFile)) {
+                while (scanner.hasNext()){
+                    String path = scanner.nextLine();
+                    classNameObservableList.add((ClassName) fileReader.readObject(path));
+                }
+            } catch (Exception e) { e.printStackTrace(); }
+
+            File classRoomFile = new File("src/TextFile/ClassroomPathNames.txt");
+            try (Scanner scanner = new Scanner(classRoomFile)) {
+                while (scanner.hasNext()){
+                    String path = scanner.nextLine();
+                    classroomObservableList.add((Classroom) fileReader.readObject(path));
+                }
+            } catch (Exception e) { e.printStackTrace(); }
+
+            File subjectFile = new File("src/TextFile/SubjectPathNames.txt");
+            try (Scanner scanner = new Scanner(subjectFile)) {
+                while (scanner.hasNext()){
+                    String path = scanner.nextLine();
+                    subjectObservableList.add((Subject) fileReader.readObject(path));
+                }
+            } catch (Exception e) { e.printStackTrace(); }
+
+            File lessonFile = new File("src/TextFile/LessonPathNames.txt");
+            try (Scanner scanner = new Scanner(lessonFile)) {
+                while (scanner.hasNext()){
+                    String path = scanner.nextLine();
+                    lessonObservableList.add((Lesson) fileReader.readObject(path));
+                }
+            } catch (Exception e) { e.printStackTrace(); }
+
+            File timesFile = fileReader.readTextFile("src/TextFile/Times.txt");
+
             Set<String> times = fileReader.readFile(timesFile);
-            Set<String> classes = fileReader.readFile(classfile);
 
             List<String> sortedTimeList = new ArrayList<>(times);
             Collections.sort(sortedTimeList);
 
-            classroomComboBox.setItems(FXCollections.observableArrayList(classrooms));
-            teacherComboBox.setItems(FXCollections.observableArrayList(teachers));
-            subjectComboBox.setItems(FXCollections.observableArrayList(subjects));
+            classroomComboBox.setItems(classroomObservableList);
+            teacherComboBox.setItems(teacherObservableList);
+            subjectComboBox.setItems(subjectObservableList);
             timeFromComboBox.setItems(FXCollections.observableArrayList(sortedTimeList));
             timeToComboBox.setItems(FXCollections.observableArrayList(sortedTimeList));
-            classComboBox.setItems(FXCollections.observableArrayList(classes));
+            classComboBox.setItems(classNameObservableList);
 
 
 

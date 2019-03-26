@@ -28,19 +28,6 @@ public class LessonRectangle implements DrawableShape {
     //Lesson info
     private Lesson lesson;
 
-    //Placements
-    //Vertical times coordinates
-    private final int EIGHT = 83;
-    private final int NINE = 166;
-    private final int TEN = 249;
-    private final int ELEVEN = 332;
-    private final int TWELVE = 415;
-    private final int ONE = 499;
-    private final int TWO = 582;
-    private final int THREE = 665;
-    private final int FOUR = 748;
-    private final int FIVE = 831;
-
     //Horizontal
     private Set<Double> XCoordinates;
 
@@ -112,47 +99,7 @@ public class LessonRectangle implements DrawableShape {
     }
 
     @Override
-    public void update(double x, double y) {
-//        if (shape.contains(x, y)) {
-//            double dx = previousPoint.getX() - x;
-//            double dy = previousPoint.getY() - y;
-//
-//            //TODO dragging transformation
-//
-//            //vertical snapping
-//            double tranformedY = 0;
-//            if (shape.getBounds2D().getY() < NINE) {
-//                tranformedY = EIGHT;
-//            } else if (shape.getBounds2D().getY() > NINE && shape.getBounds2D().getY() < TEN) {
-//                tranformedY = NINE;
-//            } else if (shape.getBounds2D().getY() > TEN && shape.getBounds2D().getY() < ELEVEN) {
-//                tranformedY = TEN;
-//            } else if (shape.getBounds2D().getY() > ELEVEN && shape.getBounds2D().getY() < TWELVE) {
-//                tranformedY = ELEVEN;
-//            } else if (shape.getBounds2D().getY() > TWELVE && shape.getBounds2D().getY() < ONE) {
-//                tranformedY = TWELVE;
-//            } else if (shape.getBounds2D().getY() > ONE && shape.getBounds2D().getY() < TWO) {
-//                tranformedY = ONE;
-//            } else if (shape.getBounds2D().getY() > TWO && shape.getBounds2D().getY() < THREE) {
-//                tranformedY = TWO;
-//            } else if (shape.getBounds2D().getY() > THREE && shape.getBounds2D().getY() < FOUR) {
-//                tranformedY = THREE;
-//            } else if (shape.getBounds2D().getY() > FOUR && shape.getBounds2D().getY() < FIVE) {
-//                tranformedY = FOUR;
-//            } else if (shape.getBounds2D().getY() > FIVE) {
-//                tranformedY = FIVE;
-//            }
-//
-//            double transformedX = 0;
-//            //TODO horisontal angle snapping if the center is between to lines make it snap to the middle of those lines
-//
-//            if (tranformedY != 0 && transformedX != 0 && isReleased) {
-//                af.translate(transformedX, tranformedY);
-//                isReleased = false;
-//            }
-//
-//        }
-    }
+    public void update(double x, double y) {    }
 
     public Lesson getLesson(){
         return lesson;

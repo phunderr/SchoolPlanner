@@ -36,9 +36,6 @@ public class Subject implements Serializable {
 
     @Override
     public String toString() {
-        return "Subject{" +
-                "name='" + name + '\'' +
-                ", popularity=" + popularity +
-                '}';
+        return name;
     }
 }

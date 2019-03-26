@@ -1,18 +1,20 @@
 package SchoolPlanner.Data;
 
 
+import java.io.Serializable;
+
 /**
  * @author Arno Nagtzaam
  * An object lesson that contains a subject, teacher, lesson Period, aClass and a classroom
  */
-public class Lesson {
-    private String subject;
-    private String teacher;
+public class Lesson implements Serializable {
+    private Subject subject;
+    private Teacher teacher;
     private LessonPeriod lessonPeriod;
-    private String aClass;
+    private ClassName aClass;
     private Classroom classroom;
 
-    public Lesson(String subject, String teacher, LessonPeriod lessonPeriod, Classroom classroom, String aClass) {
+    public Lesson(Subject subject, Teacher teacher, LessonPeriod lessonPeriod, Classroom classroom, ClassName aClass) {
         this.subject = subject;
         this.teacher = teacher;
         this.lessonPeriod = lessonPeriod;
@@ -20,19 +22,19 @@ public class Lesson {
         this.aClass = aClass;
     }
 
-    public String getSubject() {
+    public Subject getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
+    public void setSubject(Subject subject) {
         this.subject = subject;
     }
 
-    public String getTeacher() {
+    public Teacher getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(String teacher) {
+    public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
 
@@ -44,11 +46,11 @@ public class Lesson {
         this.lessonPeriod = lessonPeriod;
     }
 
-    public String getaClass () {
+    public ClassName getaClass () {
         return aClass;
     }
 
-    public void setaClass (String aClass) {
+    public void setaClass (ClassName aClass) {
         this.aClass = aClass;
     }
 

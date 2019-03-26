@@ -1,0 +1,3 @@
+src/objectFile/classroom/LA302.dat
+src/objectFile/classroom/LA101.dat
+src/objectFile/classroom/LD108.dat

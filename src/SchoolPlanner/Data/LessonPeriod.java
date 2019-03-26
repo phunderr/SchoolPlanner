@@ -1,11 +1,13 @@
 package SchoolPlanner.Data;
 
 
+import java.io.Serializable;
+
 /**
  * @Author Arno Nagtzaam
  * Draws a PeriodBlock to mark the lessons
  */
-public class LessonPeriod {
+public class LessonPeriod implements Serializable {
     private String lessonStartTime;
     private String lessonEndTime;
 

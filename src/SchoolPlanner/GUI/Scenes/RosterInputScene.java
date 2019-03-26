@@ -1,28 +1,47 @@
 package SchoolPlanner.GUI.Scenes;
 
 import SchoolPlanner.Data.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Set;
 
 
 /**
- * @Author Luke Taylor & Jelmer Surewaard & Pascal Holthuijsen
+ * @Author Luke Taylor & Jelmer Surewaard & Pascal Holthuijsen & Stijn van Berkel
  * creates the scene for "Roster Input" tab in the main application.
  */
 
 public class RosterInputScene {
 
     private FileReader fr = new FileReader();
+    private ObservableList<Teacher> teacherObservableList = FXCollections.observableArrayList();
+    private ObservableList<ClassName> classNameObservableList = FXCollections.observableArrayList();
+    private ObservableList<Subject> subjectObservableList = FXCollections.observableArrayList();
+    private ObservableList<Classroom> classroomObservableList = FXCollections.observableArrayList();
+    private TableView teacherView;
+    private TableView classNameView;
+    private TableView classroomView;
+    private TableView subjectView;
+    private Button changeButton;
+    private Button deleteButton;
 
     /**
      * @return the RosterInput borderpane.
@@ -32,50 +51,135 @@ public class RosterInputScene {
 
         BorderPane borderPane = new BorderPane();
 
-        TableView tableView = new TableView();
+        this.teacherView = new TableView();
+        this.classNameView = new TableView();
+        this.classroomView = new TableView();
+        this.subjectView = new TableView();
 
-        TableColumn teacherCollumn = new TableColumn("Teacher");
+        File teacherFile = new File("src/TextFile/TeacherPathNames.txt");
+        try (Scanner scanner = new Scanner(teacherFile)) {
+                while (scanner.hasNext()){
+                    String path = scanner.nextLine();
+                    teacherObservableList.add((Teacher) fr.readObject(path));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+
+        File classNameFile = new File("src/TextFile/ClassnamePathNames.txt");
+        try (Scanner scanner = new Scanner(classNameFile)) {
+            while (scanner.hasNext()){
+                String path = scanner.nextLine();
+                classNameObservableList.add((ClassName) fr.readObject(path));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+
+        File classRoomFile = new File("src/TextFile/ClassroomPathNames.txt");
+        try (Scanner scanner = new Scanner(classRoomFile)) {
+            while (scanner.hasNext()){
+                String path = scanner.nextLine();
+                classroomObservableList.add((Classroom) fr.readObject(path));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+
+        File subjectFile = new File("src/TextFile/SubjectPathNames.txt");
+        try (Scanner scanner = new Scanner(subjectFile)) {
+            while (scanner.hasNext()){
+                String path = scanner.nextLine();
+                subjectObservableList.add((Subject) fr.readObject(path));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+
         TableColumn teacherNamecollumn = new TableColumn("Name");
+        teacherNamecollumn.setCellValueFactory(new PropertyValueFactory<Teacher, String>("name"));
         TableColumn teacherPopularityCollumn = new TableColumn("Popularity");
-        teacherCollumn.getColumns().addAll(teacherNamecollumn, teacherPopularityCollumn);
+        teacherPopularityCollumn.setCellValueFactory(new PropertyValueFactory<Teacher, Integer>("popularity"));
+        teacherView.getColumns().addAll(teacherNamecollumn, teacherPopularityCollumn);
         teacherNamecollumn.setPrefWidth(125);
         teacherPopularityCollumn.setPrefWidth(125);
-        TableColumn subjectCollumn = new TableColumn("Subject");
         TableColumn subjectNameCollumn = new TableColumn("Name");
+        subjectNameCollumn.setCellValueFactory(new PropertyValueFactory<Subject, String>("name"));
         TableColumn subjectPopularityCollumn = new TableColumn("Popularity");
-        subjectCollumn.getColumns().addAll(subjectNameCollumn, subjectPopularityCollumn);
+        subjectPopularityCollumn.setCellValueFactory(new PropertyValueFactory<Subject, Integer>("popularity"));
+        subjectView.getColumns().addAll(subjectNameCollumn, subjectPopularityCollumn);
         subjectNameCollumn.setPrefWidth(125);
         subjectPopularityCollumn.setPrefWidth(125);
-        TableColumn classroomCollumn = new TableColumn("Classroom");
         TableColumn classroomNameCollumn = new TableColumn("Name");
-        classroomCollumn.getColumns().addAll(classroomNameCollumn);
+        classroomNameCollumn.setCellValueFactory(new PropertyValueFactory<Classroom, String>("classID"));
+        classroomView.getColumns().addAll(classroomNameCollumn);
         classroomNameCollumn.setPrefWidth(250);
-        TableColumn classCollumn = new TableColumn("ClassName");
         TableColumn classNameCollumn = new TableColumn("Name");
+        classNameCollumn.setCellValueFactory(new PropertyValueFactory<ClassName, String>("name"));
         TableColumn classNumberOfStudents = new TableColumn("Number of students");
-        classCollumn.getColumns().addAll(classNameCollumn, classNumberOfStudents);
+        classNumberOfStudents.setCellValueFactory(new PropertyValueFactory<ClassName, Integer>("numberOfStudents"));
+        classNameView.getColumns().addAll(classNameCollumn, classNumberOfStudents);
         classNameCollumn.setPrefWidth(125);
         classNumberOfStudents.setPrefWidth(125);
 
-        tableView.getColumns().addAll(teacherCollumn,subjectCollumn,classroomCollumn,classCollumn);
-        tableView.setMaxWidth(1000);
+        teacherView.setItems(teacherObservableList);
+        subjectView.setItems(subjectObservableList);
+        classNameView.setItems(classNameObservableList);
+        classroomView.setItems(classroomObservableList);
 
         Button addButton = new Button("ADD");
-        addButton.setFont(new Font(100));
-        addButton.setPadding(new Insets(20,50,20,50));
+        addButton.setFont(new Font(60));
+        addButton.setMaxWidth(400);
+
+        this.changeButton = new Button("CHANGE");
+        changeButton.setFont(new Font(60));
+        changeButton.setMaxWidth(400);
+
+        this.deleteButton = new Button("DELETE");
+        deleteButton.setFont(new Font(60));
+        deleteButton.setMaxWidth(400);
+
+        VBox buttonVbox = new VBox();
+        buttonVbox.getChildren().addAll(addButton,changeButton,deleteButton);
 
         addButton.setOnAction(event -> {
             addButton();
         });
 
-        Button changeButton = new Button("CHANGE");
-        changeButton.setFont(new Font(100));
-        changeButton.setPadding(new Insets(20,20,20,20));
-//
+        changeButton.setOnAction(event -> {
+            changeButton();
+        });
 
-        borderPane.setCenter(tableView);
-        borderPane.setLeft(addButton);
-        borderPane.setRight(changeButton);
+        deleteButton.setOnAction(event -> {
+            deleteButton();
+        });
+
+        VBox teacherVBox = new VBox();
+        Label teacherLabel = new Label("Teachers");
+        teacherLabel.setFont(new Font("Ariel", 20));
+        teacherVBox.setSpacing(5);
+        teacherVBox.setPadding(new Insets(10, 0, 0, 10));
+        teacherVBox.getChildren().addAll(teacherLabel, teacherView);
+
+        VBox subjectVBox = new VBox();
+        Label subjectLabel = new Label("Subject");
+        subjectLabel.setFont(new Font("Ariel", 20));
+        subjectVBox.setSpacing(5);
+        subjectVBox.setPadding(new Insets(10, 0, 0, 10));
+        subjectVBox.getChildren().addAll(subjectLabel, subjectView);
+
+        VBox classnameVBox = new VBox();
+        Label classnameLabel = new Label("Class");
+        classnameLabel.setFont(new Font("Ariel", 20));
+        classnameVBox.setSpacing(5);
+        classnameVBox.setPadding(new Insets(10, 0, 0, 10));
+        classnameVBox.getChildren().addAll(classnameLabel, classNameView);
+
+        VBox classroomVBox = new VBox();
+        Label classroomLabel = new Label("Classroom");
+        classroomLabel.setFont(new Font("Ariel", 20));
+        classroomVBox.setSpacing(5);
+        classroomVBox.setPadding(new Insets(10, 0, 0, 10));
+        classroomVBox.getChildren().addAll(classroomLabel, classroomView);
+
+        HBox hBox = new HBox();
+
+        hBox.getChildren().addAll(teacherVBox, subjectVBox, classnameVBox, classroomVBox);
+
+        borderPane.setCenter(hBox);
+        borderPane.setLeft(buttonVbox);
 
         return borderPane;
     }
@@ -90,7 +194,7 @@ public class RosterInputScene {
 
         Button teacherButton = new Button("Teacher");
         Button subjectButton = new Button("Subject");
-        Button classButton = new Button("ClassName");
+        Button classButton = new Button("Class");
         Button classroomButton = new Button("Classroom");
 
         HBox buttonHbox = new HBox();
@@ -125,6 +229,8 @@ public class RosterInputScene {
                     int text = Integer.parseInt(popularityTextField.getText());
                     Teacher teacher = new Teacher(nameTextField.getText(), text);
                     fr.writeObject(teacher, "src/objectFile/teacher/" + nameTextField.getText() + ".dat");
+                    fr.addToFile("src/TextFile/TeacherPathNames.txt", "src/objectFile/teacher/" + nameTextField.getText() + ".dat");
+                    teacherObservableList.add((teacher));
                     stage.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -161,6 +267,8 @@ public class RosterInputScene {
                     int text = Integer.parseInt(popularityTextField.getText());
                     Subject subject = new Subject(nameTextField.getText(), text);
                     fr.writeObject(subject, "src/objectFile/subject/" + nameTextField.getText() + ".dat");
+                    fr.addToFile("src/TextFile/SubjectPathNames.txt", "src/objectFile/subject/" + nameTextField.getText() + ".dat");
+                    subjectObservableList.add(subject);
                     stage.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -198,6 +306,8 @@ public class RosterInputScene {
                         numberOfStudents = Integer.parseInt(numberOfStudentsTextField.getText());
                         ClassName className = new ClassName(nameTextField.getText(), numberOfStudents);
                         fr.writeObject(className, "src/objectFile/className/" + nameTextField.getText() + ".dat");
+                        fr.addToFile("src/TextFile/ClassnamePathNames.txt", "src/objectFile/className/" + nameTextField.getText() + ".dat");
+                        classNameObservableList.add(className);
                         stage.close();
                     }
                 } catch (IOException e) {
@@ -228,6 +338,8 @@ public class RosterInputScene {
                 try {
                     Classroom classroom = new Classroom(nameTextField.getText());
                     fr.writeObject(classroom, "src/objectFile/classroom/" + nameTextField.getText() + ".dat");
+                    fr.addToFile("src/TextFile/ClassroomPathNames.txt", "src/objectFile/classroom/" + nameTextField.getText() + ".dat");
+                    classroomObservableList.add(classroom);
                     stage.close();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -240,6 +352,274 @@ public class RosterInputScene {
         Scene scene = new Scene(borderPane);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void changeButton(){
+
+        Stage stage = new Stage();
+        stage.setTitle("Change");
+
+        BorderPane borderPane = new BorderPane();
+        borderPane.setMinHeight(150);
+
+        Button teacherButton = new Button("Teacher");
+        Button subjectButton = new Button("Subject");
+        Button classButton = new Button("Class");
+        Button classroomButton = new Button("Classroom");
+
+        HBox buttonHbox = new HBox();
+        buttonHbox.getChildren().addAll(teacherButton, subjectButton, classButton, classroomButton);
+        buttonHbox.setSpacing(20);
+        borderPane.setTop(buttonHbox);
+
+        teacherButton.setOnAction(event -> {
+            ComboBox teacherComboBox = new ComboBox();
+            teacherComboBox.setItems(teacherObservableList);
+
+            VBox vBox = new VBox();
+            vBox.getChildren().add(teacherComboBox);
+
+            borderPane.setCenter(vBox);
+
+            teacherComboBox.setOnAction(event1 -> {
+                Label nameLabel = new Label("Name:");
+                TextField nameTextField = new TextField();
+                Teacher selectedTeacher = (Teacher) teacherComboBox.getSelectionModel().getSelectedItem();
+                nameTextField.setText(selectedTeacher.getName());
+
+                Label popularityLabel = new Label("Popularity:");
+                TextField popularityTextField = new TextField();
+                String popularity = String.valueOf(selectedTeacher.getPopularity());
+                popularityTextField.setText(popularity);
+
+                HBox nameHbox = new HBox();
+                nameHbox.getChildren().addAll(nameLabel, nameTextField);
+
+                HBox popularityHbox = new HBox();
+                popularityHbox.getChildren().addAll(popularityLabel, popularityTextField);
+
+                vBox.getChildren().addAll(nameHbox, popularityHbox);
+
+                Button changeButton = new Button("Change");
+                borderPane.setBottom(changeButton);
+
+                changeButton.setOnAction(event2 -> {
+                    teacherObservableList.remove(selectedTeacher);
+                    int popularityTeacher = Integer.parseInt(popularityTextField.getText());
+                    Teacher teacher = new Teacher(nameTextField.getText(), popularityTeacher);
+                    teacherObservableList.add(teacher);
+                    File deleteFile = new File("src/objectFile/teacher/" + selectedTeacher.getName() + ".dat");
+                    deleteFile.delete();
+                    try {
+                        fr.writeObject(teacher, "src/objectFile/teacher/" + nameTextField.getText() + ".dat");
+                        fr.removeFromFile("src/TextFile/TeacherPathNames.txt", "src/objectFile/teacher/" + selectedTeacher.getName() + ".dat");
+                        fr.addToFile("src/TextFile/TeacherPathNames.txt", "src/objectFile/teacher/" + nameTextField.getText() + ".dat");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    stage.close();
+                });
+            });
+        });
+
+        subjectButton.setOnAction(event -> {
+            ComboBox subjectComboBox = new ComboBox();
+            subjectComboBox.setItems(subjectObservableList);
+
+            VBox vBox = new VBox();
+            vBox.getChildren().add(subjectComboBox);
+
+            borderPane.setCenter(vBox);
+
+            subjectComboBox.setOnAction(event1 -> {
+                Label nameLabel = new Label("Name:");
+                TextField nameTextField = new TextField();
+                Subject selectedSubject = (Subject) subjectComboBox.getSelectionModel().getSelectedItem();
+                nameTextField.setText(selectedSubject.getName());
+
+                Label popularityLabel = new Label("Popularity:");
+                TextField popularityTextField = new TextField();
+                String popularity = String.valueOf(selectedSubject.getPopularity());
+                popularityTextField.setText(popularity);
+
+                HBox nameHbox = new HBox();
+                nameHbox.getChildren().addAll(nameLabel, nameTextField);
+
+                HBox popularityHbox = new HBox();
+                popularityHbox.getChildren().addAll(popularityLabel, popularityTextField);
+
+                vBox.getChildren().addAll(nameHbox, popularityHbox);
+
+                Button changeButton = new Button("Change");
+                borderPane.setBottom(changeButton);
+
+                changeButton.setOnAction(event2 -> {
+                    subjectObservableList.remove(selectedSubject);
+                    int popularitySubject = Integer.parseInt(popularityTextField.getText());
+                    Subject subject = new Subject(nameTextField.getText(), popularitySubject);
+                    subjectObservableList.add(subject);
+                    File deleteFile = new File("src/objectFile/subject/" + selectedSubject.getName() + ".dat");
+                    deleteFile.delete();
+                    try {
+                        fr.writeObject(subject, "src/objectFile/subject/" + nameTextField.getText() + ".dat");
+                        fr.removeFromFile("src/TextFile/SubjectPathNames.txt", "src/objectFile/subject/" + selectedSubject.getName() + ".dat");
+                        fr.addToFile("src/TextFile/SubjectPathNames.txt", "src/objectFile/subject/" + nameTextField.getText() + ".dat");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    stage.close();
+                });
+            });
+        });
+
+        classButton.setOnAction(event -> {
+            ComboBox classComboBox = new ComboBox();
+            classComboBox.setItems(classNameObservableList);
+
+            VBox vBox = new VBox();
+            vBox.getChildren().add(classComboBox);
+
+            borderPane.setCenter(vBox);
+
+            classComboBox.setOnAction(event1 -> {
+                Label nameLabel = new Label("Name:");
+                TextField nameTextField = new TextField();
+                ClassName selectedClass = (ClassName) classComboBox.getSelectionModel().getSelectedItem();
+                nameTextField.setText(selectedClass.getName());
+
+                Label numberOfStudentsLabel = new Label("Number of Students:");
+                TextField numberOfStudentsTextField = new TextField();
+                String numberOfStudents = String.valueOf(selectedClass.getNumberOfStudents());
+                numberOfStudentsTextField.setText(numberOfStudents);
+
+                HBox nameHbox = new HBox();
+                nameHbox.getChildren().addAll(nameLabel, nameTextField);
+
+                HBox numberOfStudentsHbox = new HBox();
+                numberOfStudentsHbox.getChildren().addAll(numberOfStudentsLabel, numberOfStudentsTextField);
+
+                vBox.getChildren().addAll(nameHbox, numberOfStudentsHbox);
+
+                Button changeButton = new Button("Change");
+                borderPane.setBottom(changeButton);
+
+                changeButton.setOnAction(event2 -> {
+                    classNameObservableList.remove(selectedClass);
+                    int numberOfStudentsClass = Integer.parseInt(numberOfStudentsTextField.getText());
+                    ClassName className = new ClassName(nameTextField.getText(), numberOfStudentsClass);
+                    classNameObservableList.add(className);
+                    File deleteFile = new File("src/objectFile/className/" + selectedClass.getName() + ".dat");
+                    deleteFile.delete();
+                    try {
+                        fr.writeObject(className, "src/objectFile/className/" + nameTextField.getText() + ".dat");
+                        fr.removeFromFile("src/TextFile/ClassnamePathNames.txt", "src/objectFile/className/" + selectedClass.getName() + ".dat");
+                        fr.addToFile("src/TextFile/ClassnamePathNames.txt", "src/objectFile/className/" + nameTextField.getText() + ".dat");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    stage.close();
+                });
+            });
+        });
+
+        classroomButton.setOnAction(event -> {
+            ComboBox classroomComboBox = new ComboBox();
+            classroomComboBox.setItems(classroomObservableList);
+
+            VBox vBox = new VBox();
+            vBox.getChildren().add(classroomComboBox);
+
+            borderPane.setCenter(vBox);
+
+            classroomComboBox.setOnAction(event1 -> {
+                Label nameLabel = new Label("Name:");
+                TextField nameTextField = new TextField();
+                Classroom selectedClassroom = (Classroom) classroomComboBox.getSelectionModel().getSelectedItem();
+                nameTextField.setText(selectedClassroom.getClassID());
+
+                HBox nameHbox = new HBox();
+                nameHbox.getChildren().addAll(nameLabel, nameTextField);
+
+                vBox.getChildren().addAll(nameHbox);
+
+                Button changeButton = new Button("Change");
+                borderPane.setBottom(changeButton);
+
+                changeButton.setOnAction(event2 -> {
+                    classroomObservableList.remove(selectedClassroom);
+                    Classroom classroom = new Classroom(nameTextField.getText());
+                    classroomObservableList.add(classroom);
+                    File deleteFile = new File("src/objectFile/classroom/" + selectedClassroom.getClassID() + ".dat");
+                    deleteFile.delete();
+                    try {
+                        fr.writeObject(classroom, "src/objectFile/classroom/" + nameTextField.getText() + ".dat");
+                        fr.removeFromFile("src/TextFile/ClassroomPathNames.txt", "src/objectFile/classroom/" + selectedClassroom.getClassID() + ".dat");
+                        fr.addToFile("src/TextFile/ClassroomPathNames.txt", "src/objectFile/classroom/" + nameTextField.getText() + ".dat");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    stage.close();
+                });
+            });
+        });
+
+        Scene scene = new Scene(borderPane);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void deleteButton(){
+        deleteButton.setOnAction(e -> {
+            Teacher selectedTeacher = (Teacher) teacherView.getSelectionModel().getSelectedItem();
+            if (selectedTeacher != null) {
+                try {
+                    fr.removeFromFile("src/TextFile/TeacherPathNames.txt", "src/objectFile/teacher/" + selectedTeacher.getName() + ".dat");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                teacherObservableList.remove(selectedTeacher);
+                File deleteFile = new File("src/objectFile/teacher/" + selectedTeacher.getName() + ".dat");
+                deleteFile.delete();
+            }
+            Subject selectedSubject = (Subject) subjectView.getSelectionModel().getSelectedItem();
+            if ( selectedSubject != null) {
+                try {
+                    fr.removeFromFile("src/TextFile/SubjectPathNames.txt", "src/objectFile/subject/" + selectedSubject.getName() + ".dat");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                subjectObservableList.remove(selectedSubject);
+                File deleteFile = new File("src/objectFile/Subject/" + selectedSubject.getName() + ".dat");
+                deleteFile.delete();
+            }
+            ClassName selectedClassName = (ClassName) classNameView.getSelectionModel().getSelectedItem();
+            if(selectedClassName != null){
+                try {
+                    fr.removeFromFile("src/TextFile/ClassnamePathNames.txt", "src/objectFile/className/" + selectedClassName.getName() + ".dat");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                classNameObservableList.remove(selectedClassName);
+                File deleteFile = new File("src/objectFile/className/" + selectedClassName.getName() + ".dat");
+                deleteFile.delete();
+            }
+            Classroom selectedClassroom = (Classroom) classroomView.getSelectionModel().getSelectedItem();
+            if( selectedClassroom != null){
+                try {
+                    fr.removeFromFile("src/TextFile/ClassroomPathNames.txt", "src/objectFile/classroom/" + selectedClassroom.getClassID() + ".dat");
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                classroomObservableList.remove(selectedClassroom);
+                File deleteFile = new File("src/objectFile/classroom/" + selectedClassroom.getClassID() + ".dat");
+                deleteFile.delete();
+            }
+        });
+
     }
 }
 

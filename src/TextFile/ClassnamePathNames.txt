@@ -1,0 +1,3 @@
+src/objectFile/className/Klas A.dat
+src/objectFile/className/Klas B.dat
+src/objectFile/className/Klas C.dat

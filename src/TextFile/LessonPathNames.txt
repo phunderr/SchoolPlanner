@@ -1,0 +1,3 @@
+src/objectFile/lesson/Klas BJohanMathsLA101.dat
+src/objectFile/lesson/Klas CJohanMathsLA302.dat
+src/objectFile/lesson/Klas AJohan2DGraphicsLA101.dat
