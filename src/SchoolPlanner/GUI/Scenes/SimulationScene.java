@@ -26,9 +26,12 @@ public class SimulationScene {
     private ArrayList<Character> characterArrayList;
     private Camera camera;
     private Point2D startingPoint = new Point2D.Double(1472 + 96, 2752 + 50);
+    private Shape timerShape;
+    private long timeNow;
+    private Font font;
+    private int timerIterator = 8;
 
-
-    public BorderPane simulationScene () {
+    public BorderPane simulationScene() {
         init();
         BorderPane mainPane = new BorderPane();
         this.canvas = new ResizableCanvas(this::draw, mainPane);
@@ -36,6 +39,10 @@ public class SimulationScene {
         canvas.setHeight(1080);
         canvas.setWidth(1920);
         FXGraphics2D g2d = new FXGraphics2D(canvas.getGraphicsContext2D());
+
+        this.timeNow = System.currentTimeMillis();
+        this.font = new Font("Arial", Font.PLAIN, 30);
+        this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "08:00").getOutline();
 
         this.characterArrayList = new ArrayList<>();
         characterArrayList.add(new Character(startingPoint));
@@ -45,11 +52,11 @@ public class SimulationScene {
             long last = -1;
 
             @Override
-            public void handle (long now) {
-                if ( last == -1 ) {
+            public void handle(long now) {
+                if (last == -1) {
                     last = now;
                 }
-                update(( now - last ) * 1.0e9);
+                update((now - last) * 1.0e9, g2d);
                 last = now;
                 draw(g2d);
             }
@@ -61,23 +68,28 @@ public class SimulationScene {
     }
 
 
-    public void draw (FXGraphics2D g) {
+    public void draw(FXGraphics2D g) {
         g.setTransform(new AffineTransform());
         g.setBackground(Color.BLACK);
         g.clearRect(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
-        if ( camera != null ) {
+        if(timerShape != null) {
+            g.draw(AffineTransform.getTranslateInstance(100, 100).createTransformedShape(timerShape));
+        }
+        if (camera != null) {
             g.setTransform(camera.getTransform((int) canvas.getWidth(), (int) canvas.getHeight()));
 
             map.draw(g);
-            for ( Character character : this.characterArrayList ) {
+
+            for (Character character : this.characterArrayList) {
                 character.draw(g);
             }
         }
     }
 
-    public void update (double deltaTime) {
+    public void update(double deltaTime, FXGraphics2D g2d) {
         loadinCharacters();
-        for ( Character character : characterArrayList ) {
+        updateTimer(deltaTime, g2d);
+        for (Character character : characterArrayList) {
             character.update(characterArrayList);
         }
 
@@ -90,14 +102,32 @@ public class SimulationScene {
             }
         }
         boolean containsteacher = false;
-        for ( Character character : characterArrayList ) {
-            if ( character instanceof Teacher ) {
+        for (Character character : characterArrayList) {
+            if (character instanceof Teacher) {
                 containsteacher = true;
             }
         }
     }
 
-    public void init () {
+    public void updateTimer(double deltaTime, FXGraphics2D g2d) {
+        long newTime = System.currentTimeMillis();
+        if (newTime - timeNow > 10000) {
+            if (timerIterator < 10) {
+                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + timerIterator + ":00").getOutline();
+                timerIterator++;
+            } else {
+                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), timerIterator + ":00").getOutline();
+                timerIterator++;
+            }
+            if (timerIterator > 17) {
+                timerIterator = 8;
+            }
+            timeNow = System.currentTimeMillis();
+        }
+
+    }
+
+    public void init() {
         this.camera = null;
         map = new Map("/maps/SchoolPlannerMap.json");
     }
