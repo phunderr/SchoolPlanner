@@ -3,10 +3,7 @@ package simulation.tiled;
 import org.jfree.fx.FXGraphics2D;
 import simulation.NPC.Character;
 import javax.imageio.ImageIO;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+import javax.json.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -32,13 +29,23 @@ public class Map {
         init();
         JsonReader reader = Json.createReader(getClass().getResourceAsStream(fileName));
         JsonObject root = reader.readObject();
+        ArrayList<JsonObject> finalObjects = new ArrayList<>();
+        JsonArray layerArray = root.getJsonArray("layers");
+        int layerAmount = root.getJsonArray("layers").size();
+        for (int i = 0; i < layerAmount; i++){
+            if (layerArray.getJsonObject(i).getJsonString("type").toString().equals("objectgroup")){
+                JsonArray objectArray = layerArray.getJsonObject(i).getJsonArray("objects");
+                System.out.println(objectArray.size());
+            }
+        }
 
+        //
         width = root.getInt("width");
         height = root.getInt("height");
         JsonArray layersArray = root.getJsonArray("layers");
         JsonArray tileset = root.getJsonArray("tilesets");
         sprites = new ArrayList<>();
-        int layerAmount = root.getJsonArray("layers").size();
+
 
 
         //load the layers

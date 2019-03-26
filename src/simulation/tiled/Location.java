@@ -2,12 +2,11 @@ package simulation.tiled;
 
 import javax.json.JsonObject;
 
-public class ObjectLayer extends Layer {
+public class Location {
 
     private int x, y;
 
-    public ObjectLayer (JsonObject layer, int x, int y) {
-        super(layer, null);
+    public Location(int x, int y) {
         this.x = x;
         this.y = y;
     }
