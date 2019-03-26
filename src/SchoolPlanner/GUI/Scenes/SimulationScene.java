@@ -29,7 +29,8 @@ public class SimulationScene {
     private Shape timerShape;
     private long timeNow;
     private Font font;
-    private int timerIterator = 8;
+    private int hoursIterator = 8;
+    private int secondsIterator = 0;
 
     public BorderPane simulationScene() {
         init();
@@ -111,17 +112,33 @@ public class SimulationScene {
 
     public void updateTimer(double deltaTime, FXGraphics2D g2d) {
         long newTime = System.currentTimeMillis();
-        if (newTime - timeNow > 10000) {
-            if (timerIterator < 10) {
-                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + timerIterator + ":00").getOutline();
-                timerIterator++;
+        if(newTime-timeNow > 167 *10){
+            secondsIterator++;
+        }
+
+
+
+        if (newTime - timeNow > 1000) {
+            if(secondsIterator < 10){
+                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + hoursIterator + ":0" + secondsIterator).getOutline();
+            } else if(secondsIterator == 59){
+                secondsIterator = 0;
             } else {
-                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), timerIterator + ":00").getOutline();
-                timerIterator++;
+                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + hoursIterator + ":" + secondsIterator).getOutline();
             }
-            if (timerIterator > 17) {
-                timerIterator = 8;
-            }
+//            if (hoursIterator < 10) {
+//                hoursIterator++;
+//            } else {
+//                if(secondsIterator<10){
+//                    this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(),hoursIterator + ":0" + secondsIterator).getOutline();
+//                } else {
+//                    this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), hoursIterator + ":" + secondsIterator).getOutline();
+//                }
+//                hoursIterator++;
+//            }
+//            if (hoursIterator > 17) {
+//                hoursIterator = 8;
+//            }
             timeNow = System.currentTimeMillis();
         }
 
