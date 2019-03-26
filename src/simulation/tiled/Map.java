@@ -23,6 +23,7 @@ public class Map {
     private ArrayList<BufferedImage> sprites;
 
     private ArrayList<Layer> layers;
+    private ArrayList<Location> locations;
     private ArrayList<JsonObject> layers2;
 
     public Map(String fileName) {
@@ -31,12 +32,21 @@ public class Map {
         JsonObject root = reader.readObject();
         ArrayList<JsonObject> finalObjects = new ArrayList<>();
         JsonArray layerArray = root.getJsonArray("layers");
+        JsonArray finalObjectArray = null;
         int layerAmount = root.getJsonArray("layers").size();
         for (int i = 0; i < layerAmount; i++){
             if (layerArray.getJsonObject(i).getJsonString("type").toString().equals("objectgroup")){
                 JsonArray objectArray = layerArray.getJsonObject(i).getJsonArray("objects");
-                System.out.println(objectArray.size());
+                finalObjectArray = objectArray;
             }
+        }
+        System.out.println(finalObjectArray);
+        locations = new ArrayList<>();
+
+        for (int i = 0; i < finalObjectArray.size(); i++) {
+//                Location currentLocation = new Location(Integer.parseInt(finalObjectArray.getJsonObject(i).getJsonString("x").toString()),Integer.parseInt(finalObjectArray.getJsonObject(i).getJsonString("y").toString()),finalObjectArray.getJsonObject(i).getJsonString("name").getString());
+            Location currentlocation = new Location(((finalObjectArray.getJsonObject(i).getInt("x"))),((finalObjectArray.getJsonObject(i).getInt("y"))),finalObjectArray.getJsonObject(i).getJsonString("name").getString());
+            System.out.println(currentlocation.toString());
         }
 
         //
@@ -45,6 +55,7 @@ public class Map {
         JsonArray layersArray = root.getJsonArray("layers");
         JsonArray tileset = root.getJsonArray("tilesets");
         sprites = new ArrayList<>();
+
 
 
 
