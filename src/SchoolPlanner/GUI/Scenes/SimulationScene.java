@@ -29,8 +29,6 @@ public class SimulationScene {
     private Shape timerShape;
     private long timeNow;
     private Font font;
-    private int hoursIterator = 8;
-    private int secondsIterator = 0;
 
     public BorderPane simulationScene() {
         init();
@@ -111,38 +109,68 @@ public class SimulationScene {
     }
 
     public void updateTimer(double deltaTime, FXGraphics2D g2d) {
+
+        int starTime = 8;
         long newTime = System.currentTimeMillis();
-        if(newTime-timeNow > 167 *10){
-            secondsIterator++;
+        long elapsedTime = newTime - timeNow;
+        long elapsedseconds = elapsedTime / 1000;
+        long elapsedsecondsDisplay = elapsedseconds % 60;
+        long elapsedminutes = elapsedseconds / 60;
+
+
+        if(elapsedsecondsDisplay > 9){
+            this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + (starTime + elapsedminutes) + ":" + elapsedsecondsDisplay).getOutline();
+            if((starTime + elapsedminutes) > 9){
+                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), (starTime + elapsedminutes) + ":" + elapsedsecondsDisplay).getOutline();
+            }
+        } else {
+            this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + (starTime + elapsedminutes) + ":0" + elapsedsecondsDisplay).getOutline();
+            if((starTime + elapsedminutes) > 9){
+                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), (starTime + elapsedminutes) + ":" + elapsedsecondsDisplay).getOutline();
+            }
         }
 
 
 
-        if (newTime - timeNow > 1000) {
-            if(secondsIterator < 10){
-                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + hoursIterator + ":0" + secondsIterator).getOutline();
-            } else if(secondsIterator == 59){
-                secondsIterator = 0;
-            } else {
-                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + hoursIterator + ":" + secondsIterator).getOutline();
-            }
-//            if (hoursIterator < 10) {
+
+
+//        System.out.println(elapsedseconds);
+//        if(System.currentTimeMillis() % 1000 >= 970) {
+//            secondsIterator++;
+//            if (secondsIterator < 10) {
+//
+//            } else if(secondsIterator == 59){
+//                secondsIterator = 0;
 //                hoursIterator++;
 //            } else {
-//                if(secondsIterator<10){
-//                    this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(),hoursIterator + ":0" + secondsIterator).getOutline();
-//                } else {
-//                    this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), hoursIterator + ":" + secondsIterator).getOutline();
-//                }
-//                hoursIterator++;
+//                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + hoursIterator + ":" + secondsIterator).getOutline();
 //            }
-//            if (hoursIterator > 17) {
-//                hoursIterator = 8;
+//        }
+//
+//        if (newTime - timeNow > 1000) {
+//            if(secondsIterator < 10){
+//                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + hoursIterator + ":0" + secondsIterator).getOutline();
+//            } else if(secondsIterator == 59){
+//                secondsIterator = 0;
+//            } else {
+//                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + hoursIterator + ":" + secondsIterator).getOutline();
 //            }
-            timeNow = System.currentTimeMillis();
+////            if (hoursIterator < 10) {
+////                hoursIterator++;
+////            } else {
+////                if(secondsIterator<10){
+////                    this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(),hoursIterator + ":0" + secondsIterator).getOutline();
+////                } else {
+////                    this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), hoursIterator + ":" + secondsIterator).getOutline();
+////                }
+////                hoursIterator++;
+////            }
+////            if (hoursIterator > 17) {
+////                hoursIterator = 8;
+////            }
+//            timeNow = System.currentTimeMillis();
         }
 
-    }
 
     public void init() {
         this.camera = null;
