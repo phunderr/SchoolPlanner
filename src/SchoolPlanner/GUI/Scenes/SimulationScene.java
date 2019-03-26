@@ -113,7 +113,7 @@ public class SimulationScene {
         int starTime = 8;
         long newTime = System.currentTimeMillis();
         long elapsedTime = newTime - timeNow;
-        long elapsedseconds = elapsedTime / 10;
+        long elapsedseconds = elapsedTime / 1000;
         long elapsedsecondsDisplay = elapsedseconds % 60;
         long elapsedminutes = elapsedseconds / 60;
         long elapsedminutesDisplay = elapsedminutes % 9;
