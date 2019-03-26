@@ -15,14 +15,16 @@ public  class Character {
     private Point2D pos;
     private double angle;
     private double speed = 2;
+    private Point2D dirVector;
     private Shape shape;
     private Point2D target;
 
-    public Character () {
-        this.pos = new Point2D.Double(960,1000);
+    public Character (Point2D pos) {
+        this.pos = pos;
         this.angle = 0;
         shape = new Ellipse2D.Double(-50, -50, 16, 16);
         this.target = new Point2D.Double(100,100);
+        dirVector = new Point2D.Double(0, 0);
     }
 
     public void draw(FXGraphics2D g){
@@ -42,31 +44,20 @@ public  class Character {
 
         Point2D.Double newPosition = new Point2D.Double(0,0);
         if(pos.getX() < target.getX()){
-            newPosition = new Point2D.Double(pos.getX() + speed, pos.getY());
+            dirVector.setLocation(speed , 0);
         }
         if(pos.getX() > target.getX()){
-            newPosition = new Point2D.Double(pos.getX() - speed, pos.getY());
+            dirVector.setLocation(-speed , 0);
         }
         if(pos.getY() < target.getY()){
-            newPosition = new Point2D.Double(pos.getX(), pos.getY() + speed);
+            dirVector.setLocation(0 , speed);
         }
         if(pos.getY() > target.getY()){
-            newPosition = new Point2D.Double(pos.getX(), pos.getY() - speed);
+            dirVector.setLocation(0 , -speed);
         }
-//        double targetAngle = Math.atan2(diff.getY(), diff.getX());
-//
-//        double angleDiff = targetAngle - angle;
-//        while(angleDiff > Math.PI)
-//            angleDiff -= 2 * Math.PI;
-//        while(angleDiff < -Math.PI)
-//            angleDiff += 2 * Math.PI;
-//
-//        if(angleDiff < -0.1)
-//            angle-=0.1;
-//        else if(angleDiff > 0.1)
-//            angle+=0.1;
-//        else
-//            this.angle = targetAngle;
+
+        newPosition.setLocation(pos.getX() + dirVector.getX(), pos.getY() + dirVector.getY());
+
 
         boolean hasCollision = false;
         for(Character character : characters)
@@ -74,6 +65,7 @@ public  class Character {
             if(character != this && this.hasCollisionCharacter(character))
             {
                 hasCollision = true;
+
                 break;
             }
         }
@@ -96,12 +88,12 @@ public  class Character {
     }
 
     public boolean hasCollisionCharacter(Character otherVisitor) {
-        return otherVisitor.pos.distance(pos) < 15;
+        return otherVisitor.pos.distance(pos) < 16;
     }
 
     public boolean hasCollisionPoint(Point2D otherPosition)
     {
-        return otherPosition.distance(pos) < 15;
+        return otherPosition.distance(pos) < 16;
     }
 
     public double getDistance(Point2D pointCompare){
@@ -110,5 +102,21 @@ public  class Character {
 
     public void setName(String name){
         this.name = name;
+    }
+
+    public Point2D getDirVector () {
+        return dirVector;
+    }
+
+    public void setDirVector (Point2D dirVector) {
+        this.dirVector = dirVector;
+    }
+
+    public double getSpeed () {
+        return speed;
+    }
+
+    public void setSpeed (double speed) {
+        this.speed = speed;
     }
 }

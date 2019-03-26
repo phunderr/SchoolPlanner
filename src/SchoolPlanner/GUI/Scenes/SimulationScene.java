@@ -25,20 +25,20 @@ public class SimulationScene {
     private Map map;
     private ArrayList<Character> characterArrayList;
     private Camera camera;
-    private Point2D startingPoint = new Point2D.Double(960, 1000);
+    private Point2D startingPoint = new Point2D.Double(1472 + 96, 2752 + 50);
 
 
     public BorderPane simulationScene () {
         init();
         BorderPane mainPane = new BorderPane();
-        this.canvas = new ResizableCanvas(g -> draw(g), mainPane);
+        this.canvas = new ResizableCanvas(this::draw, mainPane);
         mainPane.setCenter(canvas);
         canvas.setHeight(1080);
         canvas.setWidth(1920);
         FXGraphics2D g2d = new FXGraphics2D(canvas.getGraphicsContext2D());
 
         this.characterArrayList = new ArrayList<>();
-        characterArrayList.add(new Character());
+        characterArrayList.add(new Character(startingPoint));
 
 
         new AnimationTimer() {
@@ -55,7 +55,7 @@ public class SimulationScene {
             }
         }.start();
 
-        camera = new Camera(canvas, g -> draw(g), g2d);
+        camera = new Camera(canvas, this::draw, g2d);
 
         return mainPane;
     }
@@ -84,9 +84,9 @@ public class SimulationScene {
     }
 
     private void loadinCharacters () {
-        if ( characterArrayList.size() < 10 ) {
+        if ( characterArrayList.size() < 51 ) {
             if ( characterArrayList.get(characterArrayList.size() - 1).getDistance(startingPoint) > 32 ) {
-                characterArrayList.add(new Character());
+                characterArrayList.add(new Character(startingPoint));
             }
         }
         boolean containsteacher = false;
