@@ -27,7 +27,7 @@ public  class Character {
         dirVector = new Point2D.Double(0, 0);
     }
 
-    public void draw(FXGraphics2D g){
+    public void draw(Graphics2D g){
         g.setColor(Color.decode("#ffff00"));
         g.fill(getTransformedShape());
     }

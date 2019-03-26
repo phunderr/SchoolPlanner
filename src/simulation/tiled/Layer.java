@@ -47,7 +47,7 @@ public class Layer {
         return tiles;
     }
 
-    public void draw(FXGraphics2D g) {
+    public void draw(Graphics2D g) {
         //if ( layerImage != null ){
         for (Tile tile : tiles) {
             g.drawImage(tile.getBf(),(int)tile.getLocation().getX(),(int)tile.getLocation().getY(),null);
