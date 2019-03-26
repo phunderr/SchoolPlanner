@@ -23,7 +23,7 @@ public  class Character {
         this.pos = pos;
         this.angle = 0;
         shape = new Ellipse2D.Double(-50, -50, 16, 16);
-        this.target = new Point2D.Double(100,100);
+        this.target = new Point2D.Double(1472,2752);
         dirVector = new Point2D.Double(0, 0);
     }
 
@@ -65,6 +65,10 @@ public  class Character {
             if(character != this && this.hasCollisionCharacter(character))
             {
                 hasCollision = true;
+
+                if ( Math.random() > 0.50 ){
+                    dirVector.setLocation(0 , -speed);
+                }
 
                 break;
             }
