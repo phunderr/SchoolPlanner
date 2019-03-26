@@ -113,63 +113,26 @@ public class SimulationScene {
         int starTime = 8;
         long newTime = System.currentTimeMillis();
         long elapsedTime = newTime - timeNow;
-        long elapsedseconds = elapsedTime / 1000;
+        long elapsedseconds = elapsedTime / 10;
         long elapsedsecondsDisplay = elapsedseconds % 60;
         long elapsedminutes = elapsedseconds / 60;
+        long elapsedminutesDisplay = elapsedminutes % 9;
 
 
         if(elapsedsecondsDisplay > 9){
-            this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + (starTime + elapsedminutes) + ":" + elapsedsecondsDisplay).getOutline();
-            if((starTime + elapsedminutes) > 9){
-                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), (starTime + elapsedminutes) + ":" + elapsedsecondsDisplay).getOutline();
+            this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + (starTime + elapsedminutesDisplay) + ":" + elapsedsecondsDisplay).getOutline();
+            if((starTime + elapsedminutesDisplay) > 9){
+                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), (starTime + elapsedminutesDisplay) + ":" + elapsedsecondsDisplay).getOutline();
             }
         } else {
-            this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + (starTime + elapsedminutes) + ":0" + elapsedsecondsDisplay).getOutline();
-            if((starTime + elapsedminutes) > 9){
-                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), (starTime + elapsedminutes) + ":" + elapsedsecondsDisplay).getOutline();
+            this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + (starTime + elapsedminutesDisplay) + ":0" + elapsedsecondsDisplay).getOutline();
+            if((starTime + elapsedminutesDisplay) > 9){
+                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), (starTime + elapsedminutesDisplay) + ":" + elapsedsecondsDisplay).getOutline();
             }
         }
 
 
-
-
-
-//        System.out.println(elapsedseconds);
-//        if(System.currentTimeMillis() % 1000 >= 970) {
-//            secondsIterator++;
-//            if (secondsIterator < 10) {
-//
-//            } else if(secondsIterator == 59){
-//                secondsIterator = 0;
-//                hoursIterator++;
-//            } else {
-//                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + hoursIterator + ":" + secondsIterator).getOutline();
-//            }
-//        }
-//
-//        if (newTime - timeNow > 1000) {
-//            if(secondsIterator < 10){
-//                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + hoursIterator + ":0" + secondsIterator).getOutline();
-//            } else if(secondsIterator == 59){
-//                secondsIterator = 0;
-//            } else {
-//                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + hoursIterator + ":" + secondsIterator).getOutline();
-//            }
-////            if (hoursIterator < 10) {
-////                hoursIterator++;
-////            } else {
-////                if(secondsIterator<10){
-////                    this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(),hoursIterator + ":0" + secondsIterator).getOutline();
-////                } else {
-////                    this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), hoursIterator + ":" + secondsIterator).getOutline();
-////                }
-////                hoursIterator++;
-////            }
-////            if (hoursIterator > 17) {
-////                hoursIterator = 8;
-////            }
-//            timeNow = System.currentTimeMillis();
-        }
+    }
 
 
     public void init() {
