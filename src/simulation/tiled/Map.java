@@ -13,6 +13,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class Map {
 
@@ -25,6 +26,7 @@ public class Map {
     private ArrayList<Layer> layers;
     private ArrayList<Location> locations;
     private ArrayList<JsonObject> layers2;
+    private BufferedImage finalImage = new BufferedImage(100*32,100*32,BufferedImage.TYPE_INT_ARGB);
 
     public Map(String fileName) {
         init();
@@ -83,15 +85,26 @@ public class Map {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        getFinalMapImage();
+    }
 
-
+    public void getFinalMapImage(){
+        Graphics g = finalImage.getGraphics();
+        try {
+            for (Layer layer : layers) {
+                for (Tile tile : layer.getTiles()) {
+                    g.drawImage(tile.getBf(),(int)tile.getLocation().getX(),(int)tile.getLocation().getY(),null);
+                }
+            }
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
 
+
     public void draw(FXGraphics2D g) {
-        for (Layer layer:layers) {
-            layer.draw(g);
-        }
+        g.drawImage(finalImage,0,0,null);
     }
 
 
