@@ -118,10 +118,10 @@ public class SimulationScene {
                             }
                             if (lesson.getLessonPeriod().getLessonStartTime().substring(0, 2).equals(schoolTimerString)) {
                                 if (lesson.getaClass().getName().equals(className.getName())) {
-                                    for (Location location : Map.locations) {
-                                        for (Classroom classroom : classrooms) {
+                                    for (Classroom classroom : classrooms) {
+                                        for (Location location : Map.locations) {
                                             if (location.getName().equals(classroom.getClassID())) {
-                                                character.setTarget(new Point2D.Double(location.getLocation().getX(), location.getLocation().getY()));
+                                                character.setTarget(location.getLocation());
                                             }
                                         }
                                     }
@@ -137,11 +137,20 @@ public class SimulationScene {
 
 
     private void loadinCharacters() {
-        if (characterArrayList.size() < 51) {
-            if (characterArrayList.get(characterArrayList.size() - 1).getDistance(startingPoint) > 32) {
-                for (ClassName className : getClasses()) {
-                    for (int i = 0; i < 18; i++) {
-                        characterArrayList.add(new Student(startingPoint, className));
+        int currentAmountOfStudents = 0;
+        if (characterArrayList.size() < 64) {
+
+            int r = ((int) (Math.random() * classNames.size()));
+            for (int i = 0; i < characterArrayList.size(); i++) {
+                if (characterArrayList.get(i) instanceof Student) {
+                    if (((Student) characterArrayList.get(i)).getClassName().getName().equals(classNames.get(r).getName())) {
+                        currentAmountOfStudents++;
+                    }
+                }
+                if (characterArrayList.get(characterArrayList.size() - 1).getDistance(startingPoint) > 32) {
+
+                    if (classNames.get(r).getNumberOfStudents() > currentAmountOfStudents) {
+                        characterArrayList.add(new Student(startingPoint, classNames.get(r)));
                     }
                 }
             }
