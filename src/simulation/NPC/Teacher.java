@@ -11,8 +11,7 @@ public class Teacher extends Character {
         super(pos);
     }
 
-    @Override
-    public void draw(Graphics2D g) {
+    public void draw(FXGraphics2D g) {
         g.setColor(Color.decode("#5c42f4"));
         g.fill(getTransformedShape());
     }

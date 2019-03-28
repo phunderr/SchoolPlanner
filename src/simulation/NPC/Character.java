@@ -42,25 +42,40 @@ public  class Character {
 
     public void update(ArrayList<Character> characters){
 
-        Point2D newPosition = new Point2D.Double(pos.getX() + speed * Math.cos(angle), pos.getY() + speed* Math.sin(angle));
+        Point2D.Double newPosition = new Point2D.Double(0,0);
+        if(pos.getX() < target.getX()){
+            dirVector.setLocation(speed , 0);
+        }
+        if(pos.getX() > target.getX()){
+            dirVector.setLocation(-speed , 0);
+        }
+        if(pos.getY() < target.getY()){
+            dirVector.setLocation(0 , speed);
+        }
+        if(pos.getY() > target.getY()){
+            dirVector.setLocation(0 , -speed);
+        }
 
-        //newPosition.setLocation(pos.getX() + dirVector.getX(), pos.getY() + dirVector.getY());
+        newPosition.setLocation(pos.getX() + dirVector.getX(), pos.getY() + dirVector.getY());
 
 
         boolean hasCollision = false;
         for(Character character : characters)
         {
-            if(character != this && (this.hasCollisionCharacter(character) ||character.hasCollisionPoint(newPosition)))
+            if(character != this && this.hasCollisionCharacter(character))
             {
                 hasCollision = true;
+
+                if ( Math.random() > 0.50 ){
+                    dirVector.setLocation(0 , -speed);
+                }
+
                 break;
             }
         }
 
         if(!hasCollision) {
             setPos(newPosition);
-        }else{
-            this.angle += 2;
         }
     }
 
@@ -68,7 +83,7 @@ public  class Character {
         this.target = target;
     }
 
-    private void setPos(Point2D pos){
+    private void setPos(Point2D.Double pos){
         this.pos = pos;
     }
 
