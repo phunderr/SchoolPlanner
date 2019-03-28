@@ -1,5 +1,7 @@
 package SchoolPlanner.GUI.Scenes;
 
+import SchoolPlanner.Data.ClassName;
+import SchoolPlanner.Data.Classroom;
 import SchoolPlanner.Data.Lesson;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -9,8 +11,10 @@ import javafx.stage.Stage;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 import simulation.NPC.Character;
+import simulation.NPC.Student;
 import simulation.NPC.Teacher;
 import simulation.tiled.Camera;
+import simulation.tiled.Location;
 import simulation.tiled.Map;
 
 import java.awt.*;
@@ -37,6 +41,8 @@ public class SimulationScene {
     private Font font;
     public static LocalTime schoolTime;
     private ArrayList<Lesson> lessons;
+    private ArrayList<ClassName> classNames;
+    private ArrayList<Classroom> classrooms;
 
     public BorderPane simulationScene() {
         init();
@@ -79,9 +85,7 @@ public class SimulationScene {
         g.setTransform(new AffineTransform());
         g.setBackground(Color.BLACK);
         g.clearRect(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
-        if (timerShape != null) {
-            g.draw(AffineTransform.getTranslateInstance(100, 100).createTransformedShape(timerShape));
-        }
+
         if (camera != null) {
             g.setTransform(camera.getTransform((int) canvas.getWidth(), (int) canvas.getHeight()));
 
@@ -91,6 +95,10 @@ public class SimulationScene {
                 character.draw(g);
             }
         }
+        if (timerShape != null) {
+            g.setTransform(new AffineTransform());
+            g.draw(AffineTransform.getTranslateInstance(100, 100).createTransformedShape(timerShape));
+        }
 
     }
 
@@ -98,15 +106,44 @@ public class SimulationScene {
         loadinCharacters();
         updateTimer(deltaTime, g2d);
         for (Character character : characterArrayList) {
+            if (character instanceof Student) {
+                for (ClassName className : classNames) {
+                    if (((Student) character).getClassName().getName().equals(className.getName())) {
+                        for (Lesson lesson : lessons) {
+                            String schoolTimerString;
+                            if (schoolTime.getHour() < 10) {
+                                schoolTimerString = "0" + schoolTime.getHour();
+                            } else {
+                                schoolTimerString = "" + schoolTime.getHour();
+                            }
+                            if (lesson.getLessonPeriod().getLessonStartTime().substring(0, 2).equals(schoolTimerString)) {
+                                if (lesson.getaClass().getName().equals(className.getName())) {
+                                    for (Location location : Map.locations) {
+                                        for (Classroom classroom : classrooms) {
+                                            if (location.getName().equals(classroom.getClassID())) {
+                                                character.setTarget(new Point2D.Double(location.getLocation().getX(), location.getLocation().getY()));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             character.update(characterArrayList);
         }
-
     }
+
 
     private void loadinCharacters() {
         if (characterArrayList.size() < 51) {
             if (characterArrayList.get(characterArrayList.size() - 1).getDistance(startingPoint) > 32) {
-                characterArrayList.add(new Character(startingPoint));
+                for (ClassName className : getClasses()) {
+                    for (int i = 0; i < 18; i++) {
+                        characterArrayList.add(new Student(startingPoint, className));
+                    }
+                }
             }
         }
         boolean containsteacher = false;
@@ -147,8 +184,8 @@ public class SimulationScene {
 
     }
 
-    public ArrayList<File> loadFiles(){
-        File folder = new File("src\\objectFile\\lesson");
+    public ArrayList<File> loadFiles(String pathname) {
+        File folder = new File(pathname);
         File[] listOfFiles = folder.listFiles();
         ArrayList<File> files = new ArrayList<>();
 
@@ -162,7 +199,7 @@ public class SimulationScene {
 
     public ArrayList<Lesson> getLesson() {
         ArrayList<Lesson> lessons = new ArrayList<>();
-        ArrayList<File> files = loadFiles();
+        ArrayList<File> files = loadFiles("src\\objectFile\\lesson");
         for (int i = 0; i < files.size(); i++) {
             File file = new File(files.get(i).getAbsolutePath());
             Lesson lesson = null;
@@ -178,8 +215,46 @@ public class SimulationScene {
         return lessons;
     }
 
+    public ArrayList<ClassName> getClasses() {
+        ArrayList<ClassName> classNames = new ArrayList<>();
+        ArrayList<File> files = loadFiles("src\\objectFile\\className");
+        for (int i = 0; i < files.size(); i++) {
+            File file = new File(files.get(i).getAbsolutePath());
+            ClassName className = null;
+            try (ObjectInputStream reader = new ObjectInputStream(new FileInputStream(file))) {
+                className = (ClassName) reader.readObject();
+                classNames.add(className);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return classNames;
+    }
+
+    public ArrayList<Classroom> getClassRooms() {
+        ArrayList<Classroom> classrooms = new ArrayList<>();
+        ArrayList<File> files = loadFiles("src\\objectFile\\classroom");
+        for (int i = 0; i < files.size(); i++) {
+            File file = new File(files.get(i).getAbsolutePath());
+            Classroom classroom = null;
+            try (ObjectInputStream reader = new ObjectInputStream(new FileInputStream(file))) {
+                classroom = (Classroom) reader.readObject();
+                classrooms.add(classroom);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return classrooms;
+    }
+
     public void init() {
         lessons = getLesson();
+        classNames = getClasses();
+        classrooms = getClassRooms();
         System.out.println(lessons);
         this.camera = null;
         map = new Map("/maps/SchoolPlannerMap.json");

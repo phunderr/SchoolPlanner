@@ -1,8 +1,8 @@
 package simulation.tiled;
 
-import javafx.geometry.Point2D;
 
 import javax.json.JsonObject;
+import java.awt.geom.Point2D;
 
 public class Location {
 
@@ -10,10 +10,17 @@ public class Location {
     private String name;
 
     public Location(int x, int y,String name) {
-        this.location = new Point2D(x,y);
+        this.location = new Point2D.Double(x,y);
         this.name = name;
     }
 
+    public Point2D getLocation() {
+        return location;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     @Override
     public String toString() {
