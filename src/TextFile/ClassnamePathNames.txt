@@ -1,4 +1,4 @@
+src/objectFile/className/Klas A.dat
+src/objectFile/className/Klas B.dat
 src/objectFile/className/Klas C.dat
 src/objectFile/className/Klas D.dat
-src/objectFile/className/Klas B.dat
-src/objectFile/className/Klas A.dat
