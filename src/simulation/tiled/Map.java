@@ -24,7 +24,7 @@ public class Map {
     private ArrayList<BufferedImage> sprites;
 
     private ArrayList<Layer> layers;
-    private ArrayList<Location> locations;
+    public static ArrayList<Location> locations;
     private ArrayList<JsonObject> layers2;
     private BufferedImage finalImage = new BufferedImage(100*32,100*32,BufferedImage.TYPE_INT_ARGB);
 
@@ -48,7 +48,7 @@ public class Map {
         for (int i = 0; i < finalObjectArray.size(); i++) {
 //                Location currentLocation = new Location(Integer.parseInt(finalObjectArray.getJsonObject(i).getJsonString("x").toString()),Integer.parseInt(finalObjectArray.getJsonObject(i).getJsonString("y").toString()),finalObjectArray.getJsonObject(i).getJsonString("name").getString());
             Location currentlocation = new Location(((finalObjectArray.getJsonObject(i).getInt("x"))),((finalObjectArray.getJsonObject(i).getInt("y"))),finalObjectArray.getJsonObject(i).getJsonString("name").getString());
-            System.out.println(currentlocation.toString());
+            locations.add(currentlocation);
         }
 
         //

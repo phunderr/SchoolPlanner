@@ -1,3 +1,4 @@
 src/objectFile/lesson/Klas AJohan2DGraphicsLA101.dat
-src/objectFile/lesson/Klas CPieterMathsLD108.dat
-src/objectFile/lesson/Klas BEttiëne2DGraphicsLA302.dat
+src/objectFile/lesson/Klas BPieterMathsLA102.dat
+src/objectFile/lesson/Klas CEttiëneOGPLA103.dat
+src/objectFile/lesson/Klas CEttiëneMathsLA104.dat
