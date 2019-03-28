@@ -1,5 +1,6 @@
 package simulation.tiled;
 
+import SchoolPlanner.GUI.Scenes.SimulationScene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -19,13 +20,17 @@ public class Camera {
     private Canvas canvas;
     private Resizable resizable;
     private FXGraphics2D g2d;
+    private SimulationScene ss;
 
-    public Camera(Canvas canvas, Resizable resizable, FXGraphics2D g2d) {
+    public Camera(Canvas canvas, Resizable resizable, FXGraphics2D g2d, SimulationScene ss) {
         this.canvas = canvas;
         this.resizable = resizable;
         this.g2d = g2d;
+        this.ss = ss;
 
-        canvas.setOnMousePressed(e -> lastMousePos = new Point2D.Double(e.getX(), e.getY()));
+        canvas.setOnMousePressed(e -> {lastMousePos = new Point2D.Double(e.getX(), e.getY());
+            ss.setStarted();
+        });
         canvas.setOnMouseDragged(this::mouseDragged);
         canvas.setOnScroll(this::mouseScroll);
     }

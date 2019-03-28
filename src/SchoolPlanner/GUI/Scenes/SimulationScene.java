@@ -4,6 +4,9 @@ import SchoolPlanner.Data.ClassName;
 import SchoolPlanner.Data.Classroom;
 import SchoolPlanner.Data.Lesson;
 import javafx.animation.AnimationTimer;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
@@ -22,6 +25,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SimulationScene {
 
@@ -37,7 +41,8 @@ public class SimulationScene {
     public static LocalTime schoolTime;
     private ArrayList<Lesson> lessons;
     private ArrayList<ClassName> classNames;
-    private ArrayList<Classroom> classrooms;
+    private ArrayList<Classroom> list;
+    private boolean isStarted = false;
 
     BorderPane simulationScene() {
         init();
@@ -64,13 +69,15 @@ public class SimulationScene {
                 if (last == -1) {
                     last = now;
                 }
-                update((now - last) * 1.0e9, g2d);
+                if ( isStarted )
+                    update((now - last) * 1.0e9, g2d);
                 last = now;
                 draw(g2d);
+
             }
         }.start();
 
-        camera = new Camera(canvas, this::draw, g2d);
+        camera = new Camera(canvas, this::draw, g2d, this);
 
         return mainPane;
     }
@@ -112,10 +119,10 @@ public class SimulationScene {
                                     Integer.parseInt(lesson.getLessonPeriod().getLessonEndTime().substring(0, 2)) > schoolTime.getHour()
 
                                     ) {
-                                    for (Classroom classroom : classrooms) {
+                                    for (Classroom classroom : list ) {
                                         for (Location location : Map.locations) {
                                             if (location.getName().equals(classroom.getClassID()) && classroom.getClassID().equals(lesson.getClassroom().getClassID())) {
-                                                character.setTarget(location.getLocation());
+                                                character.setTarget(new Point2D.Double(location.getLocation().getX() + 100 , location.getLocation().getY() + 100));
                                             }
                                         }
                                     }
@@ -127,7 +134,11 @@ public class SimulationScene {
             }
             character.update(characterArrayList);
         }
+        canvas.requestFocus();
+        canvas.setOnMouseClicked(e -> System.out.println("sup"));
     }
+
+
 
 
     private void loadingCharacters () {
@@ -152,28 +163,28 @@ public class SimulationScene {
 
     public void updateTimer(double deltaTime, FXGraphics2D g2d) {
 
-        int starTime = 8;
+        int startTime = 8;
         long newTime = System.currentTimeMillis();
         long elapsedTime = newTime - timeNow;
         long elapsedseconds = elapsedTime / 500;
         long elapsedsecondsDisplay = elapsedseconds % 60;
         long elapsedminutes = elapsedseconds / 60;
         long elapsedminutesDisplay = elapsedminutes % 9;
-
+        System.out.println(newTime);
 
         if (elapsedsecondsDisplay > 9) {
-            this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + (starTime + elapsedminutesDisplay) + ":" + elapsedsecondsDisplay).getOutline();
-            schoolTime = LocalTime.of(starTime + (int) elapsedminutesDisplay, (int) elapsedsecondsDisplay);
-            if ((starTime + elapsedminutesDisplay) > 9) {
-                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), (starTime + elapsedminutesDisplay) + ":" + elapsedsecondsDisplay).getOutline();
-                schoolTime = LocalTime.of(starTime + (int) elapsedminutesDisplay, (int) elapsedsecondsDisplay);
+            this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + (startTime + elapsedminutesDisplay) + ":" + elapsedsecondsDisplay).getOutline();
+            schoolTime = LocalTime.of(startTime + (int) elapsedminutesDisplay, (int) elapsedsecondsDisplay);
+            if ((startTime + elapsedminutesDisplay) > 9) {
+                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), (startTime + elapsedminutesDisplay) + ":" + elapsedsecondsDisplay).getOutline();
+                schoolTime = LocalTime.of(startTime + (int) elapsedminutesDisplay, (int) elapsedsecondsDisplay);
             }
         } else {
-            this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + (starTime + elapsedminutesDisplay) + ":0" + elapsedsecondsDisplay).getOutline();
-            schoolTime = LocalTime.of(starTime + (int) elapsedminutesDisplay, (int) elapsedsecondsDisplay);
-            if ((starTime + elapsedminutesDisplay) > 9) {
-                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), (starTime + elapsedminutesDisplay) + ":" + elapsedsecondsDisplay).getOutline();
-                schoolTime = LocalTime.of(starTime + (int) elapsedminutesDisplay, (int) elapsedsecondsDisplay);
+            this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + (startTime + elapsedminutesDisplay) + ":0" + elapsedsecondsDisplay).getOutline();
+            schoolTime = LocalTime.of(startTime + (int) elapsedminutesDisplay, (int) elapsedsecondsDisplay);
+            if ((startTime + elapsedminutesDisplay) > 9) {
+                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), (startTime + elapsedminutesDisplay) + ":" + elapsedsecondsDisplay).getOutline();
+                schoolTime = LocalTime.of(startTime + (int) elapsedminutesDisplay, (int) elapsedsecondsDisplay);
             }
         }
 
@@ -247,13 +258,25 @@ public class SimulationScene {
         return classrooms;
     }
 
+
+
+
     public void init() {
         lessons = getLesson();
         classNames = getClasses();
-        classrooms = getClassRooms();
+        list = getClassRooms();
+
         System.out.println(lessons);
         this.camera = null;
         map = new Map("/maps/SchoolPlannerMap.json");
     }
+
+    public void setStarted () {
+        isStarted = true;
+    }
+
+
+    //events
+
 
 }

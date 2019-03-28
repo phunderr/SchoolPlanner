@@ -7,12 +7,18 @@ import java.awt.geom.Point2D;
 
 public class Teacher extends Character {
 
-    public Teacher (Point2D pos) {
+
+
+    public Teacher (Point2D pos, String name) {
         super(pos);
+        super.setName(name);
     }
 
-    public void draw(FXGraphics2D g) {
+    @Override
+    public void draw(Graphics2D g) {
         g.setColor(Color.decode("#5c42f4"));
         g.fill(getTransformedShape());
     }
+
+
 }
