@@ -80,6 +80,7 @@ public  class Character {
     }
 
     public void setTarget(Point2D target){
+
         this.target = target;
     }
 

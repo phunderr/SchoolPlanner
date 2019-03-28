@@ -110,22 +110,32 @@ public class SimulationScene {
                 for (ClassName className : classNames) {
                     if (((Student) character).getClassName().getName().equals(className.getName())) {
                         for (Lesson lesson : lessons) {
-                            String schoolTimerString;
-                            if (schoolTime.getHour() < 10) {
-                                schoolTimerString = "0" + schoolTime.getHour();
-                            } else {
-                                schoolTimerString = "" + schoolTime.getHour();
-                            }
-                            if (lesson.getLessonPeriod().getLessonStartTime().substring(0, 2).equals(schoolTimerString)) {
-                                if (lesson.getaClass().getName().equals(className.getName())) {
+                            if (lesson.getaClass().getName().equals(className.getName())) {
+                                if (Integer.parseInt(lesson.getLessonPeriod().getLessonStartTime().substring(0, 2)) > schoolTime.getHour() &&
+                                        schoolTime.getHour() < Integer.parseInt(lesson.getLessonPeriod().getLessonEndTime().substring(0, 2))) {
+                                    String schoolTimerString;
+                                    if (schoolTime.getHour() < 10) {
+                                        schoolTimerString = "0" + schoolTime.getHour();
+                                    } else {
+                                        schoolTimerString = "" + schoolTime.getHour();
+                                    }
+//                                if (lesson.getLessonPeriod().getLessonStartTime().substring(0, 2).equals(schoolTimerString)) {
+
                                     for (Classroom classroom : classrooms) {
                                         for (Location location : Map.locations) {
-                                            if (location.getName().equals(classroom.getClassID())) {
+                                            if (location.getName().equals(classroom.getClassID()) && classroom.getClassID().equals(lesson.getClassroom().getClassID())) {
                                                 character.setTarget(location.getLocation());
                                             }
+//                                            }
                                         }
                                     }
                                 }
+                                else {
+                                    character.setTarget(new Point2D.Double(1120, 1440));
+                                }
+                            }
+                            else {
+                                character.setTarget(new Point2D.Double(1120, 1440));
                             }
                         }
                     }
@@ -138,7 +148,7 @@ public class SimulationScene {
 
     private void loadinCharacters() {
         int currentAmountOfStudents = 0;
-        if (characterArrayList.size() < 64) {
+        if (characterArrayList.size() < 13) {
 
             int r = ((int) (Math.random() * classNames.size()));
             for (int i = 0; i < characterArrayList.size(); i++) {
@@ -148,7 +158,6 @@ public class SimulationScene {
                     }
                 }
                 if (characterArrayList.get(characterArrayList.size() - 1).getDistance(startingPoint) > 32) {
-
                     if (classNames.get(r).getNumberOfStudents() > currentAmountOfStudents) {
                         characterArrayList.add(new Student(startingPoint, classNames.get(r)));
                     }
@@ -168,7 +177,7 @@ public class SimulationScene {
         int starTime = 8;
         long newTime = System.currentTimeMillis();
         long elapsedTime = newTime - timeNow;
-        long elapsedseconds = elapsedTime / 1000;
+        long elapsedseconds = elapsedTime / 500;
         long elapsedsecondsDisplay = elapsedseconds % 60;
         long elapsedminutes = elapsedseconds / 60;
         long elapsedminutesDisplay = elapsedminutes % 9;
