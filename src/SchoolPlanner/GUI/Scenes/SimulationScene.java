@@ -1,5 +1,6 @@
 package SchoolPlanner.GUI.Scenes;
 
+import SchoolPlanner.Data.Lesson;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -16,6 +17,11 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class SimulationScene {
@@ -29,6 +35,8 @@ public class SimulationScene {
     private Shape timerShape;
     private long timeNow;
     private Font font;
+    public static LocalTime schoolTime;
+    private ArrayList<Lesson> lessons;
 
     public BorderPane simulationScene() {
         init();
@@ -71,7 +79,7 @@ public class SimulationScene {
         g.setTransform(new AffineTransform());
         g.setBackground(Color.BLACK);
         g.clearRect(0, 0, (int) canvas.getWidth(), (int) canvas.getHeight());
-        if(timerShape != null) {
+        if (timerShape != null) {
             g.draw(AffineTransform.getTranslateInstance(100, 100).createTransformedShape(timerShape));
         }
         if (camera != null) {
@@ -83,6 +91,7 @@ public class SimulationScene {
                 character.draw(g);
             }
         }
+
     }
 
     public void update(double deltaTime, FXGraphics2D g2d) {
@@ -94,9 +103,9 @@ public class SimulationScene {
 
     }
 
-    private void loadinCharacters () {
-        if ( characterArrayList.size() < 51 ) {
-            if ( characterArrayList.get(characterArrayList.size() - 1).getDistance(startingPoint) > 32 ) {
+    private void loadinCharacters() {
+        if (characterArrayList.size() < 51) {
+            if (characterArrayList.get(characterArrayList.size() - 1).getDistance(startingPoint) > 32) {
                 characterArrayList.add(new Character(startingPoint));
             }
         }
@@ -119,23 +128,59 @@ public class SimulationScene {
         long elapsedminutesDisplay = elapsedminutes % 9;
 
 
-        if(elapsedsecondsDisplay > 9){
+        if (elapsedsecondsDisplay > 9) {
             this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + (starTime + elapsedminutesDisplay) + ":" + elapsedsecondsDisplay).getOutline();
-            if((starTime + elapsedminutesDisplay) > 9){
+            schoolTime = LocalTime.of(starTime + (int) elapsedminutesDisplay, (int) elapsedsecondsDisplay);
+            if ((starTime + elapsedminutesDisplay) > 9) {
                 this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), (starTime + elapsedminutesDisplay) + ":" + elapsedsecondsDisplay).getOutline();
+                schoolTime = LocalTime.of(starTime + (int) elapsedminutesDisplay, (int) elapsedsecondsDisplay);
             }
         } else {
             this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + (starTime + elapsedminutesDisplay) + ":0" + elapsedsecondsDisplay).getOutline();
-            if((starTime + elapsedminutesDisplay) > 9){
+            schoolTime = LocalTime.of(starTime + (int) elapsedminutesDisplay, (int) elapsedsecondsDisplay);
+            if ((starTime + elapsedminutesDisplay) > 9) {
                 this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), (starTime + elapsedminutesDisplay) + ":" + elapsedsecondsDisplay).getOutline();
+                schoolTime = LocalTime.of(starTime + (int) elapsedminutesDisplay, (int) elapsedsecondsDisplay);
             }
         }
 
 
     }
 
+    public ArrayList<File> loadFiles(){
+        File folder = new File("src\\objectFile\\lesson");
+        File[] listOfFiles = folder.listFiles();
+        ArrayList<File> files = new ArrayList<>();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isFile()) {
+                files.add(listOfFiles[i]);
+            }
+        }
+        return files;
+    }
+
+    public ArrayList<Lesson> getLesson() {
+        ArrayList<Lesson> lessons = new ArrayList<>();
+        ArrayList<File> files = loadFiles();
+        for (int i = 0; i < files.size(); i++) {
+            File file = new File(files.get(i).getAbsolutePath());
+            Lesson lesson = null;
+            try (ObjectInputStream reader = new ObjectInputStream(new FileInputStream(file))) {
+                lesson = (Lesson) reader.readObject();
+                lessons.add(lesson);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return lessons;
+    }
 
     public void init() {
+        lessons = getLesson();
+        System.out.println(lessons);
         this.camera = null;
         map = new Map("/maps/SchoolPlannerMap.json");
     }
