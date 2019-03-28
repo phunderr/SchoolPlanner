@@ -25,9 +25,9 @@ public class Camera {
         this.resizable = resizable;
         this.g2d = g2d;
 
-        canvas.setOnMousePressed(e -> {lastMousePos = new Point2D.Double(e.getX(), e.getY());});
-        canvas.setOnMouseDragged(e -> mouseDragged(e));
-        canvas.setOnScroll(e-> mouseScroll(e));
+        canvas.setOnMousePressed(e -> lastMousePos = new Point2D.Double(e.getX(), e.getY()));
+        canvas.setOnMouseDragged(this::mouseDragged);
+        canvas.setOnScroll(this::mouseScroll);
     }
 
 
@@ -42,7 +42,7 @@ public class Camera {
     }
 
     public void mouseDragged(MouseEvent e) {
-        if(e.getButton() == MouseButton.PRIMARY) {
+        if(e.getButton() == MouseButton.MIDDLE) {
             centerPoint = new Point2D.Double(
                     centerPoint.getX() - (lastMousePos.getX() - e.getX()) / zoom,
                     centerPoint.getY() - (lastMousePos.getY() - e.getY()) / zoom

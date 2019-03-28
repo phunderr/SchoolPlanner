@@ -4,22 +4,17 @@ import SchoolPlanner.Data.ClassName;
 import SchoolPlanner.Data.Classroom;
 import SchoolPlanner.Data.Lesson;
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
 import simulation.NPC.Character;
 import simulation.NPC.Student;
-import simulation.NPC.Teacher;
 import simulation.tiled.Camera;
 import simulation.tiled.Location;
 import simulation.tiled.Map;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,7 +39,7 @@ public class SimulationScene {
     private ArrayList<ClassName> classNames;
     private ArrayList<Classroom> classrooms;
 
-    public BorderPane simulationScene() {
+    BorderPane simulationScene() {
         init();
         BorderPane mainPane = new BorderPane();
         this.canvas = new ResizableCanvas(this::draw, mainPane);
@@ -103,39 +98,28 @@ public class SimulationScene {
     }
 
     public void update(double deltaTime, FXGraphics2D g2d) {
-        loadinCharacters();
+        loadingCharacters();
         updateTimer(deltaTime, g2d);
         for (Character character : characterArrayList) {
+            character.setTarget(new Point2D.Double(1120, 1440));
             if (character instanceof Student) {
                 for (ClassName className : classNames) {
                     if (((Student) character).getClassName().getName().equals(className.getName())) {
                         for (Lesson lesson : lessons) {
                             if (lesson.getaClass().getName().equals(className.getName())) {
-                                if (Integer.parseInt(lesson.getLessonPeriod().getLessonStartTime().substring(0, 2)) > schoolTime.getHour() &&
-                                        schoolTime.getHour() < Integer.parseInt(lesson.getLessonPeriod().getLessonEndTime().substring(0, 2))) {
-                                    String schoolTimerString;
-                                    if (schoolTime.getHour() < 10) {
-                                        schoolTimerString = "0" + schoolTime.getHour();
-                                    } else {
-                                        schoolTimerString = "" + schoolTime.getHour();
-                                    }
-//                                if (lesson.getLessonPeriod().getLessonStartTime().substring(0, 2).equals(schoolTimerString)) {
+                                if (Integer.parseInt(lesson.getLessonPeriod().getLessonStartTime().substring(0, 2)) == schoolTime.getHour() ||
+                                    Integer.parseInt(lesson.getLessonPeriod().getLessonStartTime().substring(0, 2)) <= schoolTime.getHour() &&
+                                    Integer.parseInt(lesson.getLessonPeriod().getLessonEndTime().substring(0, 2)) > schoolTime.getHour()
 
+                                    ) {
                                     for (Classroom classroom : classrooms) {
                                         for (Location location : Map.locations) {
                                             if (location.getName().equals(classroom.getClassID()) && classroom.getClassID().equals(lesson.getClassroom().getClassID())) {
                                                 character.setTarget(location.getLocation());
                                             }
-//                                            }
                                         }
                                     }
                                 }
-                                else {
-                                    character.setTarget(new Point2D.Double(1120, 1440));
-                                }
-                            }
-                            else {
-                                character.setTarget(new Point2D.Double(1120, 1440));
                             }
                         }
                     }
@@ -146,7 +130,7 @@ public class SimulationScene {
     }
 
 
-    private void loadinCharacters() {
+    private void loadingCharacters () {
         int currentAmountOfStudents = 0;
         if (characterArrayList.size() < 13) {
 
@@ -162,12 +146,6 @@ public class SimulationScene {
                         characterArrayList.add(new Student(startingPoint, classNames.get(r)));
                     }
                 }
-            }
-        }
-        boolean containsteacher = false;
-        for (Character character : characterArrayList) {
-            if (character instanceof Teacher) {
-                containsteacher = true;
             }
         }
     }
@@ -220,7 +198,7 @@ public class SimulationScene {
         ArrayList<File> files = loadFiles("src\\objectFile\\lesson");
         for (int i = 0; i < files.size(); i++) {
             File file = new File(files.get(i).getAbsolutePath());
-            Lesson lesson = null;
+            Lesson lesson;
             try (ObjectInputStream reader = new ObjectInputStream(new FileInputStream(file))) {
                 lesson = (Lesson) reader.readObject();
                 lessons.add(lesson);
@@ -238,7 +216,7 @@ public class SimulationScene {
         ArrayList<File> files = loadFiles("src\\objectFile\\className");
         for (int i = 0; i < files.size(); i++) {
             File file = new File(files.get(i).getAbsolutePath());
-            ClassName className = null;
+            ClassName className;
             try (ObjectInputStream reader = new ObjectInputStream(new FileInputStream(file))) {
                 className = (ClassName) reader.readObject();
                 classNames.add(className);
@@ -256,7 +234,7 @@ public class SimulationScene {
         ArrayList<File> files = loadFiles("src\\objectFile\\classroom");
         for (int i = 0; i < files.size(); i++) {
             File file = new File(files.get(i).getAbsolutePath());
-            Classroom classroom = null;
+            Classroom classroom;
             try (ObjectInputStream reader = new ObjectInputStream(new FileInputStream(file))) {
                 classroom = (Classroom) reader.readObject();
                 classrooms.add(classroom);
