@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SimulationScene {
 
@@ -30,7 +31,7 @@ public class SimulationScene {
     private Map map;
     private ArrayList<Character> characterArrayList;
     private Camera camera;
-    private Point2D startingPoint = new Point2D.Double(1472 + 96/2, 2752);
+    private Point2D startingPoint = new Point2D.Double(1472 + 96 / 2, 2752);
     private Shape timerShape;
     private long timeNow;
     private Font font;
@@ -39,6 +40,12 @@ public class SimulationScene {
     private ArrayList<ClassName> classNames;
     private ArrayList<Classroom> list;
     private boolean isStarted = false;
+    private HashMap<String, ArrayList<Point2D.Double>> klasLocations = new HashMap<>();
+
+    private int klasAIterator = 0;
+    private int klasBIterator = 0;
+    private int klasCIterator = 0;
+    private int klasDIterator = 0;
 
     BorderPane simulationScene() {
         init();
@@ -65,7 +72,7 @@ public class SimulationScene {
                 if (last == -1) {
                     last = now;
                 }
-                if ( isStarted )
+                if (isStarted)
                     update((now - last) * 1.0e9, g2d);
                 last = now;
                 draw(g2d);
@@ -111,12 +118,16 @@ public class SimulationScene {
                         for (Lesson lesson : lessons) {
                             if (lesson.getaClass().getName().equals(className.getName())) {
                                 if (Integer.parseInt(lesson.getLessonPeriod().getLessonStartTime().substring(0, 2)) == schoolTime.getHour() ||
-                                    Integer.parseInt(lesson.getLessonPeriod().getLessonStartTime().substring(0, 2)) <= schoolTime.getHour() &&
-                                    Integer.parseInt(lesson.getLessonPeriod().getLessonEndTime().substring(0, 2)) > schoolTime.getHour()) {
-                                    for (Classroom classroom : list ) {
+                                        Integer.parseInt(lesson.getLessonPeriod().getLessonStartTime().substring(0, 2)) <= schoolTime.getHour() &&
+                                                Integer.parseInt(lesson.getLessonPeriod().getLessonEndTime().substring(0, 2)) > schoolTime.getHour()) {
+                                    for (Classroom classroom : list) {
                                         for (Location location : Map.locations) {
                                             if (location.getName().equals(classroom.getClassID()) && classroom.getClassID().equals(lesson.getClassroom().getClassID())) {
-                                                character.setTarget(new Point2D.Double(location.getLocation().getX() + 100 , location.getLocation().getY() + 100));
+                                                for (String classRoomName : ((Student) character).getLocationInClassRoom().keySet()) {
+                                                    if (classroom.getClassID().equals(classRoomName)) {
+                                                        character.setTarget(((Student) character).getLocationInClassRoom().get(classRoomName));
+                                                    }
+                                                }
 //                                                character.setRandomTargetInArea(new Rectangle( (int)location.getLocation().getX(), (int)location.getLocation().getY(), location.getWidth(), location.getHeight())); doesnt work!!!
                                             }
                                         }
@@ -133,9 +144,7 @@ public class SimulationScene {
     }
 
 
-
-
-    private void loadingCharacters () {
+    private void loadingCharacters() {
         int currentAmountOfStudents = 0;
         if (characterArrayList.size() < 13) {
 
@@ -148,8 +157,18 @@ public class SimulationScene {
                 }
                 if (characterArrayList.get(characterArrayList.size() - 1).getDistance(startingPoint) > 32) {
                     if (classNames.get(r).getNumberOfStudents() > currentAmountOfStudents) {
-                        characterArrayList.add(new Student(startingPoint, classNames.get(r)));
+                        HashMap<String, Point2D.Double> studentLocationPerClass = new HashMap<>();
+                        studentLocationPerClass.put("LA101", klasLocations.get("LA101").get(klasAIterator));
+                        klasAIterator++;
+                        studentLocationPerClass.put("LA102", klasLocations.get("LA102").get(klasBIterator));
+                        klasBIterator++;
+                        studentLocationPerClass.put("LA103", klasLocations.get("LA103").get(klasCIterator));
+                        klasCIterator++;
+                        studentLocationPerClass.put("LA104", klasLocations.get("LA104").get(klasDIterator));
+                        klasDIterator++;
+                        characterArrayList.add(new Student(startingPoint, classNames.get(r), studentLocationPerClass));
                     }
+
                 }
             }
         }
@@ -251,7 +270,33 @@ public class SimulationScene {
         return classrooms;
     }
 
-
+    public HashMap<String, ArrayList<Point2D.Double>> fillClassHashmap() {
+        HashMap<String, ArrayList<Point2D.Double>> mapHashMap = new HashMap<>();
+        for (Classroom classroom : list) {
+            ArrayList<Point2D.Double> locations = new ArrayList<>();
+            for (Location location : Map.locations) {
+                if (location.getName().equals(classroom.getClassID())) {
+                    System.out.println(location.getName());
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 6; j++) {
+                            if (j % 2 == 0) {
+                                if (j != 0) {
+                                    locations.add(new Point2D.Double(location.getLocation().getX() + 18 + ((j+1) * 32) , location.getLocation().getY() + 42 + (i * 90)));
+                                } else {
+                                    locations.add(new Point2D.Double(location.getLocation().getX() + 18, location.getLocation().getY() + 42 + (i * 90)));
+                                }
+                            } else {
+                                locations.add(new Point2D.Double(location.getLocation().getX() + 18 + (j * 32), location.getLocation().getY() + 42 + (i * 90)));
+                            }
+                        }
+                    }
+                }
+            }
+            mapHashMap.put(classroom.getClassID(), locations);
+        }
+        System.out.println(list);
+        return mapHashMap;
+    }
 
 
     public void init() {
@@ -259,12 +304,12 @@ public class SimulationScene {
         classNames = getClasses();
         list = getClassRooms();
 
-        System.out.println(lessons);
         this.camera = null;
         map = new Map("/maps/SchoolPlannerMap.json");
+        klasLocations = fillClassHashmap();
     }
 
-    public void setStarted () {
+    public void setStarted() {
         isStarted = true;
     }
 

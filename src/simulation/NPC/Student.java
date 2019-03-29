@@ -8,16 +8,19 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class Student extends Character{
 
     ClassName className;
     BufferedImage[] tiles;
+    HashMap<String, Point2D.Double> locationInClassRoom;
 
-    public Student(Point2D pos, ClassName className) {
+    public Student(Point2D pos, ClassName className, HashMap<String, Point2D.Double> locationInClassRoom) {
         super(pos);
         init();
         this.className = className;
+        this.locationInClassRoom = locationInClassRoom;
     }
 
 
@@ -25,6 +28,10 @@ public class Student extends Character{
     public void draw(Graphics2D g){
         this.drawImage(g, tiles);
 
+    }
+
+    public HashMap<String, Point2D.Double> getLocationInClassRoom() {
+        return locationInClassRoom;
     }
 
     public ClassName getClassName() {
