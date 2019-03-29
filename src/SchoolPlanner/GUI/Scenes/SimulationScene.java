@@ -135,7 +135,6 @@ public class SimulationScene {
             character.update(characterArrayList);
         }
         canvas.requestFocus();
-        canvas.setOnMouseClicked(e -> System.out.println("sup"));
     }
 
 
@@ -170,7 +169,6 @@ public class SimulationScene {
         long elapsedsecondsDisplay = elapsedseconds % 60;
         long elapsedminutes = elapsedseconds / 60;
         long elapsedminutesDisplay = elapsedminutes % 9;
-        System.out.println(newTime);
 
         if (elapsedsecondsDisplay > 9) {
             this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + (startTime + elapsedminutesDisplay) + ":" + elapsedsecondsDisplay).getOutline();
