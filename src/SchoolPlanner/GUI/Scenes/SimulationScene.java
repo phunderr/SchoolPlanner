@@ -41,6 +41,7 @@ public class SimulationScene {
     private ArrayList<Classroom> list;
     private boolean isStarted = false;
     private HashMap<String, ArrayList<Point2D.Double>> klasLocations = new HashMap<>();
+    private int characterClassIterator = 0;
 
     private int klasAIterator = 0;
     private int klasBIterator = 0;
@@ -128,7 +129,6 @@ public class SimulationScene {
                                                         character.setTarget(((Student) character).getLocationInClassRoom().get(classRoomName));
                                                     }
                                                 }
-//                                                character.setRandomTargetInArea(new Rectangle( (int)location.getLocation().getX(), (int)location.getLocation().getY(), location.getWidth(), location.getHeight())); doesnt work!!!
                                             }
                                         }
                                     }
@@ -146,29 +146,35 @@ public class SimulationScene {
 
     private void loadingCharacters() {
         int currentAmountOfStudents = 0;
-        if (characterArrayList.size() < 13) {
+        if (characterArrayList.size() < 72) {
 
-            int r = ((int) (Math.random() * classNames.size()));
+            if (klasAIterator == 18) {
+                klasAIterator = 0;
+                characterClassIterator++;
+            }
             for (int i = 0; i < characterArrayList.size(); i++) {
                 if (characterArrayList.get(i) instanceof Student) {
-                    if (((Student) characterArrayList.get(i)).getClassName().getName().equals(classNames.get(r).getName())) {
+                    if (((Student) characterArrayList.get(i)).getClassName().getName().equals(classNames.get(characterClassIterator).getName())) {
                         currentAmountOfStudents++;
                     }
                 }
                 if (characterArrayList.get(characterArrayList.size() - 1).getDistance(startingPoint) > 32) {
-                    if (classNames.get(r).getNumberOfStudents() > currentAmountOfStudents) {
+                    if (classNames.get(characterClassIterator).getNumberOfStudents() > currentAmountOfStudents) {
                         HashMap<String, Point2D.Double> studentLocationPerClass = new HashMap<>();
                         studentLocationPerClass.put("LA101", klasLocations.get("LA101").get(klasAIterator));
                         klasAIterator++;
                         studentLocationPerClass.put("LA102", klasLocations.get("LA102").get(klasBIterator));
                         klasBIterator++;
+                        klasBIterator %= 18;
                         studentLocationPerClass.put("LA103", klasLocations.get("LA103").get(klasCIterator));
                         klasCIterator++;
+                        klasCIterator %= 18;
                         studentLocationPerClass.put("LA104", klasLocations.get("LA104").get(klasDIterator));
                         klasDIterator++;
-                        characterArrayList.add(new Student(startingPoint, classNames.get(r), studentLocationPerClass));
+                        klasDIterator %= 18;
+                        characterArrayList.add(new Student(startingPoint, classNames.get(characterClassIterator), studentLocationPerClass));
                     }
-
+                    System.out.println(klasLocations);
                 }
             }
         }
@@ -276,17 +282,56 @@ public class SimulationScene {
             ArrayList<Point2D.Double> locations = new ArrayList<>();
             for (Location location : Map.locations) {
                 if (location.getName().equals(classroom.getClassID())) {
-                    System.out.println(location.getName());
-                    for (int i = 0; i < 3; i++) {
-                        for (int j = 0; j < 6; j++) {
-                            if (j % 2 == 0) {
-                                if (j != 0) {
-                                    locations.add(new Point2D.Double(location.getLocation().getX() + 18 + ((j+1) * 32) , location.getLocation().getY() + 42 + (i * 90)));
-                                } else {
-                                    locations.add(new Point2D.Double(location.getLocation().getX() + 18, location.getLocation().getY() + 42 + (i * 90)));
+                    if (location.getName().equals("LA104") || location.getName().equals("LA103")) {
+                        for (int i = 0; i < 3; i++) {
+                            for (int j = 0; j < 6; j++) {
+                                switch (j) {
+                                    case 0:
+                                        locations.add(new Point2D.Double(location.getLocation().getX() + 13, location.getLocation().getY() + 48 + (i * 96)));
+                                        break;
+                                    case 1:
+                                        locations.add(new Point2D.Double(location.getLocation().getX() + 13 + 32, location.getLocation().getY() + 48 + (i * 96)));
+                                        break;
+                                    case 2:
+                                        locations.add(new Point2D.Double(location.getLocation().getX() + 13 + (2 * 32) + 32, location.getLocation().getY() + 48 + (i * 96)));
+                                        break;
+                                    case 3:
+                                        locations.add(new Point2D.Double(location.getLocation().getX() + 13 + (3 * 32) + 32, location.getLocation().getY() + 48 + (i * 96)));
+                                        break;
+                                    case 4:
+                                        locations.add(new Point2D.Double(location.getLocation().getX() + 13 + (4 * 32) + 64, location.getLocation().getY() + 48 + (i * 96)));
+                                        break;
+                                    case 5:
+                                        locations.add(new Point2D.Double(location.getLocation().getX() + 13 + (5 * 32) + 64, location.getLocation().getY() + 48 + (i * 96)));
+                                        break;
+
                                 }
-                            } else {
-                                locations.add(new Point2D.Double(location.getLocation().getX() + 18 + (j * 32), location.getLocation().getY() + 42 + (i * 90)));
+                            }
+                        }
+                    } else {
+                        for (int i = 0; i < 3; i++) {
+                            for (int j = 0; j < 6; j++) {
+                                switch (j) {
+                                    case 0:
+                                        locations.add(new Point2D.Double(location.getLocation().getX() + 18, location.getLocation().getY() + 42 + (i * 96)));
+                                        break;
+                                    case 1:
+                                        locations.add(new Point2D.Double(location.getLocation().getX() + 18 + 32, location.getLocation().getY() + 42 + (i * 96)));
+                                        break;
+                                    case 2:
+                                        locations.add(new Point2D.Double(location.getLocation().getX() + 18 + (2 * 32) + 32, location.getLocation().getY() + 42 + (i * 96)));
+                                        break;
+                                    case 3:
+                                        locations.add(new Point2D.Double(location.getLocation().getX() + 18 + (3 * 32) + 32, location.getLocation().getY() + 42 + (i * 96)));
+                                        break;
+                                    case 4:
+                                        locations.add(new Point2D.Double(location.getLocation().getX() + 18 + (4 * 32) + 64, location.getLocation().getY() + 42 + (i * 96)));
+                                        break;
+                                    case 5:
+                                        locations.add(new Point2D.Double(location.getLocation().getX() + 18 + (5 * 32) + 64, location.getLocation().getY() + 42 + (i * 96)));
+                                        break;
+
+                                }
                             }
                         }
                     }

@@ -47,7 +47,7 @@ public class Camera {
     }
 
     public void mouseDragged(MouseEvent e) {
-        if(e.getButton() == MouseButton.MIDDLE) {
+        if(e.getButton() == MouseButton.SECONDARY) {
             centerPoint = new Point2D.Double(
                     centerPoint.getX() - (lastMousePos.getX() - e.getX()) / zoom,
                     centerPoint.getY() - (lastMousePos.getY() - e.getY()) / zoom
