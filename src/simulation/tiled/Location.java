@@ -8,10 +8,13 @@ public class Location {
 
     private Point2D location;
     private String name;
+    private int width, height;
 
-    public Location(int x, int y,String name) {
+    public Location(int x, int y,String name, int width, int height) {
         this.location = new Point2D.Double(x,y);
         this.name = name;
+        this.width = width;
+        this.height = height;
     }
 
     public Point2D getLocation() {
@@ -20,6 +23,14 @@ public class Location {
 
     public String getName() {
         return name;
+    }
+
+    public int getWidth () {
+        return width;
+    }
+
+    public int getHeight () {
+        return height;
     }
 
     @Override

@@ -4,9 +4,6 @@ import SchoolPlanner.Data.ClassName;
 import SchoolPlanner.Data.Classroom;
 import SchoolPlanner.Data.Lesson;
 import javafx.animation.AnimationTimer;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import org.jfree.fx.FXGraphics2D;
 import org.jfree.fx.ResizableCanvas;
@@ -25,7 +22,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.List;
 
 public class SimulationScene {
 
@@ -34,7 +30,7 @@ public class SimulationScene {
     private Map map;
     private ArrayList<Character> characterArrayList;
     private Camera camera;
-    private Point2D startingPoint = new Point2D.Double(1472 + 96, 2752 + 50);
+    private Point2D startingPoint = new Point2D.Double(1472 + 96/2, 2752);
     private Shape timerShape;
     private long timeNow;
     private Font font;
@@ -116,13 +112,12 @@ public class SimulationScene {
                             if (lesson.getaClass().getName().equals(className.getName())) {
                                 if (Integer.parseInt(lesson.getLessonPeriod().getLessonStartTime().substring(0, 2)) == schoolTime.getHour() ||
                                     Integer.parseInt(lesson.getLessonPeriod().getLessonStartTime().substring(0, 2)) <= schoolTime.getHour() &&
-                                    Integer.parseInt(lesson.getLessonPeriod().getLessonEndTime().substring(0, 2)) > schoolTime.getHour()
-
-                                    ) {
+                                    Integer.parseInt(lesson.getLessonPeriod().getLessonEndTime().substring(0, 2)) > schoolTime.getHour()) {
                                     for (Classroom classroom : list ) {
                                         for (Location location : Map.locations) {
                                             if (location.getName().equals(classroom.getClassID()) && classroom.getClassID().equals(lesson.getClassroom().getClassID())) {
                                                 character.setTarget(new Point2D.Double(location.getLocation().getX() + 100 , location.getLocation().getY() + 100));
+//                                                character.setRandomTargetInArea(new Rectangle( (int)location.getLocation().getX(), (int)location.getLocation().getY(), location.getWidth(), location.getHeight())); doesnt work!!!
                                             }
                                         }
                                     }
@@ -181,7 +176,7 @@ public class SimulationScene {
             this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), "0" + (startTime + elapsedminutesDisplay) + ":0" + elapsedsecondsDisplay).getOutline();
             schoolTime = LocalTime.of(startTime + (int) elapsedminutesDisplay, (int) elapsedsecondsDisplay);
             if ((startTime + elapsedminutesDisplay) > 9) {
-                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), (startTime + elapsedminutesDisplay) + ":" + elapsedsecondsDisplay).getOutline();
+                this.timerShape = font.createGlyphVector(g2d.getFontRenderContext(), (startTime + elapsedminutesDisplay) + ":0" + elapsedsecondsDisplay).getOutline();
                 schoolTime = LocalTime.of(startTime + (int) elapsedminutesDisplay, (int) elapsedsecondsDisplay);
             }
         }

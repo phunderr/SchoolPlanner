@@ -47,7 +47,8 @@ public class Map {
 
         for (int i = 0; i < finalObjectArray.size(); i++) {
 //                Location currentLocation = new Location(Integer.parseInt(finalObjectArray.getJsonObject(i).getJsonString("x").toString()),Integer.parseInt(finalObjectArray.getJsonObject(i).getJsonString("y").toString()),finalObjectArray.getJsonObject(i).getJsonString("name").getString());
-            Location currentlocation = new Location(((finalObjectArray.getJsonObject(i).getInt("x"))),((finalObjectArray.getJsonObject(i).getInt("y"))),finalObjectArray.getJsonObject(i).getJsonString("name").getString());
+            Location currentlocation = new Location(((finalObjectArray.getJsonObject(i).getInt("x"))),((finalObjectArray.getJsonObject(i).getInt("y"))),finalObjectArray.getJsonObject(i).getJsonString("name").getString()
+                                                    , finalObjectArray.getJsonObject(i).getInt("width"), finalObjectArray.getJsonObject(i).getInt("height"));
             locations.add(currentlocation);
         }
 

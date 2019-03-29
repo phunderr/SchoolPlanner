@@ -4,9 +4,7 @@ import javafx.scene.input.MouseEvent;
 import org.jfree.fx.FXGraphics2D;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Point2D;
+import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -46,6 +44,7 @@ public  class Character {
     public void update(ArrayList<Character> characters){
 
         Point2D.Double newPosition = new Point2D.Double(0,0);
+
         if(pos.getX() < target.getX()){
             dirVector.setLocation(speed , 0);
         }
@@ -58,6 +57,7 @@ public  class Character {
         if(pos.getY() > target.getY()){
             dirVector.setLocation(0 , -speed);
         }
+
 
         if ( pos.distance(target) < 5)
             dirVector.setLocation(0, 0);
@@ -91,7 +91,7 @@ public  class Character {
     }
 
     public void setTarget(Point2D target){
-
+        this.previousArea = null;
         this.target = target;
     }
 
@@ -139,11 +139,28 @@ public  class Character {
     public int getSpriteImage () {
         return spriteImage;
     }
+    private Rectangle2D previousArea = null;
+    public void setRandomTargetInArea (Rectangle2D area){
+        if ( this.previousArea == null ){
+            previousArea = area;
+        } else if ( previousArea.getBounds2D().equals(area.getBounds2D()) ){
+            return;
+        }
+
+            double x = area.getBounds2D().getX() + Math.random() * area.getBounds2D().getWidth();
+            double y = area.getBounds2D().getY() + Math.random() * area.getBounds2D().getHeight();
+            System.out.println("x: " + x + " y:" + y);
+            this.target.setLocation(x, y);
+
+
+
+
+    }
 
 
     public void drawImage(Graphics2D g, BufferedImage[] tiles){
         AffineTransform tx = new AffineTransform();
-        tx.translate(this.getPos().getX(), this.getPos().getY());
+        tx.translate(this.getPos().getX() - 16, this.getPos().getY() - 16);
         //tx.scale(0.5 , 0.5);
 
         if ( getDirVector().getY() == 2 ){//0, 1, 2
