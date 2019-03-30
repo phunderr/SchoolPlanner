@@ -142,6 +142,7 @@ public class SimulationScene {
                 }
             }
             if (character instanceof Teacher){
+                character.setTarget(new Point2D.Double(2016, 2080));
                 for (Lesson lesson : lessons){
                     for (SchoolPlanner.Data.Teacher teacher : teachers){
                         if (lesson.getTeacher().getName().equals(teacher.getName())){
