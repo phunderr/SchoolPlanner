@@ -153,6 +153,7 @@ public class SimulationScene {
                                         for (Location location : Map.locations) {
                                             if (location.getName().equals(classroom.getClassID()) && classroom.getClassID().equals(lesson.getClassroom().getClassID() + "Teacher")) {
                                                 for (String classRoomName : ((Teacher) character).getLocationInClassRoom().keySet()) {
+                                                    System.out.println(classroom);
                                                     if (classroom.getClassID().equals(classRoomName)) {
                                                         character.setTarget(((Teacher) character).getLocationInClassRoom().get(classRoomName));
                                                     }

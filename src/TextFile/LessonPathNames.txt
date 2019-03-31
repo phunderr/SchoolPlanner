@@ -1,5 +1,3 @@
-src/objectFile/lesson/Klas AJohanMathsLA101.dat
-src/objectFile/lesson/Klas BJohanMathsLA102.dat
-src/objectFile/lesson/Klas CPieterOGPLA101.dat
-src/objectFile/lesson/Klas DPieterOGPLA104.dat
-src/objectFile/lesson/Klas BJohanOGPLA103.dat
+src/objectFile/lesson/Klas AJohanOGPLA101.dat
+src/objectFile/lesson/Klas BPieterMathsLA102.dat
+src/objectFile/lesson/Klas CEttiëne2DGraphicsLA104.dat
