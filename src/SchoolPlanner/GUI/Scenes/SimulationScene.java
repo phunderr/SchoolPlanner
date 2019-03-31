@@ -50,6 +50,7 @@ public class SimulationScene {
     private int klasCIterator = 0;
     private int klasDIterator = 0;
     private int teacherIterator = 0;
+    private int cafeteriaIterator = 0;
 
     BorderPane simulationScene() {
         init();
@@ -116,7 +117,8 @@ public class SimulationScene {
         updateTimer(deltaTime, g2d);
         for (Character character : characterArrayList) {
             if (character instanceof Student) {
-                character.setTarget(new Point2D.Double(1120, 1440));
+//                System.out.println(((Student) character).getLocationInClassRoom().get("Cafeteria"));
+                character.setTarget(((Student) character).getLocationInClassRoom().get("Cafeteria"));
                 for (ClassName className : classNames) {
                     if (((Student) character).getClassName().getName().equals(className.getName())) {
                         for (Lesson lesson : lessons) {
@@ -141,28 +143,28 @@ public class SimulationScene {
                     }
                 }
             }
-            if (character instanceof Teacher){
+            if (character instanceof Teacher) {
                 character.setTarget(new Point2D.Double(2016, 2080));
-                for (Lesson lesson : lessons){
-                    for (SchoolPlanner.Data.Teacher teacher : teachers){
-                        if (character.getName().equals(teacher.getName())){
-                        if (lesson.getTeacher().getName().equals(teacher.getName())){
-                            if (Integer.parseInt(lesson.getLessonPeriod().getLessonStartTime().substring(0, 2)) == schoolTime.getHour() ||
-                                    Integer.parseInt(lesson.getLessonPeriod().getLessonStartTime().substring(0, 2)) <= schoolTime.getHour() &&
-                                            Integer.parseInt(lesson.getLessonPeriod().getLessonEndTime().substring(0, 2)) > schoolTime.getHour()) {
-                                for (Classroom classroom : listClassRoomsTeachers) {
-                                    for (Location location : Map.locations) {
-                                        if (location.getName().equals(classroom.getClassID()) && classroom.getClassID().equals(lesson.getClassroom().getClassID() + "Teacher")) {
-                                            for (String classRoomName : ((Teacher) character).getLocationInClassRoom().keySet()) {
-                                                if (classroom.getClassID().equals(classRoomName)) {
-                                                    character.setTarget(((Teacher) character).getLocationInClassRoom().get(classRoomName));
-                                                }
+                for (Lesson lesson : lessons) {
+                    for (SchoolPlanner.Data.Teacher teacher : teachers) {
+                        if (character.getName().equals(teacher.getName())) {
+                            if (lesson.getTeacher().getName().equals(teacher.getName())) {
+                                if (Integer.parseInt(lesson.getLessonPeriod().getLessonStartTime().substring(0, 2)) == schoolTime.getHour() ||
+                                        Integer.parseInt(lesson.getLessonPeriod().getLessonStartTime().substring(0, 2)) <= schoolTime.getHour() &&
+                                                Integer.parseInt(lesson.getLessonPeriod().getLessonEndTime().substring(0, 2)) > schoolTime.getHour()) {
+                                    for (Classroom classroom : listClassRoomsTeachers) {
+                                        for (Location location : Map.locations) {
+                                            if (location.getName().equals(classroom.getClassID()) && classroom.getClassID().equals(lesson.getClassroom().getClassID() + "Teacher")) {
+                                                for (String classRoomName : ((Teacher) character).getLocationInClassRoom().keySet()) {
+                                                    if (classroom.getClassID().equals(classRoomName)) {
+                                                        character.setTarget(((Teacher) character).getLocationInClassRoom().get(classRoomName));
+                                                    }
 
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
                             }
                         }
                     }
@@ -197,7 +199,7 @@ public class SimulationScene {
                     teacherLocationPerClass.put("LA104Teacher", new Point2D.Double(1136, 1968));
 
                     for (SchoolPlanner.Data.Teacher t : teachers) {
-                        if (teacherIterator < teachers.size()){
+                        if (teacherIterator < teachers.size()) {
                             characterArrayList.add(new Teacher(startingPoint, t.getName(), teacherLocationPerClass));
                             teacherIterator++;
                             continue;
@@ -205,6 +207,12 @@ public class SimulationScene {
                     }
                     if (classNames.get(characterClassIterator).getNumberOfStudents() > currentAmountOfStudents) {
                         HashMap<String, Point2D.Double> studentLocationPerClass = new HashMap<>();
+
+                        if(cafeteriaIterator<72){
+                            studentLocationPerClass.put("Cafeteria", klasLocations.get("Cafeteria").get(cafeteriaIterator));
+                            cafeteriaIterator++;
+                        }
+
                         studentLocationPerClass.put("LA101", klasLocations.get("LA101").get(klasAIterator));
                         klasAIterator++;
                         studentLocationPerClass.put("LA102", klasLocations.get("LA102").get(klasBIterator));
@@ -355,7 +363,7 @@ public class SimulationScene {
                                 }
                             }
                         }
-                    } else if(location.getName().equals("LA102") || location.getName().equals("LA101")){
+                    } else if (location.getName().equals("LA102") || location.getName().equals("LA101")) {
                         for (int i = 0; i < 3; i++) {
                             for (int j = 0; j < 6; j++) {
                                 switch (j) {
@@ -386,7 +394,78 @@ public class SimulationScene {
             }
             mapHashMap.put(classroom.getClassID(), locations);
         }
-        System.out.println(listClassRooms);
+        ArrayList<Point2D.Double> cafeteriaLocation = new ArrayList<>();
+        for (Location location : Map.locations) {
+            if (location.getName().equals("Cafeteria")) {
+                for (int i = 0; i < 10; i++) {
+                    if (i == 0 || i == 9) {
+                        for (int j = 0; j < 4; j++) {
+                            switch (j) {
+                                case 0:
+                                    if(i == 0){
+                                        cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 18 + 59, location.getLocation().getY() + 18));
+                                    } else {
+                                        cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 18 + 59, location.getLocation().getY() + 16 +(11*32)));
+                                    }
+                                    break;
+                                case 1:
+                                    if(i == 0){
+                                        cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 18 + 59 + (6*32), location.getLocation().getY() + 18));
+                                    } else {
+                                        cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 18 + 59 + (6*32), location.getLocation().getY() + 16 +(11*32)));
+                                    }
+                                    break;
+                                case 2:
+                                    if(i == 0){
+                                        cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 18 + 59 + (14*32)+4, location.getLocation().getY() + 18));
+                                    } else {
+                                        cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 18 + 59 + (14*32)+4, location.getLocation().getY() + 16 +(11*32)));
+                                    }
+                                    break;
+                                case 3:
+                                    if(i == 0){
+                                        cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 18 + 59 + (20*32)+4, location.getLocation().getY() + 18));
+                                    } else {
+                                        cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 18 + 59 + (20*32)+4, location.getLocation().getY() + 16 +(11*32)));
+                                    }
+                                    break;
+                            }
+                        }
+                    } else {
+                        for (int j = 0; j < 8; j++) {
+                            switch (j) {
+                                case 0:
+                                    cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 15, location.getLocation().getY() + 76 + ((i-1) * 32)));
+                                    break;
+                                case 1:
+                                    cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 15 + (4*31), location.getLocation().getY() + 76 + ((i-1) * 32)));
+                                    break;
+                                case 2:
+                                    cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 15 + (6*32), location.getLocation().getY() + 76 + ((i-1) * 32)));
+                                    break;
+                                case 3:
+                                    cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 15 + (10*32), location.getLocation().getY() + 76 + ((i-1) * 32)));
+                                    break;
+                                case 4:
+                                    cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 15 + (15*30), location.getLocation().getY() + 76 + ((i-1) * 32)));
+                                    break;
+                                case 5:
+                                    cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 15 + (19*31)-10, location.getLocation().getY() + 76 + ((i-1) * 32)));
+                                    break;
+                                case 6:
+                                    cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 15 + (21*31)-5, location.getLocation().getY() + 76 + ((i-1) * 32)));
+                                    break;
+                                case 7:
+                                    cafeteriaLocation.add(new Point2D.Double(location.getLocation().getX() + 15 + (25*31)-5, location.getLocation().getY() + 76 + ((i-1) * 32)));
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+            mapHashMap.put("Cafeteria", cafeteriaLocation);
+        }
+
         return mapHashMap;
     }
 
