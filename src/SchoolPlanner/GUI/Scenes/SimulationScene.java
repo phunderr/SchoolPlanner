@@ -145,23 +145,24 @@ public class SimulationScene {
                 character.setTarget(new Point2D.Double(2016, 2080));
                 for (Lesson lesson : lessons){
                     for (SchoolPlanner.Data.Teacher teacher : teachers){
+                        if (character.getName().equals(teacher.getName())){
                         if (lesson.getTeacher().getName().equals(teacher.getName())){
                             if (Integer.parseInt(lesson.getLessonPeriod().getLessonStartTime().substring(0, 2)) == schoolTime.getHour() ||
                                     Integer.parseInt(lesson.getLessonPeriod().getLessonStartTime().substring(0, 2)) <= schoolTime.getHour() &&
                                             Integer.parseInt(lesson.getLessonPeriod().getLessonEndTime().substring(0, 2)) > schoolTime.getHour()) {
-                                    for (Classroom classroom : listClassRoomsTeachers){
-                                        for (Location location : Map.locations) {
-                                            if (location.getName().equals(classroom.getClassID()) && classroom.getClassID().equals(lesson.getClassroom().getClassID() + "Teacher")) {
-                                                for (String classRoomName : ((Teacher) character).getLocationInClassRoom().keySet()) {
-                                                    System.out.println(classroom);
-                                                    if (classroom.getClassID().equals(classRoomName)) {
-                                                        character.setTarget(((Teacher) character).getLocationInClassRoom().get(classRoomName));
-                                                    }
-
+                                for (Classroom classroom : listClassRoomsTeachers) {
+                                    for (Location location : Map.locations) {
+                                        if (location.getName().equals(classroom.getClassID()) && classroom.getClassID().equals(lesson.getClassroom().getClassID() + "Teacher")) {
+                                            for (String classRoomName : ((Teacher) character).getLocationInClassRoom().keySet()) {
+                                                if (classroom.getClassID().equals(classRoomName)) {
+                                                    character.setTarget(((Teacher) character).getLocationInClassRoom().get(classRoomName));
                                                 }
+
                                             }
                                         }
                                     }
+                                }
+                            }
                             }
                         }
                     }
