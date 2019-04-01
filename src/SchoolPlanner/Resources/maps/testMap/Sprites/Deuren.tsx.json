@@ -1,0 +1,14 @@
+{ "columns":8,
+ "image":"890280SPTWSchool01.png",
+ "imageheight":128,
+ "imagewidth":256,
+ "margin":0,
+ "name":"Deuren",
+ "spacing":0,
+ "tilecount":32,
+ "tiledversion":"1.2.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":1.2
+}

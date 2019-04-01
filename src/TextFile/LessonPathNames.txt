@@ -1,0 +1,3 @@
+src/objectFile/lesson/Klas AJohanOGPLA101.dat
+src/objectFile/lesson/Klas BPieterOGPLA103.dat
+src/objectFile/lesson/Klas CEttiëne2DGraphicsLA104.dat

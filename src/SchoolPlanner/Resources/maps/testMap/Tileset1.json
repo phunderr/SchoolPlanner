@@ -1,0 +1,14 @@
+{ "columns":8,
+ "image":"/Sprites/610101STSchlWE01.png",
+ "imageheight":1600,
+ "imagewidth":256,
+ "margin":0,
+ "name":"Tileset1",
+ "spacing":0,
+ "tilecount":400,
+ "tiledversion":"1.2.2",
+ "tileheight":32,
+ "tilewidth":32,
+ "type":"tileset",
+ "version":1.2
+}
