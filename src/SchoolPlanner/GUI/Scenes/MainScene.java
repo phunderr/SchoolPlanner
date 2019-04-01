@@ -73,10 +73,6 @@ public class MainScene extends Application {
         primaryStage.setResizable(false);
 
         canvas.setOnMouseMoved(this::onMouseMoved);
-
-
-
-//      new AddLessonPopUpScene().generatePopUp(new Stage());
     }
 
     /**

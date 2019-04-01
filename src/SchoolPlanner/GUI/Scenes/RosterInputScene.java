@@ -44,10 +44,10 @@ public class RosterInputScene {
     private Button deleteButton;
 
     /**
-     * @return the RosterInput borderpane.
+     * @return the RosterInput borderPane.
      */
 
-    public BorderPane rosterInputScene(){
+    BorderPane rosterInputScene(){
 
         BorderPane borderPane = new BorderPane();
 

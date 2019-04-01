@@ -2,6 +2,7 @@ package SchoolPlanner.Data;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * @Author Arno Nagtzaam
@@ -32,7 +33,7 @@ public class LessonPeriod implements Serializable {
         this.lessonEndTime = lessonEndTime;
     }
 
-    public int getLessonTime(){
+    public int getLessonTime() {
         return lessonStartTime.compareTo(lessonEndTime);
     }
 
